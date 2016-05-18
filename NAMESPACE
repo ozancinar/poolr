@@ -1,0 +1,9 @@
+exportPattern("^[^\\.]")
+
+import(methods)
+import(stats)
+import(Matrix)
+import(MASS)
+
+#S3method(generic, default)
+#S3method(generic, class)
