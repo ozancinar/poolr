@@ -3,10 +3,9 @@
 \title{Number of Effective Tests}
 \description{Function to calculate the number of effective tests based on one of the four methods.}
 \usage{
-m.eff(p, R, method, \dots)
+m.eff(R, method, \dots)
 }
 \arguments{
-   \item{p}{vector with the (one- or two-sided) p-values.}
    \item{R}{matrix that include pairwise correlations between the p-values.}
    \item{method}{method to be used to calculate the number of effective tests. Can be one of "nyholt", "li.ji", "gao", or "galwey".}
    \item{\dots}{other arguments.}
@@ -28,12 +27,11 @@ m.eff(p, R, method, \dots)
    Nyholt, D. R. (2004). \emph{A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other.} The American Journal of Human Genetics, 74(4), 765-769.
 }
 \examples{
-p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-m.eff(p, R = R, method = "nyholt")
+m.eff(R = R, method = "nyholt")
 }
 \keyword{htest}

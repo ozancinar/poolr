@@ -1,8 +1,8 @@
 
-m.eff <- function(p, R, method = NULL, ...) {
+m.eff <- function(R, method = NULL, ...) {
   
   # number of p-values
-  k <- length(p)
+  k <- nrow(R)
   
   # dimension checks
   if(!isSymmetric(R)) {
