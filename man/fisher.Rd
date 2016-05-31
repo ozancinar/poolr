@@ -13,7 +13,7 @@ fisher(p, adjust, pca.method, R, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to apply Fisher's method. The user can choose to use default Fisher's method by leaving "adjust" argument as default. Or, the user can choose to adjust the Fisher's method with PCA-based methods to consoder the dependencies between the tests.
+   The function can be used to apply Fisher's method. The user can choose to use default Fisher's method by leaving "adjust" argument as default. Or, the user can choose to adjust the Fisher's method with PCA-based methods to consider the dependencies between the tests.
 }
 \value{
    The function returns the (pooled) p-value based on Fisher's method and the selected adjustment method.
