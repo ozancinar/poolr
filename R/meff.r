@@ -1,5 +1,5 @@
 
-m.eff <- function(R, method = NULL, ...) {
+meff <- function(R, method = NULL, ...) {
   
   # number of p-values
   k <- nrow(R)
@@ -26,21 +26,21 @@ m.eff <- function(R, method = NULL, ...) {
   
   if(method == "nyholt") {
      ### effective number of tests (based on Nyholt, 2004)
-     m.eff <- 1 + (k - 1) * (1 - var(evs) / k)
-     m.eff <- floor(m.eff)
+     eff <- 1 + (k - 1) * (1 - var(evs) / k)
+     eff <- floor(eff)
   } else if(method == "li.ji") {
      ### effective number of tests (based on Li & Ji, 2005)
-     m.eff <- sum(ifelse(abs.evs >= 1, 1, 0) + (abs.evs - floor(abs.evs)))
-     m.eff <- floor(m.eff)
+     eff <- sum(ifelse(abs.evs >= 1, 1, 0) + (abs.evs - floor(abs.evs)))
+     eff <- floor(eff)
   } else if(method == "gao") {
      ### effective number of tests (based on Gao, 2008)
-     m.eff <- which(cumsum(sort(abs.evs, decreasing = TRUE)) / sum(abs.evs) > 0.995)[1]
+     eff <- which(cumsum(sort(abs.evs, decreasing = TRUE)) / sum(abs.evs) > 0.995)[1]
   } else if(method == "galwey") {
      ### effective number of tests (based on Galwey, 2009)
      evs[evs < 0] <- 0
-     m.eff <- sum(sqrt(evs))^2 / sum(evs)
-     m.eff <- floor(m.eff)
+     eff <- sum(sqrt(evs))^2 / sum(evs)
+     eff <- floor(eff)
   }
   
-  return(m.eff)
+  return(eff)
 }

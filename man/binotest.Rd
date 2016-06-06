@@ -1,9 +1,9 @@
-\name{binomial}
-\alias{binomial}
+\name{binotest}
+\alias{binotest}
 \title{Binomial Test}
 \description{Function to carry out Binomial Test to combine the p-values.}
 \usage{
-fisher(p, adjust, pca.method, R, \dots)
+binotest(p, adjust, pca.method, R, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -27,13 +27,13 @@ fisher(p, adjust, pca.method, R, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-binomial(p)
+binotest(p)
 p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-binomial(p, adjust = "m.eff", pca.method = "nyholt", R = R)
+binotest(p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}

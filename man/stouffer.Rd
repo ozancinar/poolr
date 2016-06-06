@@ -3,7 +3,7 @@
 \title{Stouffer's Method}
 \description{Function to carry out Stouffer's method.}
 \usage{
-Stouffer(p, adjust, pca.method, R, \dots)
+stouffer(p, adjust, pca.method, R, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}

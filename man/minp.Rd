@@ -1,9 +1,9 @@
-\name{min.p}
-\alias{min.p}
+\name{minp}
+\alias{minp}
 \title{Minimum p}
 \description{Function to combine the p-values with the strongest evidence, i.e. the smallest p-values.}
 \usage{
-fisher(p, adjust, \dots)
+minp(p, adjust, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -25,6 +25,6 @@ fisher(p, adjust, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-min.p(p)
+minp(p)
 }
 \keyword{htest}

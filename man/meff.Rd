@@ -1,9 +1,9 @@
-\name{m.eff}
-\alias{m.eff}
+\name{meff}
+\alias{meff}
 \title{Number of Effective Tests}
 \description{Function to calculate the number of effective tests based on one of the four methods.}
 \usage{
-m.eff(R, method, \dots)
+meff(R, method, \dots)
 }
 \arguments{
    \item{R}{matrix that include pairwise correlations between the p-values.}
@@ -32,6 +32,6 @@ R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-m.eff(R = R, method = "nyholt")
+meff(R = R, method = "nyholt")
 }
 \keyword{htest}
