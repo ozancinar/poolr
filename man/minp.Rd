@@ -25,6 +25,6 @@ minp(p, adjust, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-minp(p)
+minp(p = p)
 }
 \keyword{htest}

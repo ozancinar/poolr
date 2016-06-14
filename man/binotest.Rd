@@ -27,13 +27,13 @@ binotest(p, adjust, pca.method, R, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-binotest(p)
+binotest(p = p)
 p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-binotest(p, adjust = "m.eff", pca.method = "nyholt", R = R)
+binotest(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}

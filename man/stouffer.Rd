@@ -27,13 +27,13 @@ stouffer(p, adjust, pca.method, R, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-stouffer(p)
+stouffer(p = p)
 p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-stouffer(p, adjust = "m.eff", pca.method = "nyholt", R = R)
+stouffer(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}
