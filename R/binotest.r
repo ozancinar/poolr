@@ -11,7 +11,7 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, ...) {
       m <- sum(p <= 0.05)
       eff <- meff(R = R, method = pca.method)
       probs <- dbinom(0:eff, eff, 0.05)
-      prob <- dbinom(round(m / eff), eff, 0.05)
+      prob <- dbinom(round(m * eff / k), eff, 0.05)
       pooled.p <- sum(probs[probs <= prob])
    }
    res <- list(p = pooled.p, adjust = paste0(adjust, " ", pca.method))
