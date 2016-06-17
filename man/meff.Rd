@@ -22,8 +22,11 @@ meff(R, method, \dots)
 }
 \references{
    Gao, X., Starmer, J., & Martin, E. R. (2008). \emph{A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms.} Genetic epidemiology, 32(4), 361-369.
+   
    Galwey, N. W. (2009). \emph{A new measure of the effective number of tests, a practical tool for comparing families of non-independent significance tests.} Genetic epidemiology, 33(7), 559-568.
+   
    Li, J., & Ji, L. (2005). \emph{Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix.} Heredity, 95(3), 221-227.
+   
    Nyholt, D. R. (2004). \emph{A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other.} The American Journal of Human Genetics, 74(4), 765-769.
 }
 \examples{

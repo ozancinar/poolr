@@ -3,13 +3,14 @@
 \title{Binomial Test}
 \description{Function to carry out Binomial Test to combine the p-values.}
 \usage{
-binotest(p, adjust, pca.method, R, \dots)
+binotest(p, adjust, pca.method, R, alpha, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
    \item{adjust}{adjustment method while combining the p-values. Can be "none", as default, to use the default binomial test. Or the test can be adjusted with PCA-based methods by calculating the number of effective tests.}
    \item{pca.method}{the method to be used to calculate the number of effective tests.}
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
+   \item{alpha}{significance level of the test. It is set to 0.05 as default.}
    \item{\dots}{other arguments.}
 }
 \details{

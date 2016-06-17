@@ -24,6 +24,7 @@ fisher(p, adjust, pca.method, R, \dots)
 }
 \references{
    Fisher, R. A. (1932). \emph{Statistical methods for research workers} (4th ed.). Oliver and Boyd.
+   
    Brown, MB (1975): \emph{400: A method for combining non-independent, one-sided tests of significance}. Biometrics, 987-992.
 }
 \examples{
