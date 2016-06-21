@@ -1,5 +1,5 @@
 
-minp <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = "default", ...) {
+minp <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, ...) {
    if (adjust == "none") {
       k <- length(p)
       pooled.p <- min(p) * k
