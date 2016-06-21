@@ -3,7 +3,7 @@
 \title{Binomial Test}
 \description{Function to carry out Binomial Test to combine the p-values.}
 \usage{
-binotest(p, adjust, pca.method, R, alpha, \dots)
+binotest(p, adjust, pca.method, R, alpha, size, seed, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -11,6 +11,8 @@ binotest(p, adjust, pca.method, R, alpha, \dots)
    \item{pca.method}{the method to be used to calculate the number of effective tests.}
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
    \item{alpha}{significance level of the test. It is set to 0.05 as default.}
+   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
+   \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
    \item{\dots}{other arguments.}
 }
 \details{

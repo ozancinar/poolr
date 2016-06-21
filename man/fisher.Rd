@@ -3,13 +3,15 @@
 \title{Fisher's Method}
 \description{Function to carry out Fisher's method.}
 \usage{
-fisher(p, adjust, pca.method, R, \dots)
+fisher(p, adjust, pca.method, R, size, seed, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
    \item{adjust}{adjustment method while combining the p-values. Can be "none", as default, to use the default Fisher's method. Furthermore, Fisher's method can be adjusted with a various ways to consider the dependencies between the individual p-values. First, this argument can be set to "m.eff" to use the PCA-based methods by calculating the number of effective tests. Second, it can be set to "brown" to use the Brown's method.}
    \item{pca.method}{the method to be used to calculate the number of effective tests.}
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
+   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
+   \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
    \item{\dots}{other arguments.}
 }
 \details{

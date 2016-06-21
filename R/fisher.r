@@ -1,4 +1,5 @@
-fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, ...) {
+
+fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = "default", ...) {
    if(adjust == "none") {
       k <- length(p)
       pooled.p <- pchisq(-2*sum(log(p)), df=2*k, lower.tail=FALSE)
@@ -8,6 +9,16 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, ...) {
       pooled.p <- pchisq(-2 * sum(log(p))/ eff, df = 2 * eff, lower.tail = FALSE)
    } else if (adjust == "brown") {
       pooled.p <- brown(p, R)
+   } else if (adjust == "empirical") {
+      k <- length(p)
+      tmp.p <- pchisq(-2*sum(log(p)), df=2*k, lower.tail=FALSE)
+      
+      method <- "fisher"
+      
+      if(R == NULL) {R <- "ind"}
+      emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
+      
+      pooled.p <- sum(emp.dist > tmp.p) / length(emp.dist)
    }
    
    res <- list(p = pooled.p, adjust = paste0(adjust, " ", pca.method))
