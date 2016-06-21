@@ -8,16 +8,16 @@ empirical(p, R, method, size, seed, \dots)
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values. If it is NULL then the p-values are assumed to be independent.}
-   \item{method}{an argument to specify the method to be used to derive the empirical distribution. This function can be used to adjust one of minimum p-value, binomial test, Fisher's method, or Stouffer's method. Therefore, this argument can be set to "minp", "binotest", "fisher", or "stouffer".}
+   \item{method}{an argument to specify the method to be used to derive the empirical distribution of the p-values under the null hypothesis. This function can be used to adjust one of minimum p-value, binomial test, Fisher's method, or Stouffer's method. Therefore, this argument can be set to "minp", "binotest", "fisher", or "stouffer".}
    \item{size}{size of the empirical distribution. It is set to 10000 as default.}
    \item{seed}{an argument that can be used to set the seed for random number generation.}
    \item{\dots}{other arguments.}
 }
 \details{
-   This function can be used to derive the empirical distribution of the combined p-value under the null hypothesis. The function can be used to derive the empirical distribution of the combined test statistic or p-values from minimum p-value, binomial test, Fisher's method, or Stouffer's method. 
+   This function can be used to derive the empirical distribution of the combined p-value under the null hypothesis. The function can be used with minimum p-value, binomial test, Fisher's method, or Stouffer's method. 
 }
 \value{
-   The function returns a vector that includes a set of combined test statistics or p-values that represents the empirical distribution under the null hypothesis.
+   The function returns a vector that includes a set of combined p-values that represents the empirical distribution under the null hypothesis.
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr

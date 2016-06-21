@@ -1,5 +1,5 @@
 
-fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = "default", ...) {
+fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, ...) {
    if(adjust == "none") {
       k <- length(p)
       pooled.p <- pchisq(-2*sum(log(p)), df=2*k, lower.tail=FALSE)
@@ -15,9 +15,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       
       method <- "fisher"
       
-      if(R == NULL) {R <- "ind"}
       emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
-      
       pooled.p <- sum(emp.dist > tmp.p) / length(emp.dist)
    }
    
