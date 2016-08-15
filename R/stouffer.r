@@ -6,7 +6,7 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
    } else if(adjust == "m.eff") {
       k <- length(p)
       eff <- meff(R = R, method = pca.method)
-      pooled.p <- 2 * pnorm(abs(sum(qnorm(p)) / sqrt(eff)), lower.tail = FALSE)
+      pooled.p <- 2 * pnorm(abs(sum(qnorm(p)) * sqrt(eff / k) / sqrt(k)), lower.tail = FALSE)
    } else if (adjust == "empirical") {
       k <- length(p)
       tmp.p <- 2 * pnorm(abs(sum(qnorm(p)) / sqrt(k)), lower.tail = FALSE)

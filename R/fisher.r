@@ -6,7 +6,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
    } else if(adjust == "m.eff") {
       k <- length(p)
       eff <- meff(R = R, method = pca.method)
-      pooled.p <- pchisq(-2 * sum(log(p))/ eff, df = 2 * eff, lower.tail = FALSE)
+      pooled.p <- pchisq(-2 * sum(log(p)) * (eff / k), df = 2 * eff, lower.tail = FALSE)
    } else if (adjust == "brown") {
       pooled.p <- brown(p, R)
    } else if (adjust == "empirical") {
