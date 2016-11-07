@@ -13,12 +13,18 @@ empirical <- function(p, R = NULL, method, size = 10000, seed = NULL, ...) {
       set.seed(seed)
    }
    
-   if(method == "minp") {
+   if(method == "bonferroni") {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
       pVals <- pnorm(z, lower.tail = FALSE)
-      emp <- apply(pVals, 1, function(x) {minp(x)$p})
+      emp <- apply(pVals, 1, function(x) {bonferroni(x)$p})
+   
+   } else if(method == "tippett") {
       
+      z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
+      pVals <- pnorm(z, lower.tail = FALSE)
+      emp <- apply(pVals, 1, function(x) {tippett(x)$p})
+         
    } else if(method == "binotest") {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)

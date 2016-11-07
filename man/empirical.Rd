@@ -14,7 +14,7 @@ empirical(p, R, method, size, seed, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   This function can be used to derive the empirical distribution of the combined p-value under the null hypothesis. The function can be used with minimum p-value, binomial test, Fisher's method, or Stouffer's method. 
+   This function can be used to derive the empirical distribution of the combined p-value under the null hypothesis. The function can be used with the Bonfferoni correction, Tippett's minimum p-value method, binomial test, Fisher's method, or Stouffer's method. 
 }
 \value{
    The function returns a vector that includes a set of combined p-values that represents the empirical distribution under the null hypothesis.

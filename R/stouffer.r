@@ -15,6 +15,9 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       
       emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
       pooled.p <- sum(emp.dist <= tmp.p) / length(emp.dist)
+   } else if (adjust == "general") {
+      k <- length(p)
+      pooled.p <- 2 * pnorm(abs(sum(qnorm(p)) / sqrt(sum(R))), lower.tail = FALSE)
    }
    
    res <- list(p = pooled.p, adjust = paste0(adjust, " ", pca.method))

@@ -1,9 +1,9 @@
-\name{minp}
-\alias{minp}
-\title{Minimum p}
-\description{Function to combine the p-values with the strongest evidence, i.e. the smallest p-values.}
+\name{bonferroni}
+\alias{bonferroni}
+\title{Bonferroni Correction}
+\description{Function to combine the p-values by using the Bonferroni correction.}
 \usage{
-minp(p, adjust, pca.method, R, size, seed, \dots)
+bonferroni(p, adjust, pca.method, R, size, seed, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -15,26 +15,26 @@ minp(p, adjust, pca.method, R, size, seed, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to combine a set of p-values with the strongest evidence which is determined by the smallest p-value.
+   The function can be used to combine a set of p-values by using the Bonferroni correction and the strongest evidence, i.e. the smallest p-value.
 }
 \value{
-   The function returns the (pooled) p-value based on minimum p-value method.
+   The function returns the (pooled) p-value based on the Bonferroni correction.
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Tippett, L. H. C. (1931). \emph{The Methods of Statistics}. The methods of statistics.
+   Bland, J. M., & Altman, D. G. (1995). \emph{Multiple significance tests: The Bonferroni method}. British Medical Journal, 310(6973), 170.
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-minp(p = p)
+bonferroni(p = p)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-minp(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
+bonferroni(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}
