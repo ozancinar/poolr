@@ -2,24 +2,39 @@
 stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, ...) {
    if(adjust == "none") {
       k <- length(p)
-      pooled.p <- 2 * pnorm(abs(sum(qnorm(p)) / sqrt(k)), lower.tail = FALSE)
+      testStat <- abs(sum(qnorm(p)) / sqrt(k))
+      pooled.p <- 2 * pnorm(testStat, lower.tail = FALSE)
    } else if(adjust == "m.eff") {
       k <- length(p)
-      eff <- meff(R = R, method = pca.method)
-      pooled.p <- 2 * pnorm(abs(sum(qnorm(p)) * sqrt(eff / k) / sqrt(k)), lower.tail = FALSE)
+      if(is.numeric(pca.method)) {
+         eff <- pca.method 
+      } else {
+         eff <- meff(R = R, method = pca.method)
+      }
+      testStat <- abs(sum(qnorm(p)) * sqrt(eff / k) / sqrt(k))
+      pooled.p <- 2 * pnorm(testStat, lower.tail = FALSE)
    } else if (adjust == "empirical") {
       k <- length(p)
-      tmp.p <- 2 * pnorm(abs(sum(qnorm(p)) / sqrt(k)), lower.tail = FALSE)
+      testStat <- abs(sum(qnorm(p)) / sqrt(k))
+      tmp.p <- 2 * pnorm(testStat, lower.tail = FALSE)
       
       method <- "stouffer"
       
-      emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
+      tmp <- list(...)
+      if(is.null(tmp$emp.dis)) {
+         emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
+      } else {
+         emp.dist <- tmp$emp.dist
+      }
+      
       pooled.p <- sum(emp.dist <= tmp.p) / length(emp.dist)
    } else if (adjust == "general") {
       k <- length(p)
-      pooled.p <- 2 * pnorm(abs(sum(qnorm(p)) / sqrt(sum(R))), lower.tail = FALSE)
+      testStat <- abs(sum(qnorm(p)) / sqrt(sum(R)))
+      pooled.p <- 2 * pnorm(testStat, lower.tail = FALSE)
    }
    
-   res <- list(p = pooled.p, adjust = paste0(adjust, " ", pca.method))
+   res <- list(p = pooled.p, testStat = testStat, adjust = paste0(adjust, " ", pca.method))
+   class(res) <- "combP"
    return(res)
 }
