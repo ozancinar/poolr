@@ -9,10 +9,6 @@ meff <- function(R, method = NULL, ...) {
     stop("R is not symmetric.")
   }
   
-  if(nrow(R) != k) {
-    stop("Dimensions of R do not match with the length of p.")
-  }
-  
   if(!method %in% c("nyholt", "li.ji", "gao", "galwey")) {
      stop("The method for PCA is not correct.")
   }
