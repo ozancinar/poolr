@@ -51,7 +51,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
          emp.dist <- tmp$emp.dist
       }
       
-      pooled.p <- sum(emp.dist <= tmp.p) / length(emp.dist)
+      pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
    }
    
    res <- list(p = pooled.p, testStat = testStat, adjust = paste0(adjust, " ", pca.method))

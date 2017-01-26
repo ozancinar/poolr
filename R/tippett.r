@@ -15,6 +15,7 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
    } else if (adjust == "empirical") {
       k <- length(p)
       tmp.p <- 1 - (1 - min(p))^k
+      testStat <- 1 - (1 - min(p))^k
       method <- "tippett"
       
       tmp <- list(...)
@@ -24,8 +25,7 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
          emp.dist <- tmp$emp.dist
       }
       
-      testStat <- 1 - (1 - min(p))^k
-      pooled.p <- sum(emp.dist <= tmp.p) / length(emp.dist)
+      pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
    }
    
    if(pooled.p > 1) {pooled.p <- 1}

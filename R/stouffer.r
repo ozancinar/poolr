@@ -27,7 +27,7 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
          emp.dist <- tmp$emp.dist
       }
       
-      pooled.p <- sum(emp.dist <= tmp.p) / length(emp.dist)
+      pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
    } else if (adjust == "general") {
       k <- length(p)
       testStat <- abs(sum(qnorm(p)) / sqrt(sum(R)))

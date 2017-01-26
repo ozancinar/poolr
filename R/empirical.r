@@ -17,31 +17,31 @@ empirical <- function(p, R = NULL, method, size = 10000, seed = NULL, ...) {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
       pVals <- pnorm(z, lower.tail = FALSE)
-      emp <- apply(pVals, 1, function(x) {bonferroni(x)$p})
+      emp <- apply(pVals, 1, function(x) {bonferroni(x)$testStat})
    
    } else if(method == "tippett") {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
       pVals <- pnorm(z, lower.tail = FALSE)
-      emp <- apply(pVals, 1, function(x) {tippett(x)$p})
+      emp <- apply(pVals, 1, function(x) {tippett(x)$testStat})
          
    } else if(method == "binotest") {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
       pVals <- pnorm(z, lower.tail = FALSE)
-      emp <- apply(pVals, 1, function(x) {binotest(x)$p})
+      emp <- apply(pVals, 1, function(x) {binotest(x)$testStat})
       
    } else if(method == "fisher") {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
       pVals <- pnorm(z, lower.tail = FALSE)
-      emp <- apply(pVals, 1, function(x) {fisher(x)$p})
+      emp <- apply(pVals, 1, function(x) {fisher(x)$testStat})
       
    } else if(method == "stouffer") {
       
       z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
       pVals <- pnorm(z, lower.tail = FALSE)
-      emp <- apply(pVals, 1, function(x) {stouffer(x)$p})
+      emp <- apply(pVals, 1, function(x) {stouffer(x)$testStat})
    }
    
    return(emp)
