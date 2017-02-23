@@ -8,7 +8,7 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
       if(is.numeric(pca.method)) {
          eff <- pca.method 
       } else {
-         eff <- meff(R = R, method = pca.method)
+         eff <- meff(x = R, method = pca.method)
       }
       testStat <- 1 - (1 - min(p))^eff
       pooled.p <- 1 - (1 - min(p))^eff

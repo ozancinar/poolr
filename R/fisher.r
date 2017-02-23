@@ -9,7 +9,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       if(is.numeric(pca.method)) {
          eff <- pca.method 
       } else {
-         eff <- meff(R = R, method = pca.method)
+         eff <- meff(x = R, method = pca.method)
       }
       testStat <- -2 * sum(log(p)) * (eff / k)
       pooled.p <- pchisq(-2 * sum(log(p)) * (eff / k), df = 2 * eff, lower.tail = FALSE)

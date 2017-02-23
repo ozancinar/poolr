@@ -9,7 +9,7 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       if(is.numeric(pca.method)) {
          eff <- pca.method 
       } else {
-         eff <- meff(R = R, method = pca.method)
+         eff <- meff(x = R, method = pca.method)
       }
       testStat <- abs(sum(qnorm(p)) * sqrt(eff / k) / sqrt(k))
       pooled.p <- 2 * pnorm(testStat, lower.tail = FALSE)

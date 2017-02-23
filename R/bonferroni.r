@@ -8,7 +8,7 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1
       if(is.numeric(pca.method)) {
          eff <- pca.method 
       } else {
-         eff <- meff(R = R, method = pca.method)
+         eff <- meff(x = R, method = pca.method)
       }
       testStat <- min(p) * eff
       pooled.p <- min(p) * eff
