@@ -22,12 +22,6 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
          covs <- brown(R)
       } else {
          covs <- tmp$brownCov
-         if(is.vector(covs)) {
-            if(length(covs) != k * (k - 1) / 2) stop("Length of the covariance vector is not correct.")
-         } else if(is.matrix(covs)) {
-            if(dim(covs) != k) stop("Dimensions of the covariance matrix is not correct.")
-            covs <- covs[lower.tri(covs)]
-         }
       }
       
       chi2val <- -2 * sum(log(p))
@@ -51,7 +45,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
          emp.dist <- tmp$emp.dist
       }
       
-      pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
+      pooled.p <- sum(emp.dist >= testStat) / length(emp.dist)
    }
    
    res <- list(p = pooled.p, testStat = testStat, adjust = paste0(adjust, " ", pca.method))
