@@ -9,6 +9,7 @@ empirical(p, R, method, size, seed, \dots)
    \item{p}{vector with the (one- or two-sided) p-values.}
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values. If it is NULL then the p-values are assumed to be independent.}
    \item{method}{an argument to specify the method to be used to derive the empirical distribution of the p-values under the null hypothesis. This function can be used to adjust one of minimum p-value, binomial test, Fisher's method, or Stouffer's method. Therefore, this argument can be set to "minp", "binotest", "fisher", or "stouffer".}
+   \item{type}{the type of the hypothesis test. It can take values of -1, 1, and 2 for left-sided, right-sided, and two-sided hypothesis tests, respectively.}
    \item{size}{size of the empirical distribution. It is set to 10000 as default.}
    \item{seed}{an argument that can be used to set the seed for random number generation.}
    \item{\dots}{other arguments.}
@@ -28,7 +29,7 @@ empirical(p, R, method, size, seed, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-empirical(p = p, method = "fisher")
+empirical(p = p, method = "fisher", type = 2)
 p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
