@@ -2,7 +2,7 @@
 stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, ...) {
    if(adjust == "none") {
       k <- length(p)
-      testStat <- sum(qnorm(p)) / sqrt(k)
+      testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
    } else if(adjust == "m.eff") {
       k <- length(p)
@@ -11,11 +11,11 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       } else {
          eff <- meff(x = R, method = pca.method)
       }
-      testStat <- sum(qnorm(p)) * sqrt(eff / k) / sqrt(k)
+      testStat <- sum(qnorm(p, lower.tail = FALSE)) * sqrt(eff / k) / sqrt(k)
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
    } else if (adjust == "empirical") {
       k <- length(p)
-      testStat <- sum(qnorm(p)) / sqrt(k)
+      testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
       tmp.p <- pnorm(testStat, lower.tail = FALSE)
       
       method <- "stouffer"
@@ -30,7 +30,7 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       pooled.p <- sum(emp.dist >= testStat) / length(emp.dist)
    } else if (adjust == "general") {
       k <- length(p)
-      testStat <- sum(qnorm(p)) / sqrt(sum(R))
+      testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(sum(R))
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
    }
    
