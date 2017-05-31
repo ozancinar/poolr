@@ -1,5 +1,5 @@
 
-binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.05, size = 10000, seed = NULL, ...) {
+binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.05, size = 10000, seed = NULL, type = 2, ...) {
    if(adjust == "none") {
       k <- length(p)
       m <- sum(p <= alpha)
@@ -28,7 +28,7 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.
       
       tmp <- list(...)
       if(is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
+         emp.dist <- empirical(p = p, R = R, method = method, type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }

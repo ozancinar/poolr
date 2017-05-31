@@ -1,5 +1,5 @@
 
-stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, ...) {
+stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
    if(adjust == "none") {
       k <- length(p)
       testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
@@ -22,7 +22,7 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       
       tmp <- list(...)
       if(is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
+         emp.dist <- empirical(p = p, R = R, method = method, type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }

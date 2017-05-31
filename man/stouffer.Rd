@@ -3,7 +3,7 @@
 \title{Stouffer's Method}
 \description{Function to carry out Stouffer's method.}
 \usage{
-stouffer(p, adjust, pca.method, R, size, seed, \dots)
+stouffer(p, adjust, pca.method, R, size, seed, type, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -12,6 +12,7 @@ stouffer(p, adjust, pca.method, R, size, seed, \dots)
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
+   \item{type}{type of the p-values used in the tests. As default, it is set to 2 for two-sided tests.}
    \item{\dots}{other arguments.}
 }
 \details{

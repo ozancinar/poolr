@@ -1,5 +1,5 @@
 
-tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, ...) {
+tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
    if (adjust == "none") {
       k <- length(p)
       testStat <- 1 - (1 - min(p))^k
@@ -20,7 +20,7 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
       
       tmp <- list(...)
       if(is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(p = p, R = R, method = method, size = size, seed = seed)
+         emp.dist <- empirical(p = p, R = R, method = method, type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }

@@ -3,7 +3,7 @@
 \title{Binomial Test}
 \description{Function to carry out Binomial Test to combine the p-values.}
 \usage{
-binotest(p, adjust, pca.method, R, alpha, size, seed, \dots)
+binotest(p, adjust, pca.method, R, alpha, size, seed, type, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -13,6 +13,7 @@ binotest(p, adjust, pca.method, R, alpha, size, seed, \dots)
    \item{alpha}{significance level of the test. It is set to 0.05 as default.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
+   \item{type}{type of the p-values used in the tests. As default, it is set to 2 for two-sided tests.}
    \item{\dots}{other arguments.}
 }
 \details{
