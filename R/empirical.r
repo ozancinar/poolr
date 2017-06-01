@@ -25,7 +25,7 @@ empirical <- function(p, R = NULL, method, type, size = 10000, seed = NULL, ...)
       } else if (type == 1) {
          pVals <- pnorm(z, lower.tail = FALSE)
       } else if (type == 2) {
-         pVals <- 2 * pnorm(abs(z), lower.tail = TRUE)
+         pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
       }
       emp <- apply(pVals, 1, function(x) {bonferroni(x)$testStat})
    
@@ -37,7 +37,7 @@ empirical <- function(p, R = NULL, method, type, size = 10000, seed = NULL, ...)
       } else if (type == 1) {
          pVals <- pnorm(z, lower.tail = FALSE)
       } else if (type == 2) {
-         pVals <- 2 * pnorm(abs(z), lower.tail = TRUE)
+         pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
       }
       emp <- apply(pVals, 1, function(x) {tippett(x)$testStat})
          
@@ -49,7 +49,7 @@ empirical <- function(p, R = NULL, method, type, size = 10000, seed = NULL, ...)
       } else if (type == 1) {
          pVals <- pnorm(z, lower.tail = FALSE)
       } else if (type == 2) {
-         pVals <- 2 * pnorm(abs(z), lower.tail = TRUE)
+         pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
       }
       emp <- apply(pVals, 1, function(x) {binotest(x)$testStat})
       
@@ -61,7 +61,7 @@ empirical <- function(p, R = NULL, method, type, size = 10000, seed = NULL, ...)
       } else if (type == 1) {
          pVals <- pnorm(z, lower.tail = FALSE)
       } else if (type == 2) {
-         pVals <- 2 * pnorm(abs(z), lower.tail = TRUE)
+         pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
       }
       emp <- apply(pVals, 1, function(x) {fisher(x)$testStat})
       
@@ -73,7 +73,7 @@ empirical <- function(p, R = NULL, method, type, size = 10000, seed = NULL, ...)
       } else if (type == 1) {
          pVals <- pnorm(z, lower.tail = FALSE)
       } else if (type == 2) {
-         pVals <- 2 * pnorm(abs(z), lower.tail = TRUE)
+         pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
       }
       emp <- apply(pVals, 1, function(x) {stouffer(x)$testStat})
    }
