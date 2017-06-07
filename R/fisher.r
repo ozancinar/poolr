@@ -26,7 +26,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       
       chi2val <- -2 * sum(log(p))
       expx2 <- 2 * k
-      varx2 <- 4 * k + 2 * sum(covs)
+      varx2 <- 4 * k + 2 * sum(covs[upper.tri(covs)])
       fval <- 2 * expx2^2 / varx2
       cval <- varx2 / (2 * expx2)
       
