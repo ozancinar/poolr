@@ -3,9 +3,8 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.
    if(adjust == "none") {
       k <- length(p)
       m <- sum(p <= alpha)
-      probs <- dbinom(0:k, k, alpha)
       testStat <- dbinom(m, k, alpha)
-      pooled.p <- sum(probs[probs <= testStat])
+      pooled.p <- sum(dbinom(m:k, k, alpha))
    } else if(adjust == "m.eff") {
       k <- length(p)
       m <- sum(p <= alpha)
