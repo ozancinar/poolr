@@ -14,7 +14,7 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.
          eff <- meff(x = R, method = pca.method)
       }
       testStat <- dbinom(round(m * eff / k), eff, alpha)
-      pooled.p <- dbinom(round(m * eff / k):eff, eff, alpha)
+      pooled.p <- sum(dbinom(round(m * eff / k):eff, eff, alpha))
    } else if (adjust == "empirical") {
       k <- length(p)
       m <- sum(p <= alpha)
