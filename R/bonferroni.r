@@ -4,11 +4,14 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1
       k <- length(p)
       testStat <- min(p) * k
       pooled.p <- min(p) * k
+      adjust <- "none"
    } else if (adjust == "m.eff") {
       if(is.numeric(pca.method)) {
-         eff <- pca.method 
+         eff <- pca.method
+         adjust <- paste0(pca.method, " (user defined)")
       } else {
          eff <- meff(x = R, method = pca.method)
+         adjust <- paste0("meff (", pca.method, ")")
       }
       testStat <- min(p) * eff
       pooled.p <- min(p) * eff
@@ -26,10 +29,11 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1
       }
       
       pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
+      adjust <- "empirical"
    }
    
    if(pooled.p > 1) {pooled.p <- 1}
-   res <- list(p = pooled.p, testStat = testStat, adjust = paste0(adjust, " ", pca.method))
+   res <- list(p = pooled.p, testStat = testStat, adjust = adjust)
    class(res) <- "combP"
    return(res)
 }

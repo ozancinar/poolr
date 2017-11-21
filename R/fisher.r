@@ -4,12 +4,15 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       k <- length(p)
       testStat <- -2*sum(log(p))
       pooled.p <- pchisq(-2*sum(log(p)), df=2*k, lower.tail=FALSE)
+      adjust <- "none"
    } else if(adjust == "m.eff") {
       k <- length(p)
       if(is.numeric(pca.method)) {
          eff <- pca.method 
+         adjust <- paste0(pca.method, " (user defined)")
       } else {
          eff <- meff(x = R, method = pca.method)
+         adjust <- paste0("meff (", pca.method, ")")
       }
       testStat <- -2 * sum(log(p)) * (eff / k)
       pooled.p <- pchisq(-2 * sum(log(p)) * (eff / k), df = 2 * eff, lower.tail = FALSE)
@@ -32,6 +35,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       
       testStat <- chi2val/cval
       pooled.p <- pchisq(chi2val/cval, df=fval, lower.tail=FALSE)
+      adjust <- "brown"
    } else if (adjust == "empirical") {
       k <- length(p)
       tmp.p <- pchisq(-2*sum(log(p)), df=2*k, lower.tail=FALSE)
@@ -46,9 +50,10 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       }
       
       pooled.p <- sum(emp.dist >= testStat) / length(emp.dist)
+      adjust <- "empirical"
    }
    
-   res <- list(p = pooled.p, testStat = testStat, adjust = paste0(adjust, " ", pca.method))
+   res <- list(p = pooled.p, testStat = testStat, adjust = adjust)
    class(res) <- "combP"
    return(res)
 }
