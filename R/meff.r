@@ -1,38 +1,37 @@
-
 meff <- function(x, eigen = FALSE, method = NULL, ...) {
-   
+
    # Check if the method is correct.
    if(!method %in% c("nyholt", "li.ji", "gao", "galwey")) {
          stop("The method for PCA is not correct.")
    }
-      
+
    # if the input x is eigen values, i.e., eigen is TRUE, then it will not calculate the eigen values of the matrix.
    if(eigen) {
       if(!class(x) %in% c("numeric", "integer")) {
          stop("eigen values are not numeric or integer.")
       }
       k <- length(x)
-      
+
       evs <- x
       abs.evs <- abs(evs)
    } else {
       # number of p-values
       k <- nrow(x)
-  
+
       # dimension checks
       if(!isSymmetric(x)) {
          stop("R is not symmetric.")
       }
-  
+
       # Converting the correlation matrix to positive-definite.
       x <- as.matrix(nearPD(x)$mat)
-  
+
       ### get eigenvalues and absolute eigenvalues of R matrix
       evs <- eigen(x)$values
       abs.evs <- abs(evs)
    }
-  
-   
+
+
    if(method == "nyholt") {
       ### effective number of tests (based on Nyholt, 2004)
       eff <- 1 + (k - 1) * (1 - var(evs) / k)
@@ -50,6 +49,6 @@ meff <- function(x, eigen = FALSE, method = NULL, ...) {
       eff <- sum(sqrt(evs))^2 / sum(evs)
       eff <- floor(eff)
    }
-  
+
    return(eff)
 }
