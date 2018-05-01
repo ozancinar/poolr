@@ -75,7 +75,18 @@ empirical <- function(p, R = NULL, method, type, size = 10000, seed = NULL, ...)
          pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
       }
       emp <- apply(pVals, 1, function(x) {stouffer(x)$testStat})
-   }
+   
+   } else if(method == "invchisq") {
+     z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
+     if (type == -1) {
+       pVals <- pnorm(z, lower.tail = TRUE)
+     } else if (type == 1) {
+       pVals <- pnorm(z, lower.tail = FALSE)
+     } else if (type == 2) {
+       pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
+     }
+     emp <- apply(pVals, 1, function(x) {invchisq(x)$testStat})
+   } 
 
    return(emp)
 }
