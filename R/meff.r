@@ -38,6 +38,8 @@ meff <- function(x, eigen = FALSE, method = NULL, ...) {
       eff <- floor(eff)
    } else if(method == "li.ji") {
       ### effective number of tests (based on Li & Ji, 2005)
+      # adding a small value to the eigen values in order to overcome the numeric calculation problem.
+      abs.evs <- abs.evs + sqrt(.Machine$double.eps)
       eff <- sum(ifelse(abs.evs >= 1, 1, 0) + (abs.evs - floor(abs.evs)))
       eff <- floor(eff)
    } else if(method == "gao") {

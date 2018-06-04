@@ -12,7 +12,7 @@ meff(x, eigen = FALSE, method, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to calculate the number of effective tests based on one of the four methods.
+   The function can be used to calculate the number of effective tests based on one of the four methods. Du to the problems arise with numerical calculations, in Li & Ji method, a small value is added to the eigen values. 
 }
 \value{
    The function returns the number of effective tests.
