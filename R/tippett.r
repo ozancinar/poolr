@@ -40,9 +40,6 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed
 
    }
 
-   if (pooled.p > 1)
-      pooled.p <- 1
-
    res <- list(p = pooled.p, testStat = testStat, adjust = adjust)
    class(res) <- "combP"
    return(res)
