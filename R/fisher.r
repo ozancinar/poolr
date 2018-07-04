@@ -5,7 +5,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed 
    if (adjust == "none") {
 
       testStat <- -2*sum(log(p))
-      pooled.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
+      pooled.p <- pchisq(testStat, df=2*k, lower.tail = FALSE)
       adjust <- "none"
 
    }
@@ -16,7 +16,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed 
          eff <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
       } else {
-         eff <- meff(x = R, method = pca.method)
+         eff <- meff(R = R, method = pca.method)
          adjust <- paste0("meff (", pca.method, ")")
       }
       testStat <- -2 * sum(log(p)) * (eff / k)
@@ -41,7 +41,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed 
       cval <- varx2 / (2 * expx2)
 
       testStat <- chi2val/cval
-      pooled.p <- pchisq(chi2val/cval, df=fval, lower.tail=FALSE)
+      pooled.p <- pchisq(chi2val/cval, df=fval, lower.tail = FALSE)
       adjust <- "brown"
 
    }
@@ -49,12 +49,11 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed 
    if (adjust == "empirical") {
 
       testStat <- -2*sum(log(p))
-      tmp.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
       method <- "fisher"
 
       tmp <- list(...)
       if (is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(p = p, R = R, method = method, type = type, size = size, seed = seed)
+         emp.dist <- empirical(R = R, method = method, type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }

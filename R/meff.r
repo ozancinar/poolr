@@ -1,4 +1,4 @@
-meff <- function(x, eigen = FALSE, method, ...) {
+meff <- function(R, eigen = FALSE, method, ...) {
 
    # match method argument
    method <- match.arg(method, c("nyholt", "li.ji", "gao", "galwey"))
@@ -7,28 +7,28 @@ meff <- function(x, eigen = FALSE, method, ...) {
 
       # can pass eigenvalues directly to function if eigen is TRUE
 
-      if (!class(x) %in% c("numeric", "integer"))
+      if (!class(R) %in% c("numeric", "integer"))
          stop("eigenvalues are not numeric or integer.")
 
-      k <- length(x)
+      k <- length(R)
 
-      evs <- x
+      evs <- R
       abs.evs <- abs(evs)
 
    } else {
 
       # number of p-values
-      k <- nrow(x)
+      k <- nrow(R)
 
       # check that R is symmetric
-      if (!isSymmetric(x))
+      if (!isSymmetric(R))
          stop("R is not symmetric.")
 
       # ensure that the correlation matrix is positive semi-definite
-      #x <- as.matrix(nearPD(x)$mat)
+      #R <- as.matrix(nearPD(R)$mat)
 
       ### get eigenvalues and absolute eigenvalues of R matrix
-      evs <- eigen(x)$values
+      evs <- eigen(R)$values
       abs.evs <- abs(evs)
 
    }

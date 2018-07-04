@@ -1,9 +1,9 @@
-empirical <- function(p, R, method, type, size = 10000, seed, ...) {
+empirical <- function(R, method, type, size = 10000, seed, ...) {
 
    if (!type %in% c(-1, 1, 2))
       stop("the type of the tests entered is not valid.")
 
-   k <- length(p)
+   k <- nrow(R)
 
    if (missing(R))
       R <- diag(1, k)

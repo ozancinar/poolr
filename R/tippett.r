@@ -16,7 +16,7 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed
          eff <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
       } else {
-         eff <- meff(x = R, method = pca.method)
+         eff <- meff(R = R, method = pca.method)
          adjust <- paste0("meff (", pca.method, ")")
       }
       testStat <- 1 - (1 - min(p))^eff
@@ -26,13 +26,12 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed
 
    if (adjust == "empirical") {
 
-      tmp.p <- 1 - (1 - min(p))^k
       testStat <- 1 - (1 - min(p))^k
       method <- "tippett"
 
       tmp <- list(...)
       if (is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(p = p, R = R, method = method, type = type, size = size, seed = seed)
+         emp.dist <- empirical(R = R, method = method, type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }
