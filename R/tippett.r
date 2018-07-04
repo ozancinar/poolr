@@ -1,8 +1,9 @@
 tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
 
+   k <- length(p)
+
    if (adjust == "none") {
 
-      k <- length(p)
       testStat <- 1 - (1 - min(p))^k
       pooled.p <- testStat
       adjust <- "none"
@@ -21,7 +22,6 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
 
    } else if (adjust == "empirical") {
 
-      k <- length(p)
       tmp.p <- 1 - (1 - min(p))^k
       testStat <- 1 - (1 - min(p))^k
       method <- "tippett"

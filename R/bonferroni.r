@@ -1,8 +1,9 @@
 bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
 
+   k <- length(p)
+
    if (adjust == "none") {
 
-      k <- length(p)
       testStat <- min(p) * k
       pooled.p <- testStat
       adjust <- "none"
@@ -21,7 +22,6 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1
 
    } else if (adjust == "empirical") {
 
-      k <- length(p)
       tmp.p <- min(p) * k
       method <- "bonferroni"
       testStat <- tmp.p

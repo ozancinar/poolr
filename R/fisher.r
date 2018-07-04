@@ -1,15 +1,15 @@
 fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
 
+   k <- length(p)
+
    if (adjust == "none") {
 
-      k <- length(p)
       testStat <- -2*sum(log(p))
       pooled.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
       adjust <- "none"
 
    } else if (adjust == "m.eff") {
 
-      k <- length(p)
       if (is.numeric(pca.method)) {
          eff <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
@@ -21,8 +21,6 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       pooled.p <- pchisq(-2 * sum(log(p)) * (eff / k), df = 2 * eff, lower.tail = FALSE)
 
    } else if (adjust == "brown") {
-
-      k <- length(p)
 
       tmp <- list(...)
       if (is.null(tmp$brownCov)) {
@@ -44,7 +42,6 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
 
    } else if (adjust == "empirical") {
 
-      k <- length(p)
       testStat <- -2*sum(log(p))
       tmp.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
       method <- "fisher"

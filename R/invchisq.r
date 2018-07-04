@@ -1,15 +1,15 @@
 invchisq <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
 
+   k <- length(p)
+
    if (adjust == "none") {
 
-      k <- length(p)
       testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
       pooled.p <- pchisq(testStat, df = k, lower.tail=FALSE)
       adjust <- "none"
 
    } else if (adjust == "m.eff") {
 
-      k <- length(p)
       if (is.numeric(pca.method)) {
          eff <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
@@ -22,7 +22,6 @@ invchisq <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
 
   } else if (adjust == "empirical") {
 
-      k <- length(p)
       testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
       tmp.p <- pchisq(testStat, df = k, lower.tail=FALSE)
       method <- "invchisq"
