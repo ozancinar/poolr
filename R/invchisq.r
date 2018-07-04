@@ -17,7 +17,7 @@ invchisq <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
          eff <- meff(x = R, method = pca.method)
          adjust <- paste0("meff (", pca.method, ")")
       }
-      testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
+      testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE)) * (eff / k)
       pooled.p <- pchisq(testStat, df = eff, lower.tail = FALSE)
 
   } else if (adjust == "empirical") {
