@@ -37,13 +37,11 @@ meff <- function(x, eigen = FALSE, method = NULL, ...) {
    if (method == "nyholt") {
       ### effective number of tests (based on Nyholt, 2004)
       eff <- 1 + (k - 1) * (1 - var(evs) / k)
-      eff <- floor(eff)
    } else if (method == "li.ji") {
       ### effective number of tests (based on Li & Ji, 2005)
       # adding a small value to the eigenvalues to overcome the numeric calculation problem
       abs.evs <- abs.evs + sqrt(.Machine$double.eps)
       eff <- sum(ifelse(abs.evs >= 1, 1, 0) + (abs.evs - floor(abs.evs)))
-      eff <- floor(eff)
    } else if (method == "gao") {
       ### effective number of tests (based on Gao, 2008)
       eff <- which(cumsum(sort(abs.evs, decreasing = TRUE)) / sum(abs.evs) > 0.995)[1]
@@ -51,8 +49,10 @@ meff <- function(x, eigen = FALSE, method = NULL, ...) {
       ### effective number of tests (based on Galwey, 2009)
       evs[evs < 0] <- 0
       eff <- sum(sqrt(evs))^2 / sum(evs)
-      eff <- floor(eff)
    }
+
+   # always round down estimated value
+   eff <- floor(eff)
 
    return(eff)
 
