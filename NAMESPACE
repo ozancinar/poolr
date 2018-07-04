@@ -5,5 +5,4 @@ import(stats)
 import(Matrix)
 import(MASS)
 
-#S3method(generic, default)
-#S3method(generic, class)
+S3method(print, combP)

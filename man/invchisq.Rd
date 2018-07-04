@@ -3,7 +3,8 @@
 \title{Inverse Chi-Squared Method}
 \description{Function to carry out inverse Chi-Squared method.}
 \usage{
-invchisq(p, adjust, pca.method, R, size, seed, type, \dots)
+invchisq(p, adjust = "none", pca.method, R,
+         size = 10000, seed, type = 2, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -16,7 +17,7 @@ invchisq(p, adjust, pca.method, R, size, seed, type, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to apply inverse Chi-Squared method. The user can choose to use default inverse Chi-Squared method by leaving "adjust" argument as default. The user can choose to adjust the method with PCA-based methods to consider the dependencies between the tests. Or, the user can apply empirically-derived distribution of the test statistic under the null hypothesis to consider the correlations among the tests. 
+   The function can be used to apply inverse Chi-Squared method. The user can choose to use default inverse Chi-Squared method by leaving "adjust" argument as default. The user can choose to adjust the method with PCA-based methods to consider the dependencies between the tests. Or, the user can apply empirically-derived distribution of the test statistic under the null hypothesis to consider the correlations among the tests.
 }
 \value{
    The function returns the (pooled) p-value based on inverse Chi-Squared method and the selected adjustment method.
@@ -30,14 +31,13 @@ invchisq(p, adjust, pca.method, R, size, seed, type, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-invchisq(p = p)
-p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-invchisq(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
+invchisq(p)
+invchisq(p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}
 

@@ -1,6 +1,6 @@
 Package: poolR
 Version: 0.1-0
-Date: 2016-05-18
+Date: 2018-07-04
 Title: Package for Pooling the Results from (Dependent) Tests
 Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = c("aut")))
 Depends: R (>= 3.2.0), Matrix, MASS

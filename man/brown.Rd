@@ -28,6 +28,6 @@ R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-brown(R = R)
+brown(R)
 }
 \keyword{htest}

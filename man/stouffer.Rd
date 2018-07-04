@@ -3,7 +3,8 @@
 \title{Stouffer's Method}
 \description{Function to carry out Stouffer's method.}
 \usage{
-stouffer(p, adjust, pca.method, R, size, seed, type, \dots)
+stouffer(p, adjust = "none", pca.method, R,
+         size = 10000, seed, type = 2, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -30,13 +31,12 @@ stouffer(p, adjust, pca.method, R, size, seed, type, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-stouffer(p = p)
-p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-stouffer(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
+stouffer(p)
+stouffer(p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}

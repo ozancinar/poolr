@@ -3,7 +3,8 @@
 \title{Tippett's Minimum P-Value Method}
 \description{Function to combine the p-values by using Tippett's minimum p-value method.}
 \usage{
-tippett(p, adjust, pca.method, R, size, seed, type, \dots)
+tippett(p, adjust = "none", pca.method, R,
+        size = 10000, seed, type = 2, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -30,12 +31,12 @@ tippett(p, adjust, pca.method, R, size, seed, type, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-tippett(p = p)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-tippett(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
+tippett(p)
+tippett(p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}

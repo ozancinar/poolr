@@ -1,9 +1,10 @@
 \name{binotest}
 \alias{binotest}
 \title{Binomial Test}
-\description{Function to carry out Binomial Test to combine the p-values.}
+\description{Function to carry out the binomial test to combine p-values.}
 \usage{
-binotest(p, adjust, pca.method, R, alpha, size, seed, type, \dots)
+binotest(p, adjust = "none", pca.method, R, alpha = 0.05,
+         size = 10000, seed, type = 2, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -17,7 +18,7 @@ binotest(p, adjust, pca.method, R, alpha, size, seed, type, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to use Binomial dsitribution to combine the p-values. The user can choose to use default parameters for the binomial test depending on the number of p-values to be combined by leaving "adjust" argument as default. Or, the user can choose to adjust the 'n' parameter of the binomial distribution with PCA-based methods to consider the dependencies between the tests.
+   The function can be used to use binomial test to combine p-values. The user can choose to use default parameters for the binomial test depending on the number of p-values to be combined by leaving "adjust" argument as default. Or, the user can choose to adjust the 'n' parameter of the binomial distribution with PCA-based methods to consider the dependencies between the tests.
 }
 \value{
    The function returns the (pooled) p-value calculated with binomial distribution and the selected adjustment method.
@@ -31,13 +32,12 @@ binotest(p, adjust, pca.method, R, alpha, size, seed, type, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-binotest(p = p)
-p <- c(.013, .022, .124, .278)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-binotest(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
+binotest(p)
+binotest(p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}

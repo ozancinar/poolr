@@ -3,7 +3,7 @@ poolR: Package for Pooling the Results from (Dependent) Tests
 
 ## Description
 
-The `poolR` package is a collection of functions for pooling the results (usually p-values) of tests, which may possibly be dependent.
+The `poolR` package is a collection of functions for pooling the results (i.e., p-values) of tests, which may possibly be dependent.
 
 ## Meta
 

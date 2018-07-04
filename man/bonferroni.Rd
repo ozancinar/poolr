@@ -3,7 +3,8 @@
 \title{Bonferroni Correction}
 \description{Function to combine the p-values by using the Bonferroni correction.}
 \usage{
-bonferroni(p, adjust, pca.method, R, size, seed, type, \dots)
+bonferroni(p, adjust = "none", pca.method, R,
+           size = 10000, seed, type = 2, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -30,12 +31,12 @@ bonferroni(p, adjust, pca.method, R, size, seed, type, \dots)
 }
 \examples{
 p <- c(.013, .022, .124, .278)
-bonferroni(p = p)
 R <- matrix(c(1, 0.8, 0.5, -0.3,
               0.8, 1, 0.2, 0.4,
               0.5, 0.2, 1, -0.7,
               -0.3, 0.4, -0.7, 1),
               nrow = 4, byrow = TRUE)
-bonferroni(p = p, adjust = "m.eff", pca.method = "nyholt", R = R)
+bonferroni(p)
+bonferroni(p, adjust = "m.eff", pca.method = "nyholt", R = R)
 }
 \keyword{htest}

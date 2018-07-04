@@ -9,9 +9,6 @@ empirical <- function(R, method, type, size = 10000, seed, ...) {
 
    k <- nrow(R)
 
-   if (missing(R))
-      R <- diag(1, k)
-
    # check that R is symmetric
    if (!isSymmetric(R))
       stop("R is not symmetric.")
