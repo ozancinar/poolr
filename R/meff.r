@@ -1,11 +1,11 @@
 meff <- function(x, eigen = FALSE, method = NULL, ...) {
 
-   # check method argument
-   if (!method %in% c("nyholt", "li.ji", "gao", "galwey"))
-         stop("The method for PCA is not correct.")
+   # match method argument
+   method <- match.arg(method, c("nyholt", "li.ji", "gao", "galwey"))
 
-   # can pass eigenvalues directly to function if eigen is TRUE
    if (eigen) {
+
+      # can pass eigenvalues directly to function if eigen is TRUE
 
       if (!class(x) %in% c("numeric", "integer"))
          stop("eigenvalues are not numeric or integer.")
