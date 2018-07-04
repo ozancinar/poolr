@@ -23,8 +23,8 @@ meff <- function(x, eigen = FALSE, method = NULL, ...) {
          stop("R is not symmetric.")
       }
 
-      # Converting the correlation matrix to positive-definite.
-      x <- as.matrix(nearPD(x)$mat)
+      # ensure that the correlation matrix is positive semi-definite
+      #x <- as.matrix(nearPD(x)$mat)
 
       ### get eigenvalues and absolute eigenvalues of R matrix
       evs <- eigen(x)$values
