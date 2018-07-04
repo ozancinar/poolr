@@ -1,12 +1,16 @@
 fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
-   if(adjust == "none") {
+
+   if (adjust == "none") {
+
       k <- length(p)
       testStat <- -2*sum(log(p))
       pooled.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
       adjust <- "none"
-   } else if(adjust == "m.eff") {
+
+   } else if (adjust == "m.eff") {
+
       k <- length(p)
-      if(is.numeric(pca.method)) {
+      if (is.numeric(pca.method)) {
          eff <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
       } else {
@@ -15,12 +19,13 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       }
       testStat <- -2 * sum(log(p)) * (eff / k)
       pooled.p <- pchisq(-2 * sum(log(p)) * (eff / k), df = 2 * eff, lower.tail = FALSE)
+
    } else if (adjust == "brown") {
+
       k <- length(p)
 
       tmp <- list(...)
-
-      if(is.null(tmp$brownCov)) {
+      if (is.null(tmp$brownCov)) {
          covs <- brown(R)
       } else {
          covs <- tmp$brownCov
@@ -36,14 +41,16 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       testStat <- chi2val/cval
       pooled.p <- pchisq(chi2val/cval, df=fval, lower.tail=FALSE)
       adjust <- "brown"
+
    } else if (adjust == "empirical") {
+
       k <- length(p)
       testStat <- -2*sum(log(p))
       tmp.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
       method <- "fisher"
 
       tmp <- list(...)
-      if(is.null(tmp$emp.dis)) {
+      if (is.null(tmp$emp.dis)) {
          emp.dist <- empirical(p = p, R = R, method = method, type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
@@ -51,9 +58,11 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
 
       pooled.p <- sum(emp.dist >= testStat) / length(emp.dist)
       adjust <- "empirical"
+
    }
 
    res <- list(p = pooled.p, testStat = testStat, adjust = adjust)
    class(res) <- "combP"
    return(res)
+
 }
