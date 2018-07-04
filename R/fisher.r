@@ -1,4 +1,4 @@
-fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
+fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
 
    k <- length(p)
 
@@ -8,7 +8,9 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       pooled.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)
       adjust <- "none"
 
-   } else if (adjust == "m.eff") {
+   }
+
+   if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
          eff <- pca.method
@@ -20,7 +22,9 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       testStat <- -2 * sum(log(p)) * (eff / k)
       pooled.p <- pchisq(-2 * sum(log(p)) * (eff / k), df = 2 * eff, lower.tail = FALSE)
 
-   } else if (adjust == "brown") {
+   }
+
+   if (adjust == "brown") {
 
       tmp <- list(...)
       if (is.null(tmp$brownCov)) {
@@ -40,7 +44,9 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000
       pooled.p <- pchisq(chi2val/cval, df=fval, lower.tail=FALSE)
       adjust <- "brown"
 
-   } else if (adjust == "empirical") {
+   }
+
+   if (adjust == "empirical") {
 
       testStat <- -2*sum(log(p))
       tmp.p <- pchisq(testStat, df=2*k, lower.tail=FALSE)

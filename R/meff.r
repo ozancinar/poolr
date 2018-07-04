@@ -1,4 +1,4 @@
-meff <- function(x, eigen = FALSE, method = NULL, ...) {
+meff <- function(x, eigen = FALSE, method, ...) {
 
    # match method argument
    method <- match.arg(method, c("nyholt", "li.ji", "gao", "galwey"))

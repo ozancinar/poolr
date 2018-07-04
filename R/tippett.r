@@ -1,4 +1,4 @@
-tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
+tippett <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
 
    k <- length(p)
 
@@ -8,7 +8,9 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
       pooled.p <- testStat
       adjust <- "none"
 
-   } else if (adjust == "m.eff") {
+   }
+
+   if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
          eff <- pca.method
@@ -20,7 +22,9 @@ tippett <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1000
       testStat <- 1 - (1 - min(p))^eff
       pooled.p <- testStat
 
-   } else if (adjust == "empirical") {
+   }
+
+   if (adjust == "empirical") {
 
       tmp.p <- 1 - (1 - min(p))^k
       testStat <- 1 - (1 - min(p))^k

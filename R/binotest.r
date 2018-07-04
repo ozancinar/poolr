@@ -1,4 +1,4 @@
-binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.05, size = 10000, seed = NULL, type = 2, ...) {
+binotest <- function(p, adjust = "none", pca.method = NULL, R, alpha = 0.05, size = 10000, seed = NULL, type = 2, ...) {
 
    k <- length(p)
    r <- sum(p <= alpha)
@@ -9,7 +9,9 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.
       pooled.p <- sum(dbinom(r:k, k, alpha))
       adjust <- "none"
 
-   } else if (adjust == "m.eff") {
+   }
+
+   if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
          eff <- pca.method
@@ -21,7 +23,9 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R = NULL, alpha = 0.
       testStat <- dbinom(round(r * eff / k), eff, alpha)
       pooled.p <- sum(dbinom(round(r * eff / k):eff, eff, alpha))
 
-   } else if (adjust == "empirical") {
+   }
+
+   if (adjust == "empirical") {
 
       probs <- dbinom(0:k, k, alpha)
       testStat <- dbinom(r, k, alpha)

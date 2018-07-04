@@ -1,4 +1,4 @@
-stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
+stouffer <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
 
@@ -8,7 +8,9 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
       adjust <- "none"
 
-   } else if (adjust == "m.eff") {
+   }
+
+   if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
          eff <- pca.method
@@ -20,13 +22,17 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       testStat <- sum(qnorm(p, lower.tail = FALSE)) * sqrt(eff / k) / sqrt(k)
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
 
-   } else if (adjust == "general") {
+   }
+
+   if (adjust == "general") {
 
       testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(sum(R))
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
       adjust <- "generalized stouffer"
 
-   } else if (adjust == "empirical") {
+   }
+
+   if (adjust == "empirical") {
 
       testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
       tmp.p <- pnorm(testStat, lower.tail = FALSE)

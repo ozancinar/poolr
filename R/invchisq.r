@@ -1,4 +1,4 @@
-invchisq <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
+invchisq <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
 
    k <- length(p)
 
@@ -8,7 +8,9 @@ invchisq <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       pooled.p <- pchisq(testStat, df = k, lower.tail=FALSE)
       adjust <- "none"
 
-   } else if (adjust == "m.eff") {
+   }
+
+   if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
          eff <- pca.method
@@ -20,7 +22,9 @@ invchisq <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 100
       testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE)) * (eff / k)
       pooled.p <- pchisq(testStat, df = eff, lower.tail = FALSE)
 
-  } else if (adjust == "empirical") {
+  }
+
+  if (adjust == "empirical") {
 
       testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
       tmp.p <- pchisq(testStat, df = k, lower.tail=FALSE)

@@ -1,4 +1,4 @@
-bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 10000, seed = NULL, type = 2, ...) {
+bonferroni <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
 
    k <- length(p)
 
@@ -8,7 +8,9 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1
       pooled.p <- testStat
       adjust <- "none"
 
-   } else if (adjust == "m.eff") {
+   }
+
+   if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
          eff <- pca.method
@@ -20,7 +22,9 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R = NULL, size = 1
       testStat <- min(p) * eff
       pooled.p <- min(p) * eff
 
-   } else if (adjust == "empirical") {
+   }
+
+   if (adjust == "empirical") {
 
       tmp.p <- min(p) * k
       method <- "bonferroni"
