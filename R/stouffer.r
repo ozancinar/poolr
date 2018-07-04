@@ -2,9 +2,10 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, see
 
    k <- length(p)
 
+   testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
+
    if (adjust == "none") {
 
-      testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
       adjust <- "none"
 
@@ -13,13 +14,14 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, see
    if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
-         eff <- pca.method
+         m <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
       } else {
-         eff <- meff(R = R, method = pca.method)
+         m <- meff(R = R, method = pca.method)
          adjust <- paste0("meff (", pca.method, ")")
       }
-      testStat <- sum(qnorm(p, lower.tail = FALSE)) * sqrt(eff / k) / sqrt(k)
+
+      testStat <- testStat * sqrt(m / k)
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
 
    }
@@ -34,12 +36,9 @@ stouffer <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, see
 
    if (adjust == "empirical") {
 
-      testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-      method <- "stouffer"
-
       tmp <- list(...)
       if (is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(R = R, method = method, type = type, size = size, seed = seed)
+         emp.dist <- empirical(R = R, method = "stouffer", type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }

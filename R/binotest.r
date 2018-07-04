@@ -3,9 +3,10 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R, alpha = 0.05, siz
    k <- length(p)
    r <- sum(p <= alpha)
 
+   testStat <- dbinom(r, k, alpha)
+
    if (adjust == "none") {
 
-      testStat <- dbinom(r, k, alpha)
       pooled.p <- sum(dbinom(r:k, k, alpha))
       adjust <- "none"
 
@@ -14,25 +15,23 @@ binotest <- function(p, adjust = "none", pca.method = NULL, R, alpha = 0.05, siz
    if (adjust == "m.eff") {
 
       if (is.numeric(pca.method)) {
-         eff <- pca.method
+         m <- pca.method
          adjust <- paste0(pca.method, " (user defined)")
       } else {
-         eff <- meff(R = R, method = pca.method)
+         m <- meff(R = R, method = pca.method)
          adjust <- paste0("meff (", pca.method, ")")
       }
-      testStat <- dbinom(round(r * eff / k), eff, alpha)
-      pooled.p <- sum(dbinom(round(r * eff / k):eff, eff, alpha))
+
+      testStat <- dbinom(round(r * m / k), m, alpha)
+      pooled.p <- sum(dbinom(round(r * m / k):m, m, alpha))
 
    }
 
    if (adjust == "empirical") {
 
-      testStat <- dbinom(r, k, alpha)
-      method <- "binotest"
-
       tmp <- list(...)
       if (is.null(tmp$emp.dis)) {
-         emp.dist <- empirical(R = R, method = method, type = type, size = size, seed = seed)
+         emp.dist <- empirical(R = R, method = "binotest", type = type, size = size, seed = seed)
       } else {
          emp.dist <- tmp$emp.dist
       }
