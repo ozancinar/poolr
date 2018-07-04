@@ -1,8 +1,8 @@
-bonferroni <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
+bonferroni <- function(p, adjust = "none", pca.method, R, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
 
-   testStat <- min(p) * k
+   testStat <- min(1, min(p) * k)
 
    if (adjust == "none") {
 
@@ -21,8 +21,8 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, s
          adjust <- paste0("meff (", pca.method, ")")
       }
 
-      testStat <- min(p) * m
-      pooled.p <- min(p) * m
+      testStat <- min(1, min(p) * m)
+      pooled.p <- testStat
 
    }
 
@@ -39,9 +39,6 @@ bonferroni <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, s
       adjust <- "empirical"
 
    }
-
-   if (pooled.p > 1)
-      pooled.p <- 1
 
    res <- list(p = pooled.p, testStat = testStat, adjust = adjust)
    class(res) <- "combP"

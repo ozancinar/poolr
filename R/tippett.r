@@ -1,4 +1,4 @@
-tippett <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
+tippett <- function(p, adjust = "none", pca.method, R, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
 

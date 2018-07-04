@@ -1,8 +1,8 @@
-fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed = NULL, type = 2, ...) {
+fisher <- function(p, adjust = "none", pca.method, R, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
 
-   testStat <- -2*sum(log(p))
+   testStat <- -2 * sum(log(p))
 
    if (adjust == "none") {
 
@@ -22,7 +22,7 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed 
       }
 
       testStat <- testStat * (m / k)
-      pooled.p <- pchisq(-2 * sum(log(p)) * (m / k), df = 2 * m, lower.tail = FALSE)
+      pooled.p <- pchisq(testStat * (m / k), df = 2 * m, lower.tail = FALSE)
 
    }
 
@@ -36,7 +36,6 @@ fisher <- function(p, adjust = "none", pca.method = NULL, R, size = 10000, seed 
       }
 
       expx2 <- 2 * k
-      #varx2 <- 4 * k + 2 * sum(covs[upper.tri(covs)])
       varx2 <- sum(covs)
       fval <- 2 * expx2^2 / varx2
       cval <- varx2 / (2 * expx2)

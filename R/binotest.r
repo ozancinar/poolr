@@ -1,4 +1,4 @@
-binotest <- function(p, adjust = "none", pca.method = NULL, R, alpha = 0.05, size = 10000, seed = NULL, type = 2, ...) {
+binotest <- function(p, adjust = "none", pca.method, R, alpha = 0.05, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
    r <- sum(p <= alpha)

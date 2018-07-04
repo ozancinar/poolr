@@ -1,13 +1,22 @@
 empirical <- function(R, method, type, size = 10000, seed, ...) {
 
+   # match method argument
+   method <- match.arg(method, c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))
+
+   # check type argument
    if (!type %in% c(-1, 1, 2))
-      stop("the type of the tests entered is not valid.")
+      stop("Argument 'type' must be one of -1, 1, or 2.")
 
    k <- nrow(R)
 
    if (missing(R))
       R <- diag(1, k)
 
+   # check that R is symmetric
+   if (!isSymmetric(R))
+      stop("R is not symmetric.")
+
+   # ensure that the correlation matrix is positive semi-definite
    R <- nearPD(R)$mat
 
    if (!missing(seed))
@@ -23,15 +32,6 @@ empirical <- function(R, method, type, size = 10000, seed, ...) {
       pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
    }
 
-   if (method == "bonferroni")
-      emp <- apply(pVals, 1, function(x) bonferroni(x)$testStat)
-
-   if (method == "tippett")
-      emp <- apply(pVals, 1, function(x) tippett(x)$testStat)
-
-   if (method == "binotest")
-      emp <- apply(pVals, 1, function(x) binotest(x)$testStat)
-
    if (method == "fisher")
       emp <- apply(pVals, 1, function(x) fisher(x)$testStat)
 
@@ -40,6 +40,15 @@ empirical <- function(R, method, type, size = 10000, seed, ...) {
 
    if (method == "invchisq")
       emp <- apply(pVals, 1, function(x) invchisq(x)$testStat)
+
+   if (method == "binotest")
+      emp <- apply(pVals, 1, function(x) binotest(x)$testStat)
+
+   if (method == "bonferroni")
+      emp <- apply(pVals, 1, function(x) bonferroni(x)$testStat)
+
+   if (method == "tippett")
+      emp <- apply(pVals, 1, function(x) tippett(x)$testStat)
 
    return(emp)
 
