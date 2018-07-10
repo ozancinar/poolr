@@ -26,11 +26,11 @@ stouffer <- function(p, adjust = "none", pca.method, R, size = 10000, seed, type
 
    }
 
-   if (adjust == "general") {
+   if (adjust == "strube") {
 
       testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(sum(R))
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
-      adjust <- "generalized stouffer"
+      adjust <- "strube"
 
    }
 
