@@ -1,4 +1,4 @@
-fisher <- function(p, adjust = "none", pca.method, R, size = 10000, seed, type = 2, ...) {
+fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
 
@@ -11,14 +11,14 @@ fisher <- function(p, adjust = "none", pca.method, R, size = 10000, seed, type =
 
    }
 
-   if (adjust == "m.eff") {
+   if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
 
-      if (is.numeric(pca.method)) {
-         m <- pca.method
-         adjust <- paste0(pca.method, " (user defined)")
+      if (!missing(m)) {
+         m <- m
+         adjust <- paste0(m, " (user defined)")
       } else {
-         m <- meff(R = R, method = pca.method)
-         adjust <- paste0("meff (", pca.method, ")")
+         m <- meff(R = R, method = adjust)
+         adjust <- paste0("meff (", adjust, ")")
       }
 
       testStat <- testStat * (m / k)

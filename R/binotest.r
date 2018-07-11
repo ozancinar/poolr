@@ -1,4 +1,4 @@
-binotest <- function(p, adjust = "none", pca.method, R, alpha = 0.05, size = 10000, seed, type = 2, ...) {
+binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed, type = 2, ...) {
 
    k <- length(p)
    r <- sum(p <= alpha)
@@ -12,14 +12,14 @@ binotest <- function(p, adjust = "none", pca.method, R, alpha = 0.05, size = 100
 
    }
 
-   if (adjust == "m.eff") {
+   if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
 
-      if (is.numeric(pca.method)) {
-         m <- pca.method
-         adjust <- paste0(pca.method, " (user defined)")
+      if (!missing(m)) {
+         m <- m
+         adjust <- paste0(m, " (user defined)")
       } else {
-         m <- meff(R = R, method = pca.method)
-         adjust <- paste0("meff (", pca.method, ")")
+         m <- meff(R = R, method = adjust)
+         adjust <- paste0("meff (", adjust, ")")
       }
 
       testStat <- dbinom(round(r * m / k), m, alpha)
