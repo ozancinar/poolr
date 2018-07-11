@@ -4,8 +4,8 @@ empirical <- function(R, method, type, size = 10000, seed, ...) {
    method <- match.arg(method, c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))
 
    # check type argument
-   if (!type %in% c(-1, 1, 2))
-      stop("Argument 'type' must be one of -1, 1, or 2.")
+   if (!type %in% c(1, 2))
+      stop("Argument 'type' must be either 1 or 2.")
 
    k <- nrow(R)
 
@@ -21,9 +21,7 @@ empirical <- function(R, method, type, size = 10000, seed, ...) {
 
    z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
 
-   if (type == -1) {
-      pVals <- pnorm(z, lower.tail = TRUE)
-   } else if (type == 1) {
+   if (type == 1) {
       pVals <- pnorm(z, lower.tail = FALSE)
    } else if (type == 2) {
       pVals <- 2 * pnorm(abs(z), lower.tail = FALSE)
