@@ -1,4 +1,4 @@
-emp.distirical <- function(R, method, type, size = 10000, seed, ...) {
+empirical <- function(R, method, type, size = 10000, seed, ...) {
 
    # match method argument
    method <- match.arg(method, c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))
