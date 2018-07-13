@@ -36,7 +36,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
          emp.dist <- tmp$emp.dist
       }
 
-      pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
+      pooled.p <- (sum(emp.dist <= testStat) + 1) / (size + 1)
       adjust <- "empirical"
 
    }

@@ -35,7 +35,7 @@ bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, .
          emp.dist <- tmp$emp.dist
       }
 
-      pooled.p <- sum(emp.dist <= testStat) / length(emp.dist)
+      pooled.p <- (sum(emp.dist <= testStat) + 1) / (size + 1)
       adjust <- "empirical"
 
    }
