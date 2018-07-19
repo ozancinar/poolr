@@ -22,7 +22,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) 
       }
 
       testStat <- testStat * (m / k)
-      pooled.p <- pchisq(testStat * (m / k), df = 2 * m, lower.tail = FALSE)
+      pooled.p <- pchisq(testStat, df = 2 * m, lower.tail = FALSE)
 
    }
 
