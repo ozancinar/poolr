@@ -1,5 +1,9 @@
 binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed, type = 2, ...) {
 
+   if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown", "strube") & missing(m)) {
+     stop("adjustment method is not correct and the user-defined effective number of tests is missing.")
+   }
+
    k <- length(p)
    r <- sum(p <= alpha)
 

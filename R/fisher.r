@@ -1,5 +1,10 @@
 fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) {
 
+   if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown", "strube") & missing(m)) {
+     stop("adjustment method is not correct and the user-defined effective number of tests is missing.")
+   }
+
+
    k <- length(p)
 
    testStat <- -2 * sum(log(p))
