@@ -8,6 +8,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...
     m <- m
     adjust <- paste0(m, " (user defined)")
     
+    testStat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
     testStat <- testStat * (m / k)
     pooled.p <- pchisq(testStat, df = m, lower.tail = FALSE)
     

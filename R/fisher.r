@@ -8,6 +8,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) 
     m <- m
     adjust <- paste0(m, " (user defined)")
     
+    testStat <- -2 * sum(log(p))
     testStat <- testStat * (m / k)
     pooled.p <- pchisq(testStat, df = 2 * m, lower.tail = FALSE)
     

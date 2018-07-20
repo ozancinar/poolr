@@ -8,6 +8,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...
     m <- m
     adjust <- paste0(m, " (user defined)")
     
+    testStat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
     testStat <- testStat * sqrt(m / k)
     pooled.p <- pnorm(testStat, lower.tail = FALSE)
     
