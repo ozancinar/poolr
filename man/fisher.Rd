@@ -4,7 +4,7 @@
 \description{Function to carry out Fisher's method.}
 \usage{
 fisher(p, adjust = "none", m, R,
-       size = 10000, seed, type = 2, \dots)
+       size = 10000, seed, type = 2, emp.loop = FALSE, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
@@ -14,6 +14,7 @@ fisher(p, adjust = "none", m, R,
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
    \item{type}{type of the p-values used in the tests. As default, it is set to 2 for two-sided tests.}
+   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to FALSE as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch emp.loop = TRUE.}
    \item{\dots}{other arguments.}
 }
 \details{

@@ -1,4 +1,5 @@
-bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) {
+bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
+                       emp.loop = FALSE, ...) {
 
   k <- length(p)
   
@@ -48,7 +49,7 @@ bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, .
       if (is.null(tmp$emp.dis)) {
         
         emp.dist <- empirical(R = R, method = "bonferroni", type = type, size = size, 
-                              seed = seed)
+                              seed = seed, emp.loop = emp.loop)
         
       } else { # otherwise, the function will use the user-given empirical distribution.
         

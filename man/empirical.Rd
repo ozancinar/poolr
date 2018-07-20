@@ -3,7 +3,7 @@
 \title{Emprically-Derived Null Distributions}
 \description{Function to derive the empirical distribution of the combined p-value under the null hypothesis.}
 \usage{
-empirical(R, method, type, size = 10000, seed, \dots)
+empirical(R, method, type, size = 10000, seed, emp.loop, \dots)
 }
 \arguments{
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values. If it is NULL then the p-values are assumed to be independent.}
@@ -11,6 +11,7 @@ empirical(R, method, type, size = 10000, seed, \dots)
    \item{type}{the type of the hypothesis test. It can take values 1 or 2 for one-sided or two-sided p-values, respectively.}
    \item{size}{size of the empirical distribution. It is set to 10000 as default.}
    \item{seed}{an argument that can be used to set the seed for random number generation.}
+   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. If the size of the empirical distribution to be generated is too large, we recommend you to use emp.loop = TRUE.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -35,6 +36,7 @@ R <- matrix(c(1, 0.8, 0.5, -0.3,
               nrow = 4, byrow = TRUE)
 empirical(R, method = "fisher", type = 1)
 empirical(R, method = "fisher", type = 2)
+empirical(R, method = "fisher", type = 2, emp.loop = TRUE)
 fisher(p, adjust = "empirical", R = R, size = 1000, seed = 123)
 }
 \keyword{htest}

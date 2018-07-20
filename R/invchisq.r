@@ -1,4 +1,5 @@
-invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) {
+invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
+                     emp.loop = FALSE, ...) {
   
   k <- length(p)
   
@@ -50,7 +51,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...
       if (is.null(tmp$emp.dis)) {
         
         emp.dist <- empirical(R = R, method = "invchisq", type = type, size = size, 
-                              seed = seed)
+                              seed = seed, emp.loop = emp.loop)
         
       } else { # otherwise, the function will use the user-given empirical distribution.
         
