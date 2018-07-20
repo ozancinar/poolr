@@ -11,6 +11,10 @@ bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, .
     testStat <- min(1, min(p) * m)
     pooled.p <- testStat
     
+    # warning the user if the user-defined m is larger than the number of p-values.
+    if(m > k)
+      warning("the user-defined effective number of test is larger than the number of p-values that were combined.")
+    
   } else {
     
     # first, if the adjust is not given, it will be set to "none".

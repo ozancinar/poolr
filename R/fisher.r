@@ -12,6 +12,10 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) 
     testStat <- testStat * (m / k)
     pooled.p <- pchisq(testStat, df = 2 * m, lower.tail = FALSE)
     
+    # warning the user if the user-defined m is larger than the number of p-values.
+    if(m > k)
+      warning("the user-defined effective number of test is larger than the number of p-values that were combined.")
+    
   } else {
     
     # first, if the adjust is not given, it will be set to "none".

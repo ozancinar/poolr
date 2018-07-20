@@ -13,6 +13,10 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
     testStat <- dbinom(round(r * m / k), m, alpha)
     pooled.p <- sum(dbinom(round(r * m / k):m, m, alpha))
     
+    # warning the user if the user-defined m is larger than the number of p-values.
+    if(m > k)
+      warning("the user-defined effective number of test is larger than the number of p-values that were combined.")
+    
   } else {
     
     # if m is not provided by the user, then the functions will use adjust argument.
