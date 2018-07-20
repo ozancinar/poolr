@@ -23,19 +23,12 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
     # checking if the adjust argument is given correctly.
     
     # first, if the adjust is not given, it will be set to "none".
-    if(missing(adjust)) {
-      
+    if(missing(adjust))
       adjust <- "none"
       
-    }
-    
     # now, checking the adjust argument.
-    
-    if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical")) {
-      
+    if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical")) 
       stop("adjust argument is not given correctly. Please refer to ?binotest for the correct set for adjust arguments.")
-      
-    }
     
     if (adjust == "none") {
       

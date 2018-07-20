@@ -19,20 +19,13 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, ...) 
   } else {
     
     # first, if the adjust is not given, it will be set to "none".
-    if(missing(adjust)) {
-      
+    if(missing(adjust))
       adjust <- "none"
-      
-    }
     
     # now, checking the adjust argument.
-    
-    if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown")) {
-      
+    if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown"))
       stop("adjust argument is not given correctly. Please refer to ?fisher for the correct set for adjust arguments.")
       
-    }
-    
     if (adjust == "none") {
       
       testStat <- -2 * sum(log(p))
