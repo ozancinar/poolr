@@ -25,7 +25,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
     
     # now, checking the adjust argument.
     if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "strube")) 
-      stop("adjust argument is not given correctly. Please refer to ?stouffer for the correct set for adjust arguments.")
+      stop("adjust argument is not given correctly. Please see ?stouffer for the correct options for adjust.")
 
     if (adjust == "none") {
       

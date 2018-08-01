@@ -24,7 +24,7 @@ bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
     
     # now, checking the adjust argument.
     if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical"))
-      stop("adjust argument is not given correctly. Please refer to ?bonferroni for the correct set for adjust arguments.")
+      stop("adjust argument is not given correctly. Please see ?bonferroni for the correct options for adjust.")
       
     if (adjust == "none") {
       
