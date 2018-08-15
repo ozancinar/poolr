@@ -1,5 +1,5 @@
 binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed, 
-                     type = 2, emp.loop = FALSE, ...) {
+                     type = 2, emp.loop = FALSE, emp.step, ...) {
   
   k <- length(p)
   r <- sum(p <= alpha)
@@ -46,24 +46,100 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
       
     } else if (adjust == "empirical") {
       
-      tmp <- list(...)
-      
-      # if an empirical distribution is not provided by the user, we will use 
-      # empirical() to generate an empirical distribution.
-      if (is.null(tmp$emp.dis)) {
+      # checking if the user wants to use a stepwise algorithm for empirical adjustment.
+      if (!missing(emp.step)) {
         
-        emp.dist <- empirical(R = R, method = "binotest", type = type, size = size, 
-                              seed = seed, emp.loop = emp.loop)
+        # checking if emp.step is a list.
+        if (!is.list(emp.step))
+          stop("emp.dist should be a list.")
         
-      } else { # otherwise, the function will use the user-given empirical distribution.
+        # checking if there are two vectors in the emp.step.
+        if (!length(emp.step) == 2)
+          stop("emp.dist should include two lists. Please see ?binotest.")
         
-        emp.dist <- tmp$emp.dist
+        # checking if the lengths of the vectors in the emp.step are correct.
+        if (!(length(emp.step[[1]]) - length(emp.step[[2]])) %in% c(-1, 1))
+          stop("the lengths of the vectors in emp.step are not correct. Please see ?binotest.")
+        
+        # checking if the vectors have names.
+        if (is.null(names(emp.step))) {
+          
+          # if they don't have names, they will be named.
+          names(emp.step)[which.max(unlist(lapply(emp.step, length)))] <- "size"
+          names(emp.step)[which.min(unlist(lapply(emp.step, length)))] <- "thres"
+          
+        } else {
+          
+          # if the names of the vectors are not correct, they will be corrected.
+          if (!all(names(emp.step) %in% c("size", "thres"))) {
+            
+            names(emp.step)[which.max(unlist(lapply(emp.step, length)))] <- "size"
+            names(emp.step)[which.min(unlist(lapply(emp.step, length)))] <- "thres"
+            
+          }
+          
+        }
+        
+        # setting the seed before starting to generate sets to obtain mutually exclusive sets.
+        if (!missing(seed))
+          set.seed(seed)
+        
+        for (i in 1:length(emp.step$thres)) {
+          
+          size      <- emp.step$size[i]
+          emp.dist  <- empirical(R = R, method = "binotest", type = type, size = size, 
+                                 emp.loop = emp.loop)
+          
+          testStat.tmp <- dbinom(r, k, alpha)
+          pooled.p.tmp <- (sum(emp.dist <= testStat) + 1) / (size + 1)
+          
+          if (pooled.p.tmp > emp.step$thres[i]) {
+            
+            testStat  <- testStat.tmp
+            pooled.p  <- pooled.p.tmp
+            adjust    <- "empirical"
+            break
+            
+          }
+          
+        }
+        
+        # if the threshold could not be achieved in the loop, then we are going
+        # to use the largest sample size. 
+        if (!exists("pooled.p")) {
+          
+          size      <- max(emp.step$size)
+          emp.dist  <- empirical(R = R, method = "binotest", type = type, size = size, 
+                                 seed = seed, emp.loop = emp.loop)
+          
+          testStat  <- dbinom(r, k, alpha)
+          pooled.p  <- (sum(emp.dist <= testStat) + 1) / (size + 1)
+          adjust    <- "empirical"
+          
+        }
+        
+      } else {
+        
+        tmp <- list(...)
+        
+        # if an empirical distribution is not provided by the user, we will use 
+        # empirical() to generate an empirical distribution.
+        if (is.null(tmp$emp.dis)) {
+          
+          emp.dist <- empirical(R = R, method = "binotest", type = type, size = size, 
+                                seed = seed, emp.loop = emp.loop)
+          
+        } else { # otherwise, the function will use the user-given empirical distribution.
+          
+          emp.dist <- tmp$emp.dist
+          
+        }
+        
+        testStat  <- dbinom(r, k, alpha)
+        pooled.p  <- (sum(emp.dist <= testStat) + 1) / (size + 1)
+        adjust    <- "empirical" 
         
       }
-      
-      testStat <- dbinom(r, k, alpha)
-      pooled.p <- (sum(emp.dist <= testStat) + 1) / (size + 1)
-      adjust <- "empirical"
       
     }
     

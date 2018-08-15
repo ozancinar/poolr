@@ -76,19 +76,20 @@ bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
           
         }
         
-        # sorting the values in the vectors in an ascending order if they are not in this order. 
-        emp.step <- lapply(emp.step, sort)
+        # setting the seed before starting to generate sets to obtain mutually exclusive sets.
+        if (!missing(seed))
+          set.seed(seed)
         
         for (i in 1:length(emp.step$thres)) {
           
           size      <- emp.step$size[i]
           emp.dist  <- empirical(R = R, method = "bonferroni", type = type, size = size, 
-                                seed = seed, emp.loop = emp.loop)
+                                emp.loop = emp.loop)
           
           testStat.tmp <- min(1, min(p) * k)
           pooled.p.tmp <- (sum(emp.dist <= testStat.tmp) + 1) / (size + 1)
           
-          if (pooled.p.tmp <= emp.step$thres[i]) {
+          if (pooled.p.tmp > emp.step$thres[i]) {
             
             testStat  <- testStat.tmp
             pooled.p  <- pooled.p.tmp
