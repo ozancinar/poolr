@@ -24,7 +24,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       adjust <- "none"
     
     # now, checking the adjust argument.
-    if (!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown"))
+    if (!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown1", "brown2"))
       stop("adjust argument is not given correctly. Please see ?fisher for the correct options for adjust.")
       
     if (adjust == "none") {
@@ -42,15 +42,15 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       testStat <- testStat * (m / k)
       pooled.p <- pchisq(testStat, df = 2 * m, lower.tail = FALSE)
       
-    } else if (adjust == "brown") {
+    } else if (adjust == "brown1") {
       
       tmp <- list(...)
       
-      # if the Brown correlations are not provided by the user, we will use brown()
+      # if the Brown correlations are not provided by the user, we will use brown1()
       # to get the Brown correlations.
       if (is.null(tmp$brownCov)) {
         
-        covs <- brown(R)
+        covs <- brown1(R)
         
       } else { # otherwise, the function will use user-defined correlations.
         
@@ -66,7 +66,33 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       testStat  <- -2 * sum(log(p))
       testStat  <- testStat/cval
       pooled.p  <- pchisq(testStat, df = fval, lower.tail = FALSE)
-      adjust    <- "brown"
+      adjust    <- "brown (one-sided)"
+      
+    } else if (adjust == "brown2") {
+        
+      tmp <- list(...)
+        
+      # if the Brown correlations are not provided by the user, we will use brown2()
+      # to get the Brown correlations.
+      if (is.null(tmp$brownCov)) {
+            
+          covs <- brown2(R)
+            
+      } else { # otherwise, the function will use user-defined correlations.
+            
+          covs <- tmp$brownCov
+            
+      }
+        
+      expx2 <- 2 * k
+      varx2 <- sum(covs)
+      fval <- 2 * expx2^2 / varx2
+      cval <- varx2 / (2 * expx2)
+        
+      testStat  <- -2 * sum(log(p))
+      testStat  <- testStat/cval
+      pooled.p  <- pchisq(testStat, df = fval, lower.tail = FALSE)
+      adjust    <- "brown (two-sided)"
       
     } else if (adjust == "empirical") {
       
