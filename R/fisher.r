@@ -1,6 +1,8 @@
 fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
                    emp.loop = FALSE, emp.step, ...) {
   
+  adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+  
   k <- length(p)
   
   # if m is provided by the user, then we don't need to check the adjustment method.
@@ -24,7 +26,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       adjust <- "none"
     
     # now, checking the adjust argument.
-    if (!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "brown1", "brown2"))
+    if (!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
       stop("adjust argument is not given correctly. Please see ?fisher for the correct options for adjust.")
       
     if (adjust == "none") {
@@ -42,21 +44,9 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       testStat <- testStat * (m / k)
       pooled.p <- pchisq(testStat, df = 2 * m, lower.tail = FALSE)
       
-    } else if (adjust == "brown1") {
-      
-      tmp <- list(...)
-      
-      # if the Brown correlations are not provided by the user, we will use brown1()
-      # to get the Brown correlations.
-      if (is.null(tmp$brownCov)) {
+    } else if (adjust == "generalized") {
         
-        covs <- brown1(R)
-        
-      } else { # otherwise, the function will use user-defined correlations.
-        
-        covs <- tmp$brownCov
-        
-      }
+      covs <- R    
       
       expx2 <- 2 * k
       varx2 <- sum(covs)
@@ -66,34 +56,8 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       testStat  <- -2 * sum(log(p))
       testStat  <- testStat/cval
       pooled.p  <- pchisq(testStat, df = fval, lower.tail = FALSE)
-      adjust    <- "brown (one-sided)"
-      
-    } else if (adjust == "brown2") {
-        
-      tmp <- list(...)
-        
-      # if the Brown correlations are not provided by the user, we will use brown2()
-      # to get the Brown correlations.
-      if (is.null(tmp$brownCov)) {
-            
-          covs <- brown2(R)
-            
-      } else { # otherwise, the function will use user-defined correlations.
-            
-          covs <- tmp$brownCov
-            
-      }
-        
-      expx2 <- 2 * k
-      varx2 <- sum(covs)
-      fval <- 2 * expx2^2 / varx2
-      cval <- varx2 / (2 * expx2)
-        
-      testStat  <- -2 * sum(log(p))
-      testStat  <- testStat/cval
-      pooled.p  <- pchisq(testStat, df = fval, lower.tail = FALSE)
-      adjust    <- "brown (two-sided)"
-      
+      adjust    <- "Brown"
+     
     } else if (adjust == "empirical") {
       
       # checking if the user wants to use a stepwise algorithm for empirical adjustment.

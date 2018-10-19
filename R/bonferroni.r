@@ -1,6 +1,8 @@
 bonferroni <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
                        emp.loop = FALSE, emp.step, ...) {
-
+  
+  adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical"))
+  
   k <- length(p)
   
   # if m is provided by the user, then we don't need to check the adjustment method.

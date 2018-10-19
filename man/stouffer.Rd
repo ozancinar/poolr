@@ -8,7 +8,7 @@ stouffer(p, adjust = "none", m, R,
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
-   \item{adjust}{adjustment method while combining the p-values. Can be "none", as default, to use the default Stouffer's method. Or, Stouffer's method can be adjusted with PCA-based methods by calculating the number of effective tests by setting this argument to one of "nyholt", "liji", "gao", or "galwey". Furthermore, empirically-derived distributions under the null hypothesis can be used by setting this argument to "empirical". Finally, this argument can be set to "strube" in order to calculate the test statistic under dependence with Strube's method.}
+   \item{adjust}{adjustment method while combining the p-values. Can be "none", as default, to use the default Stouffer's method. Or, Stouffer's method can be adjusted with PCA-based methods by calculating the number of effective tests by setting this argument to one of "nyholt", "liji", "gao", or "galwey". Furthermore, empirically-derived distributions under the null hypothesis can be used by setting this argument to "empirical". Finally, this argument can be set to "generalized" in order to calculate the test statistic under dependence with Strube's method.}
    \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
@@ -47,6 +47,6 @@ R <- matrix(c(1, 0.8, 0.5, -0.3,
 stouffer(p)
 stouffer(p, adjust = "liji", R = R)
 stouffer(p, adjust = "empirical", R = R)
-stouffer(p, adjust = "strube", R = R)
+stouffer(p, adjust = "generalized", R = R)
 }
 \keyword{htest}

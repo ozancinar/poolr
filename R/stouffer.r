@@ -1,6 +1,8 @@
 stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
                      emp.loop = FALSE, emp.step, ...) {
 
+  adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+  
   k <- length(p)
   
   # if m is provided by the user, then we don't need to check the adjustment method.
@@ -24,7 +26,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       adjust <- "none"
     
     # now, checking the adjust argument.
-    if (!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "strube")) 
+    if (!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized")) 
       stop("adjust argument is not given correctly. Please see ?stouffer for the correct options for adjust.")
 
     if (adjust == "none") {
@@ -42,7 +44,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       testStat <- testStat * sqrt(m / k)
       pooled.p <- pnorm(testStat, lower.tail = FALSE)
       
-    } else if (adjust == "strube") {
+    } else if (adjust == "generalized") {
       
       testStat  <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(sum(R))
       pooled.p  <- pnorm(testStat, lower.tail = FALSE)

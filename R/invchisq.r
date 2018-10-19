@@ -1,5 +1,7 @@
 invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
                      emp.loop = FALSE, emp.step, ...) {
+
+  adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
   
   k <- length(p)
   

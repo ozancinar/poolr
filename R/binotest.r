@@ -1,6 +1,8 @@
 binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed, 
                      type = 2, emp.loop = FALSE, emp.step, ...) {
-  
+
+  adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical"))
+      
   k <- length(p)
   r <- sum(p <= alpha)
   
