@@ -8,7 +8,7 @@ meff(R, eigen = FALSE, method, \dots)
 \arguments{
    \item{R}{main input for the function. It can be a matrix for which the number of effective tests is calculated. Or, it can be pre-calculated eigenvalues of the matrix. If this is the case, the second argument eigen should be TRUE.}
    \item{eigen}{states if the main input is the eigen values. If this is true the function will not calculate the eigen values, and use the given values as the eigen values.}
-   \item{method}{method to be used to calculate the number of effective tests. Can be one of "nyholt", "li.ji", "gao", or "galwey".}
+   \item{method}{method to be used to calculate the number of effective tests. Can be one of "nyholt", "liji", "gao", or "galwey".}
    \item{\dots}{other arguments.}
 }
 \details{
