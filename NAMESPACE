@@ -4,5 +4,6 @@ import(methods)
 import(stats)
 import(Matrix)
 import(MASS)
+importFrom("utils", "data")
 
 S3method(print, combP)
