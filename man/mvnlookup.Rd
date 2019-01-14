@@ -17,6 +17,8 @@
 	\bold{z_2}   		\tab \code{numeric} 	\tab covariances among z (two-sided test statistics) \cr
 	\bold{chisq1_1}   	\tab \code{numeric} 	\tab covariances among Chi-Square (1) (one-sided test statistics) \cr
 	\bold{chisq1_2}   	\tab \code{numeric} 	\tab covariances among Chi-Square (1) (two-sided test statistics) \cr
+	\bold{p_1}   		\tab \code{numeric} 	\tab covariances among p-values (one-sided test statistics) \cr
+	\bold{p_2}   		\tab \code{numeric} 	\tab covariances among p-values (two-sided test statistics) \cr
 }
 }
 \details{
