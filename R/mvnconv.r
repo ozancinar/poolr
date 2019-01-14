@@ -10,10 +10,10 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
       # if the target is not defined either, then this function cannot work by itself.
       stop("Please specify a target distribution. See ?mvnconv for details and examples.")
     } else {
-      if(!target %in% c("m2lp", "z", "chisq1")) {
-        stop("target should be one of 'm2lp', 'z', or 'chisq1'")
+      if(!target %in% c("m2lp", "z", "chisq1", "p")) {
+        stop("target should be one of 'm2lp', 'z', 'chisq1', or 'p'.")
       } else {
-        look <- which(c("m2lp", "z", "chisq1") %in% target)
+        look <- which(c("m2lp", "z", "chisq1", "p") %in% target)
       }
     }
     
@@ -33,10 +33,10 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
       }
                   
     } else {
-      if(!target %in% c("m2lp", "z", "chisq1")) {
-        stop("target should be one of 'm2lp', 'z', or 'chisq1'")
+      if(!target %in% c("m2lp", "z", "chisq1", "p")) {
+        stop("target should be one of 'm2lp', 'z', 'chisq1', or 'p'.")
       } else {
-        look <- which(c("m2lp", "z", "chisq1") %in% target)
+        look <- which(c("m2lp", "z", "chisq1", "p") %in% target)
       }
     }
   }
@@ -50,6 +50,8 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
       colNum <- 4
     else if(look == 3)
       colNum <- 6
+    else if(look == 4)
+      colNum <- 8
   } else if(side == 2) {
     if(look == 1) 
       colNum <- 3
@@ -57,6 +59,8 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
       colNum <- 5
     else if(look == 3)
       colNum <- 7
+    else if(look == 4)
+      colNum <- 9
   }
 
   # dimension checks
