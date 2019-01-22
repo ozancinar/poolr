@@ -1,26 +1,34 @@
 \name{binotest}
 \alias{binotest}
 \title{Binomial Test}
-\description{Function to carry out the binomial test to combine p-values.}
+\description{Function to combine \eqn{p}-values using the binomial distribution.}
 \usage{
 binotest(p, adjust = "none", m, R, alpha = 0.05,
          size = 10000, seed, type = 2, emp.loop = FALSE, emp.step, \dots)
 }
 \arguments{
-   \item{p}{vector with the (one- or two-sided) p-values.}
-   \item{adjust}{adjustment method while combining the p-values. Can be "none", as default, to use the default binomial test. Or the test can be adjusted with PCA-based methods by calculating the number of effective tests. One of the four PCA-based methods can be used by setting this argument to one of "nyholt", "liji", "gao" or "galwey". Finally, this argument can be set to "empirical" to use empirically-derived distributions under the null hypothesis.}
-   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
-   \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
+   \item{p}{vector of the (one- or two-sided) \eqn{p}-values to be combined.}
+   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. One of the four PCA-based methods can be applied by setting this argument to one of \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"}. Finally, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis.}
+   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. Once this argument is set to a value, the function will not use \code{adjust} and \code{R} arguments.}
+   \item{R}{a symmetric matrix that includes pairwise correlations between the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"}.}
    \item{alpha}{significance level of the test. It is set to 0.05 as default.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
-   \item{type}{type of the p-values used in the tests. As default, it is set to 2 for two-sided tests.}
-   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to FALSE as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch emp.loop = TRUE.}
+   \item{type}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests.}
+   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch \code{emp.loop = TRUE}.}
    \item{emp.step}{an argument to apply a stepwise algortihm for empirically-derived null distributions. See details for further information.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to use binomial test to combine p-values. The user can choose to use default parameters for the binomial test depending on the number of p-values to be combined by leaving "adjust" argument as default. Or, the user can choose to adjust the 'n' parameter of the binomial distribution with PCA-based methods to consider the dependencies between the tests.
+   The function can be used to combine p-values based on a binomial distribution. It is known that p-values follows Uniform(0, 1) under the null hypothesis. Therefore, rejecting the null hypothesis (i.e., a Type I Error) is equal to \eqn{\alpha} which is conventionally set to 0.05. Then, the number of expected Type I Errors from \eqn{m} tests becomes \eqn{m \times 0.05}. If the number of rejected null hypothesis exceeds the expected value, it gives more evidence to the rejectionof the null hypotheses, which in turn gives more evidence to the rejection of the joint null hypothesis defined over the individual tests. Therefore, the a joint \eqn{p}-value can be calculated as follows:
+   
+   \eqn{p = \sum_{x = r}^m {m \choose x} \alpha^x (1 - \alpha)^{m - x}}
+   
+   where \eqn{m} is the number of individual \eqn{p}-values that are smaller than \eqn{\alpha}. 
+   
+   The above approach is applied to calculate a joint \eqn{p}-value when \code{binotest} is run with default arguments (i.e., the user only needs to supply a vector of \eqn{p}-values) which assumes independence among \eqn{p}-values. Binomial test can also be adjusted with a variety of methods to account for dependence among the \eqn{p}-values. First, PCA-based methods can be applied to adjust the binomial test by calculating effective number of tests. On this aim, one of the four PCA-based methods can be used by setting this argument to one of \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}. Note that setting \code{adjust} to one of these methods will require the correlation matrix between the \eqn{p}-values which can be supplied with \code{R} argument. If the user has calculated the effective number of test prior to using this function (this value can also be calculated by a different method), it can be used to adjust the combined \eqn{p}-value by setting \code{m} argument to this value. Once this way is chosen, the user no longer needs to submit anything to \code{adjust} and \code{R} arguments. 
+   
+   Finally, the users can put empirically-derived distributions into work to calculate a combined \eqn{p}-value. In order to do this, \code{adjust} argument should be set to \code{"empirical"} which also requires a correlation matrix given to \code{R} argument. The remaining arguments can be set to desired values in order to modify the aspects of the empirical distribution that is going to be used to calculate the combined \eqn{p}-value. 
    
    \bold{Stepwise Algorithm for Empirically-Derived Null Distributions}
    

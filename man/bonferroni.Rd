@@ -1,25 +1,27 @@
 \name{bonferroni}
 \alias{bonferroni}
 \title{Bonferroni Correction}
-\description{Function to combine the p-values by using the Bonferroni correction.}
+\description{Function to combine the \eqn{p}-values by using the Bonferroni correction.}
 \usage{
 bonferroni(p, adjust = "none", m, R,
            size = 10000, seed, type = 2, emp.loop = FALSE, emp.step, \dots)
 }
 \arguments{
-   \item{p}{vector with the (one- or two-sided) p-values.}
-   \item{adjust}{adjustment method while combining the p-values. As default, the Bonferroni correction is applied to the minimum p-value. Optionally, number of significant tests can be used instead of the Bonferroni correction by setting this argument to one of the four PCA-based methods, "nyholt", "liji", "gao" or "galwey". Finally, this argument can be set to "empirical" to use the empircally-derived distributions under the null hypothesis.}
-   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
-   \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
+   \item{p}{vector of the (one- or two-sided) \eqn{p}-values to be combined.}
+   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. One of the four PCA-based methods can be applied by setting this argument to one of \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"}. Finally, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis.}
+   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. Once this argument is set to a value, the function will not use \code{adjust} and \code{R} arguments.}
+   \item{R}{a symmetric matrix that includes pairwise correlations between the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"}.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
-   \item{type}{type of the p-values used in the tests. As default, it is set to 2 for two-sided tests.}
-   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to FALSE as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch emp.loop = TRUE.}
+   \item{type}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests.}
+   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch \code{emp.loop = TRUE}.}
    \item{emp.step}{an argument to apply a stepwise algortihm for empirically-derived null distributions. See details for further information.}
    \item{\dots}{other arguments.}
 }
 \details{
-  The function can be used to combine a set of p-values by using the Bonferroni correction and the strongest evidence, i.e. the smallest p-value.
+  The function can be used to combine a set of \eqn{p}-values by using the Bonferroni correction and the strongest evidence, i.e. the smallest \eqn{p}-value. With the default settings of this function, all the individual \eqn{p}-values are going to be multiplied with the number of \eqn{p}-values, and the smallest value is going to be reported as the combined \eqn{p}-value. This approach is applied to calculate a joint \eqn{p}-value when \code{bonferroni} is run with default arguments (i.e., the user only needs to supply a vector of \eqn{p}-values) which assumes independence among \eqn{p}-values. This method can also be adjusted with a variety of methods to account for dependence among the \eqn{p}-values. First, PCA-based methods can be applied to adjust the Bonferroni method by calculating effective number of tests. On this aim, one of the four PCA-based methods can be used by setting this argument to one of \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}. Note that setting \code{adjust} to one of these methods will require the correlation matrix between the \eqn{p}-values which can be supplied with \code{R} argument. If the user has calculated the effective number of test prior to using this function (this value can also be calculated by a different method), it can be used to adjust the combined \eqn{p}-value by setting \code{m} argument to this value. Once this way is chosen, the user no longer needs to submit anything to \code{adjust} and \code{R} arguments. 
+   
+   Finally, the users can put empirically-derived distributions into work to calculate a combined \eqn{p}-value. In order to do this, \code{adjust} argument should be set to \code{"empirical"} which also requires a correlation matrix given to \code{R} argument. The remaining arguments can be set to desired values in order to modify the aspects of the empirical distribution that is going to be used to calculate the combined \eqn{p}-value. 
    
   \bold{Stepwise Algorithm for Empirically-Derived Null Distributions}
    
