@@ -7,7 +7,6 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
   
   adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical"))
 
-  if ()  
   k <- length(p)
   r <- sum(p <= alpha)
   
