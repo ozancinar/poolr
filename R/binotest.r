@@ -1,8 +1,13 @@
 binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed, 
                      type = 2, emp.loop = FALSE, emp.step, ...) {
-
+  
+  # checking whether the number of p-values match with the dimensions of R.
+  if (!missing(R) && length(p) != nrow(R))
+    stop("the number of p-values to be combined does not match with the dimensions of the correlation matrix provided as R.")
+  
   adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical"))
-      
+
+  if ()  
   k <- length(p)
   r <- sum(p <= alpha)
   
@@ -28,9 +33,9 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
     if(missing(adjust))
       adjust <- "none"
       
-    # now, checking the adjust argument.
-    if(!adjust %in% c("none", "nyholt", "liji", "gao", "galwey", "empirical")) 
-      stop("adjust argument is not given correctly. Please see ?binotest for the correct options for adjust.")
+    # checking if dependence is accounted for when a correlation matrix is supplied.
+    if (adjust == "none" && !missing(R))
+      warning("although you specified a correlation matrix with argument R, you chose to assume independence with adjust == 'none'. If you want to account for dependence, please specify an adjustment method. See ?binotest for details.")
     
     if (adjust == "none") {
       
