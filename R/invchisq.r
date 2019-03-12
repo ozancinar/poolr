@@ -95,7 +95,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                                  emp.loop = emp.loop)
 
           testStat.tmp <- sum(qchisq(p, df = 1, lower.tail = FALSE))
-          pooled.p.tmp <- (sum(emp.dist >= testStat) + 1) / (size + 1)
+          pooled.p.tmp <- (sum(emp.dist >= testStat.tmp) + 1) / (size + 1)
 
           if (pooled.p.tmp > emp.step$thres[i]) {
 
