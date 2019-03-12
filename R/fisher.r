@@ -60,7 +60,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       testStat  <- -2 * sum(log(p))
       testStat  <- testStat/cval
       pooled.p  <- pchisq(testStat, df = fval, lower.tail = FALSE)
-      adjust    <- "Brown"
+      adjust    <- "generalized (Brown)"
      
     } else if (adjust == "empirical") {
       

@@ -145,6 +145,20 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
 
       }
 
+    } else if (adjust == "generalized") {
+      
+      covs <- R    
+      
+      expx2 <- k
+      varx2 <- sum(covs)
+      fval <- 2 * expx2^2 / varx2
+      cval <- varx2 / (2 * expx2)
+      
+      testStat  <- sum(qchisq(p = p, df = 1, lower.tail = FALSE))
+      testStat  <- testStat/cval
+      pooled.p  <- pchisq(testStat, df = fval, lower.tail = FALSE)
+      adjust    <- "generalized (Inverse Chi-Squared)"
+      
     }
 
   }
