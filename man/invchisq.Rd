@@ -8,13 +8,13 @@ invchisq(p, adjust = "none", m, R,
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
-   \item{adjust}{adjustment method while combining the p-values. Can be "none", as default, to use the default inverse Chi-Squared method. This method can be adjusted with a various ways to consider the dependencies between the individual p-values. First, this argument can be set to one of "nyholt", "liji", "gao", or "galwey" to use the PCA-based methods by calculating the number of effective tests. Or, it can be set to "empirical" to use an empirically-derived distribution of the test statistic under the null hypothesis.}
+   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis. Finally, this argument can be set to "generalized" to compute the combined \eqn{p}-value under dependence. For specification of covariance matrix under this selection, please see the explanation for "R" argument below.}
    \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
-   \item{R}{a symmetric matrix that includes pairwise correlations between the p-values.}
+   \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
-   \item{type}{type of the p-values used in the tests. As default, it is set to 2 for two-sided tests.}
-   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to FALSE as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch emp.loop = TRUE.}
+   \item{type}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
+   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emp.loop = TRUE}.}
    \item{emp.step}{an argument to apply a stepwise algortihm for empirically-derived null distributions. See details for further information.}
    \item{\dots}{other arguments.}
 }

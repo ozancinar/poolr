@@ -12,10 +12,27 @@ meff(R, eigen = FALSE, method, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to calculate the number of effective tests based on one of the four methods. Du to the problems arise with numerical calculations, in Li & Ji method, a small value is added to the eigen values.
+   The function can be used to calculate the effective number of tests based on one of the four methods. \code{poolR} provides four PCA-based methods to calculate the effective number of tests. In order to find the effective number of tests with any of these methods, first the eigen values based on the correlation matrix are computed where \eqn{\lambda_i} denotes the \eqn{i}th eigen-value. Then, the computations of effective number of tests based on the eigen-values are shown below. 
+
+   - Nyholt (2004): \eqn{m_\textrm{eff} = 1 + (k - 1) \left(1 - \frac{\mbox{Var}(\lambda)}{k}\right)}
+
+   where \eqn{\mbox{Var}(\lambda)} is the variance of the \eqn{k} eigenvalues.
+
+   - Li & Ji (2005): \eqn{m_\textrm{eff} = \sum_{i = 1}^k f(|\lambda_i|)}
+
+   where \eqn{f(x) = I(x \geq 1) + (x - \lfloor x \rfloor)} and \eqn{\lfloor.\rfloor} is the floor function.
+
+   - Gao et al. (2008): \eqn{m_\textrm{eff} = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C}
+
+   where \eqn{\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}} denote the eigen values in a decreasing order and \eqn{C} is a pre-defined parameter which is set to 0.995. 
+
+   - Galwey (2009): \eqn{m_\textrm{eff} = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i}\right)^2}{\sum_{i = 1}^k \lambda_i}}
+
+   In real life studies, researchers probably have the correlations among the interchanging elements or the test-statistics. For techniques to estimate the correlations among the \eqn{p}-values based on the correlation matrix at hand, please see \code{?mvnconv}. 
+
 }
 \value{
-   The function returns the number of effective tests.
+   The function returns the effective number of tests.
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr

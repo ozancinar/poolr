@@ -8,27 +8,31 @@ binotest(p, adjust = "none", m, R, alpha = 0.05,
 }
 \arguments{
    \item{p}{vector of the (one- or two-sided) \eqn{p}-values to be combined.}
-   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. One of the four PCA-based methods can be applied by setting this argument to one of \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"}. Finally, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis.}
+   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis.}
    \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. Once this argument is set to a value, the function will not use \code{adjust} and \code{R} arguments.}
-   \item{R}{a symmetric matrix that includes pairwise correlations between the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"}.}
+   \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
    \item{alpha}{significance level of the test. It is set to 0.05 as default.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
    \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
-   \item{type}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests.}
-   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is too large, we recommend you to switch \code{emp.loop = TRUE}.}
+   \item{type}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
+   \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emp.loop = TRUE}.}
    \item{emp.step}{an argument to apply a stepwise algortihm for empirically-derived null distributions. See details for further information.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to combine p-values based on a binomial distribution. It is known that p-values follows Uniform(0, 1) under the null hypothesis. Therefore, rejecting the null hypothesis (i.e., a Type I Error) is equal to \eqn{\alpha} which is conventionally set to 0.05. Then, the number of expected Type I Errors from \eqn{m} tests becomes \eqn{m \times 0.05}. If the number of rejected null hypothesis exceeds the expected value, it gives more evidence to the rejectionof the null hypotheses, which in turn gives more evidence to the rejection of the joint null hypothesis defined over the individual tests. Therefore, the a joint \eqn{p}-value can be calculated as follows:
-   
+   The function can be used to combine p-values based on a binomial distribution. It is known that \eqn{p}-values follow Uniform(0, 1) under the null hypothesis. Therefore, rejecting the null hypothesis (i.e., a Type I Error) is equal to \eqn{\alpha}. A combined \eqn{p}-value, \eqn{p}, that indicates an ``excess significance'' can then be calculated under independence as: 
+
    \eqn{p = \sum_{x = r}^m {m \choose x} \alpha^x (1 - \alpha)^{m - x}}
    
-   where \eqn{m} is the number of individual \eqn{p}-values that are smaller than \eqn{\alpha}. 
-   
-   The above approach is applied to calculate a joint \eqn{p}-value when \code{binotest} is run with default arguments (i.e., the user only needs to supply a vector of \eqn{p}-values) which assumes independence among \eqn{p}-values. Binomial test can also be adjusted with a variety of methods to account for dependence among the \eqn{p}-values. First, PCA-based methods can be applied to adjust the binomial test by calculating effective number of tests. On this aim, one of the four PCA-based methods can be used by setting this argument to one of \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}. Note that setting \code{adjust} to one of these methods will require the correlation matrix between the \eqn{p}-values which can be supplied with \code{R} argument. If the user has calculated the effective number of test prior to using this function (this value can also be calculated by a different method), it can be used to adjust the combined \eqn{p}-value by setting \code{m} argument to this value. Once this way is chosen, the user no longer needs to submit anything to \code{adjust} and \code{R} arguments. 
-   
-   Finally, the users can put empirically-derived distributions into work to calculate a combined \eqn{p}-value. In order to do this, \code{adjust} argument should be set to \code{"empirical"} which also requires a correlation matrix given to \code{R} argument. The remaining arguments can be set to desired values in order to modify the aspects of the empirical distribution that is going to be used to calculate the combined \eqn{p}-value. 
+   where \eqn{r} is the number of individual \eqn{p}-values that are smaller than \eqn{\alpha}. 
+
+   When the hypothesis tests from which the individual \eqn{p}-values have been obtained are not completely independent, this process can be modified with several techniques. First, users can utilize the effective number of tests by setting \code{adjust} argument to one of the four PCA-based methods \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"} (see \code{?meff} for details) and providing the correlation among the \eqn{p}-values (see \code{?mvnconv} for more details). Alternatively, users can provide an effective number of tests which is computed by another method by submitting this value to \code{m} argument. Note that once a user-defined effective number of tests is provided with \code{m} argument, he/she does not have to provide a correlation matrix to \code{R} argument anymore. Once the effective number of tests, \eqn{m_\textrm{eff}}, is computed, the combined \eqn{p}-value can be modified with it as:
+
+   \eqn{p = \sum_{x=\tilde{r}}^{m_{\textrm{eff}}} {m_{\textrm{eff}} \choose x} \alpha_p^x (1-\alpha_p)^{m_{\textrm{eff}}-x}}
+
+   where \eqn{\tilde{r} = \lfloor r \frac{k_{\textrm{eff}}}{k} \rfloor}. 
+
+   Alternatively, researchers can utilize the empirically-derived null distributions in order to calculate the combined \eqn{p}-value under a given correlation structure. This can be done by setting \code{adjust} to \code{"empirical"} and providing the correlation matrix to \code{R} argument. Then, the function will generate an empirical distribution of the combined \eqn{p}-values under the null hypothesis and compute a combined \eqn{p}-value using the percentiles of this distribution. In order to quicken the computations, researchers can use a stepwise algorithm. For details, please see below.
    
    \bold{Stepwise Algorithm for Empirically-Derived Null Distributions}
    
@@ -49,14 +53,40 @@ binotest(p, adjust = "none", m, R, alpha = 0.05,
 }
   
 \examples{
-p <- c(.013, .022, .124, .278)
-R <- matrix(c(1, 0.8, 0.5, -0.3,
-              0.8, 1, 0.2, 0.4,
-              0.5, 0.2, 1, -0.7,
-              -0.3, 0.4, -0.7, 1),
-              nrow = 4, byrow = TRUE)
-binotest(p)
-binotest(p, adjust = "liji", R = R)
-binotest(p, adjust = "empirical", R = R)
+
+
+# create a pseudo-correlation matrix for 10 test-statistics.
+r <- matrix(0.3, 10, 10)
+diag(r) <- 1
+
+# generating multivariate normal test-statistics with the given 
+# correlation structure. 
+set.seed(123)
+ts <- mvrnorm(n = 1, mu = rep(0, 10), Sigma = r)
+
+# computing individual one-sided p-values from the test-statistics
+# generated above.
+p1 <- pnorm(ts)
+
+# computing individual two-sided p-values from the test-statistics
+# generated above.
+p2 <- 2 * pnorm(abs(ts), lower.tail = FALSE)
+
+# default binomial test method.
+binotest(p = p1)
+binotest(p = p2)
+
+# using a PCA-based method (Li & Ji).
+binotest(p = p1, adjust = "liji", R = mvnconv(R = r, side = 1, target = "p"))
+binotest(p = p2, adjust = "liji", R = mvnconv(R = r, side = 2, target = "p"))
+
+# using empirically-derived null distributions.
+binotest(p = p1, adjust = "empirical", R = r, type = 1) 
+binotest(p = p2, adjust = "empirical", R = r)  # type = 2 as default.
+binotest(p = p2, adjust = "empirical", R = r, seed = 321)  # setting the seed for 
+                                                           # reproducibility.
+# binotest(p = p2, adjust = "empirical", R = r,
+# emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
+
 }
 \keyword{htest}
