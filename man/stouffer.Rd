@@ -88,8 +88,8 @@ stouffer(p = p2, adjust = "empirical", R = r, seed = 321)  # setting the seed fo
 # emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
 
 # computing the combined p-value under dependence.
-stouffer(p = p1, adjust = "generalized", R = r)
-stouffer(p = p2, adjust = "generalized", R = r)
+stouffer(p = p1, adjust = "generalized", R = mvnconv(R = r, side = 1, target = "z"))
+stouffer(p = p2, adjust = "generalized", R = mvnconv(R = r, side = 2, target = "z"))
 
 }
 \keyword{htest}

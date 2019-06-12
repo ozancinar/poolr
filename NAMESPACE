@@ -6,4 +6,4 @@ import(Matrix)
 import(MASS)
 importFrom("utils", "data")
 
-S3method(print, combP)
+S3method(print, combp)

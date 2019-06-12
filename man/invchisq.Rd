@@ -36,15 +36,44 @@ invchisq(p, adjust = "none", m, R,
   Jimmy Z. Liu, Allan F. Mcrae, Dale R. Nyholt, Sarah E. Medland, Naomi R. Wray, Kevin M. Brown, AMFS Investigators, Nicholas K. Hayward, Grant W. Montgomery, Peter M. Visscher, Nicholas G. Martin, and Stuart Macgregor (2010). \emph{A versatile gene-based test for genome-wide association studies}. The American Journal of Human Genetics, 87(1), 139-145.
 }
 \examples{
-p <- c(.013, .022, .124, .278)
-R <- matrix(c(1, 0.8, 0.5, -0.3,
-              0.8, 1, 0.2, 0.4,
-              0.5, 0.2, 1, -0.7,
-              -0.3, 0.4, -0.7, 1),
-              nrow = 4, byrow = TRUE)
-invchisq(p)
-invchisq(p, adjust = "galwey", R = R)
-invchisq(p, adjust = "empirical", R = R)
+
+# create a pseudo-correlation matrix for 10 test-statistics.
+r <- matrix(0.3, 10, 10)
+diag(r) <- 1
+
+# generating multivariate normal test-statistics with the given 
+# correlation structure. 
+set.seed(123)
+ts <- mvrnorm(n = 1, mu = rep(0, 10), Sigma = r)
+
+# computing individual one-sided p-values from the test-statistics
+# generated above.
+p1 <- pnorm(ts)
+
+# computing individual two-sided p-values from the test-statistics
+# generated above.
+p2 <- 2 * pnorm(abs(ts), lower.tail = FALSE)
+
+# default inverse chi-squared method.
+invchisq(p = p1)
+invchisq(p = p2)
+
+# using a PCA-based method (Li & Ji).
+invchisq(p = p1, adjust = "liji", R = mvnconv(R = r, side = 1, target = "p"))
+invchisq(p = p2, adjust = "liji", R = mvnconv(R = r, side = 2, target = "p"))
+
+# using empirically-derived null distributions.
+invchisq(p = p1, adjust = "empirical", R = r, type = 1) 
+invchisq(p = p2, adjust = "empirical", R = r)  # type = 2 as default.
+invchisq(p = p2, adjust = "empirical", R = r, seed = 321)  # setting the seed for 
+# reproducibility.
+invchisq(p = p2, adjust = "empirical", R = r,
+emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
+
+# computing the combined p-value under dependence.
+invchisq(p = p1, adjust = "generalized", R = mvnconv(R = r, side = 1, target = "chisq1"))
+invchisq(p = p2, adjust = "generalized", R = mvnconv(R = r, side = 2, target = "chisq1"))
+
 }
 \keyword{htest}
 

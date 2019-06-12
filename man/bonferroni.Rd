@@ -80,8 +80,8 @@ bonferroni(p = p1, adjust = "empirical", R = r, type = 1)
 bonferroni(p = p2, adjust = "empirical", R = r)  # type = 2 as default.
 bonferroni(p = p2, adjust = "empirical", R = r, seed = 321)  # setting the seed for 
                                                              # reproducibility.
-# bonferroni(p = p2, adjust = "empirical", R = r,
-# emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
+bonferroni(p = p2, adjust = "empirical", R = r,
+emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
 
 }
 \keyword{htest}

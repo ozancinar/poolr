@@ -1,3 +1,4 @@
+
 empirical <- function(R, method, type, size = 10000, seed, emp.loop, ...) {
   
   # match method argument
@@ -5,7 +6,7 @@ empirical <- function(R, method, type, size = 10000, seed, emp.loop, ...) {
                                 "bonferroni", "tippett"))
 
   # check type argument
-  if (!type %in% c(1, 2))
+  if(!type %in% c(1, 2))
       stop("argument 'type' must be either 1 or 2.")
   
   if(missing(emp.loop))
@@ -14,83 +15,75 @@ empirical <- function(R, method, type, size = 10000, seed, emp.loop, ...) {
   k <- nrow(R)
 
   # check that R is symmetric
-  if (!isSymmetric(R))
+  if(!isSymmetric(R))
       stop("R is not symmetric.")
 
   # checking if the correlation matrix is positive definite by testing if all 
   # eigen-values are positive.
   if(!all(eigen(R)$values > 0)) {
-    
     R <- nearPD(R)$mat
     warning("the correlation matrix is not positive definite. empirical() used Matrix::nearPD to make the correlation matrix positive definite.")
-    
   }
   
-  if (!missing(seed))
+  if(!missing(seed))
     set.seed(seed)
   
-  if (emp.loop == FALSE) {
+  if(emp.loop == FALSE) {
+    z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
     
-    Z <- mvrnorm(size, mu = rep(0, k), Sigma = R)
+    if(type == 1)
+      p <- pnorm(z, lower.tail = FALSE)
+    if(type == 2)
+      p <- 2 * pnorm(abs(z), lower.tail = FALSE)
     
-    if (type == 1)
-      P <- pnorm(Z, lower.tail = FALSE)
-    if (type == 2)
-      P <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+    if(method == "fisher")
+      emp_dist <- apply(p, 1, function(x) fisher(x)$test_stat)
     
-    if (method == "fisher")
-      emp.dist <- apply(P, 1, function(x) fisher(x)$testStat)
+    if(method == "stouffer")
+      emp_dist <- apply(p, 1, function(x) stouffer(x)$test_stat)
     
-    if (method == "stouffer")
-      emp.dist <- apply(P, 1, function(x) stouffer(x)$testStat)
+    if(method == "invchisq")
+      emp_dist <- apply(p, 1, function(x) invchisq(x)$test_stat)
     
-    if (method == "invchisq")
-      emp.dist <- apply(P, 1, function(x) invchisq(x)$testStat)
+    if(method == "binotest")
+      emp_dist <- apply(p, 1, function(x) binotest(x)$test_stat)
     
-    if (method == "binotest")
-      emp.dist <- apply(P, 1, function(x) binotest(x)$testStat)
+    if(method == "bonferroni")
+      emp_dist <- apply(p, 1, function(x) bonferroni(x)$test_stat)
     
-    if (method == "bonferroni")
-      emp.dist <- apply(P, 1, function(x) bonferroni(x)$testStat)
-    
-    if (method == "tippett")
-      emp.dist <- apply(P, 1, function(x) tippett(x)$testStat)
+    if(method == "tippett")
+      emp_dist <- apply(p, 1, function(x) tippett(x)$test_stat)
     
   } else {
     
-    emp.dist <- NULL
+    emp_dist <- NULL
     
-    for (i in 1:size) {
+    for(i in 1:size) {
+      z <- mvrnorm(1, mu = rep(0, k), Sigma = R)
       
-      Z <- mvrnorm(1, mu = rep(0, k), Sigma = R)
+      if(type == 1)
+        p <- pnorm(z, lower.tail = FALSE)
+      if(type == 2)
+        p <- 2 * pnorm(abs(z), lower.tail = FALSE)
       
-      if (type == 1)
-        P <- pnorm(Z, lower.tail = FALSE)
-      if (type == 2)
-        P <- 2 * pnorm(abs(Z), lower.tail = FALSE)
+      if(method == "fisher")
+        emp_dist <- append(emp_dist, fisher(p)$test_stat)
       
-      if (method == "fisher")
-        emp.dist <- append(emp.dist, fisher(P)$testStat)
+      if(method == "stouffer")
+        emp_dist <- append(emp_dist, stouffer(p)$test_stat)
       
-      if (method == "stouffer")
-        emp.dist <- append(emp.dist, stouffer(P)$testStat)
+      if(method == "invchisq")
+        emp_dist <- append(emp_dist, invchisq(p)$test_stat)
       
-      if (method == "invchisq")
-        emp.dist <- append(emp.dist, invchisq(P)$testStat)
+      if(method == "binotest")
+        emp_dist <- append(emp_dist, binotest(p)$test_stat)
       
-      if (method == "binotest")
-        emp.dist <- append(emp.dist, binotest(P)$testStat)
+      if(method == "bonferroni")
+        emp_dist <- append(emp_dist, bonferroni(p)$test_stat)
       
-      if (method == "bonferroni")
-        emp.dist <- append(emp.dist, bonferroni(P)$testStat)
-      
-      if (method == "tippett")
-        emp.dist <- append(emp.dist, tippett(P)$testStat)
-      
+      if(method == "tippett")
+        emp_dist <- append(emp_dist, tippett(p)$test_stat)
     }
-    
   }
-
-  return(emp.dist)
-  
+  return(emp_dist)
 }

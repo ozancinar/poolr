@@ -87,12 +87,12 @@ fisher(p = p1, adjust = "empirical", R = r, type = 1)
 fisher(p = p2, adjust = "empirical", R = r)  # type = 2 as default.
 fisher(p = p2, adjust = "empirical", R = r, seed = 321)  # setting the seed for 
                                                          # reproducibility.
-# fisher(p = p2, adjust = "empirical", R = r, 
-# emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
+fisher(p = p2, adjust = "empirical", R = r,
+emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
 
 # computing the combined p-value under dependence.
-fisher(p = p1, adjust = "generalized", R = r)
-fisher(p = p2, adjust = "generalized", R = r)
+fisher(p = p1, adjust = "generalized", R = mvnconv(R = r, side = 1, target = "m2lp"))
+fisher(p = p2, adjust = "generalized", R = mvnconv(R = r, side = 2, target = "m2lp"))
 
 }
 \keyword{htest}
