@@ -44,10 +44,10 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
   r <- R[lower.tri(R, diag=TRUE)]
 
   # round correlations to two decimals
-  r <- round(r, 3)
+  r <- round(r, 2)
 
   # replace -1 correlations with -.999
-  r[r == -1] <- -0.999
+  r[r == -1] <- -0.99
 
   # convert correlations into covariances
   covs <- matrix(NA, nrow = nrow(R), ncol = ncol(R))
