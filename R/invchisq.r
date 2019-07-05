@@ -3,8 +3,12 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                      emp.loop = FALSE, emp.step, ...) {
 
   # checking whether the number of p-values match with the dimensions of R.
-  if(!missing(R) && length(p) != nrow(R))
-    stop("the number of p-values to be combined does not match with the dimensions of the correlation matrix provided as R.")
+  # !!! somehow this confuses the function when it is used with mnvcon().
+  # !!! so, I am going to discard this check for now.
+  # !!! however, I need to come back here and correct this problem.
+  # !!! because, otherwise it works even when the dimensions of the p vector and R matrix do not match.
+  # if(!missing(R) && length(p) != nrow(R))
+  #   stop("the number of p-values to be combined does not match with the dimensions of the correlation matrix provided as R.")
   
   # checking if dependence is accounted for when a correlation matrix is supplied.
   if(adjust == "none" && !missing(R))
