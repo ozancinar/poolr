@@ -1,8 +1,4 @@
-mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
-
-  # dimension checks
-  if (!isSymmetric(R))
-    stop("R is not symmetric.")
+csconv <- function(p, target) {
   
   test_fun <- NULL
   test_fun <- try(sys.call(-1))
@@ -31,31 +27,26 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
       target <- target
     }
   }
-      
-  look <- which(c("m2lp", "z", "chisq1", "p") %in% target)
-  look <- look * 2
-  if(side == 2) {
-    look <- look + 1
+  
+  if (target == "m2lp") {
+    s <- -2 * log(p)
+    rho_est <- max(0, 1 - var(s) / 4)
+    k <- length(p)
+    covs <- matrix(rho_est * 4, k, k)
+    diag(covs) <- 4
+  } else if (target == "z") {
+    s <- qnorm(p)
+    rho_est <- max(0, 1 - var(s) / 1)
+    k <- length(p)
+    covs <- matrix(rho_est * 1, k, k)
+    diag(covs) <- 1
+  } else if (target == "chisq1") {
+    s <- qchisq(p, df = 1)
+    rho_est <- max(0, 1 - var(s) / 2)
+    k <- length(p)
+    covs <- matrix(rho_est * 2, k, k)
+    diag(covs) <- 2
   }
-
-  data(mvnlookup)
-
-  # lower triangular part of R
-  r <- R[lower.tri(R, diag=TRUE)]
-
-  # round correlations to two decimals
-  r <- round(r, 3)
-
-  # replace -1 correlations with -.999
-  r[r == -1] <- -0.999
-
-  # convert correlations into covariances
-  covs <- matrix(NA, nrow = nrow(R), ncol = ncol(R))
-  covs[lower.tri(covs, diag=TRUE)] <- mvnlookup[match(r, mvnlookup[, 1]), look]
-  covs[upper.tri(covs)] <- t(covs)[upper.tri(covs)]
-
-  if (covtocor)
-    covs <- cov2cor(covs)
-
+  
   return(covs)
 }

@@ -8,11 +8,11 @@ mvnconv(R, side = 2, target, covtocor)
 \arguments{
    \item{R}{a matrix that includes the correlations among the test statistics that follow a multivariate normal distribution.}
    \item{side}{the type of the test statistics (i.e., the test statistics are obtained from one- or two-sided tests). As default it is set to 2 for two-sided tests. Alternatively, it can bet to 1 for one-sided tests.}
-   \item{target}{the target distribution for which the covariances are calculated. It can be set to one of the three possibilities that are "m2lp", "z", or "chisq1" for Brown's method, Stouffer's method, or Chi-Square distribution with 1 df, respectively.}
+   \item{target}{the target distribution for which the covariances are calculated. It can be set to one of the three possibilities which are "m2lp", "z", or "chisq1" for Brown's method, Stouffer's method, or Chi-Square distribution with 1 df, respectively.}
    \item{covtocor}{a logical argument to convert the output covariance matrix to correlation matrix.}
 }
 \details{
-   The function can be used to convert the correaltions among the test statistics that follow a multivariate normal distribution to covariances assuming a distribution based on the method that is going to be used for combining p-values. 
+   The function can be used to convert the correlations among the test statistics that follow a multivariate normal distribution to covariances assuming a distribution based on the method that is going to be used for combining p-values. 
 }
 \value{
    The function returns the covariance (or, optionally correlation) matrix.
