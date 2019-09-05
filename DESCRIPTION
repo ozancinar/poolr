@@ -1,4 +1,4 @@
-Package: poolR
+Package: poolr
 Version: 0.1-0
 Date: 2018-07-04
 Title: Package for Pooling the Results from (Dependent) Tests

@@ -1,9 +1,9 @@
-\name{poolR-package}
-\alias{poolR-package}
-\alias{poolR}
+\name{poolr-package}
+\alias{poolr-package}
+\alias{poolr}
 \docType{package}
 \title{Package for Pooling the Results from (Dependent) Tests}
-\description{The poolR package is a collection of functions for pooling the results (usually p-values) of tests, which may possibly be dependent.
+\description{The poolr package is a collection of functions for pooling the results (usually p-values) of tests, which may possibly be dependent.
 }
 \author{Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
