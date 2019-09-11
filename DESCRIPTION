@@ -3,7 +3,7 @@ Version: 0.1-0
 Date: 2018-07-04
 Title: Package for Pooling the Results from (Dependent) Tests
 Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = c("aut")))
-Depends: R (>= 3.2.0), Matrix, MASS
+Depends: R (>= 3.5.0), Matrix, MASS
 Imports: methods, stats
 Description: Package for pooling the results from (dependent) tests.
 License: GPL (>=2)
