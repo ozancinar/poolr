@@ -28,15 +28,14 @@ empirical(R, method, type, size = 10000, seed, emp.loop, \dots)
    Mehta, C. R., & Patel, N. R. (1998). \emph{Exact inference for categorical data}. Encyclopedia of biostatistics, 2, 1411-1422.
 }
 \examples{
-p <- c(.013, .022, .124, .278)
-R <- matrix(c(1, 0.8, 0.5, -0.3,
-              0.8, 1, 0.2, 0.4,
-              0.5, 0.2, 1, -0.7,
-              -0.3, 0.4, -0.7, 1),
-              nrow = 4, byrow = TRUE)
-empirical(R, method = "fisher", type = 1)
-empirical(R, method = "fisher", type = 2)
-empirical(R, method = "fisher", type = 2, emp.loop = TRUE)
-fisher(p, adjust = "empirical", R = R, size = 1000, seed = 123)
+
+# creating an example correlation matrix with constant (positive) correlations
+R <- matrix(0.3, nrow = 4, ncol = 4); diag(R) <- 1
+
+# generating empirical distributions for fisher() with different features
+emp_tmp <- empirical(R, method = "fisher", type = 1)  # for one-sided p-values
+emp_tmp <- empirical(R, method = "fisher", type = 2)  # for two-sided p-values
+emp_tmp <- empirical(R, method = "fisher", type = 2, emp.loop = TRUE)  # using a loop
+
 }
 \keyword{htest}
