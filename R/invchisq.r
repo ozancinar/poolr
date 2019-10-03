@@ -141,7 +141,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
          
          test_stat <- sum(qchisq(p = p, df = 1, lower.tail = FALSE))
          test_stat <- test_stat / cval
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", fval, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", round(fval, 2), ")")
          pooled_p <- pchisq(test_stat, df = fval, lower.tail = FALSE)
          adjust <- "generalized (Inverse Chi-Squared)"
       }

@@ -27,7 +27,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       m <- m
       test_stat <- -2 * sum(log(p))
       test_stat <- test_stat * (m / k)
-      info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(2", m, ")")
+      info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", 2 * m, ")")
       pooled_p <- pchisq(test_stat, df = 2 * m, lower.tail = FALSE)
       adjust <- paste0("meff = ", m, " (user defined)")
       
@@ -39,14 +39,14 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       
       if (adjust == "none") {
          test_stat <- -2 * sum(log(p))
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(2", k, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", 2 * k, ")")
          pooled_p <- pchisq(test_stat, df = 2 * k, lower.tail = FALSE)
          adjust <- "none"
       } else if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
          m <- meff(R = R, method = adjust)
          test_stat <- -2 * sum(log(p))
          test_stat <- test_stat * (m / k)
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(2", m, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", 2 * m, ")")
          pooled_p <- pchisq(test_stat, df = 2 * m, lower.tail = FALSE)
          adjust <- paste0("meff = ", m, " (", adjust, ")")
       } else if (adjust == "generalized") {
@@ -58,7 +58,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
          
          test_stat <- -2 * sum(log(p))
          test_stat <- test_stat/cval
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", fval, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", round(fval, 2), ")")
          pooled_p <- pchisq(test_stat, df = fval, lower.tail = FALSE)
          adjust <- "generalized (Brown)"
       } else if (adjust == "empirical") {
@@ -102,7 +102,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                pooled_p_tmp <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                
                if (pooled_p_tmp > emp.step$thres[i]) {
-                  info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(2", k, ")")
+                  info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", 2 * k, ")")
                   pooled_p <- pooled_p_tmp
                   ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
                   adjust <- "empirical"
@@ -120,7 +120,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                comb_p_tmp <- pchisq(test_stat, df = 2 * k, lower.tail = FALSE)
                pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-               info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(2", k, ")")
+               info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", 2 * k, ")")
                adjust <- "empirical"
             }
          } else {
@@ -140,7 +140,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
             comb_p_tmp <- pchisq(test_stat, df = 2 * k, lower.tail = FALSE)
             pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
             ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-            info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(2", k, ")")
+            info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", 2 * k, ")")
             adjust <- "empirical"
          }
       }
