@@ -22,7 +22,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
    # if m is provided by the user, then we don't need to check the adjustment method.
    if (!missing(m)) {
       m <- m
-      info <- paste("number of significant individual tests:", round(r * m / k), " (adjusted with meff)")
+      info <- paste0("number of significant individual tests = ", round(r * m / k), " (adjusted with meff)")
       # test_stat <- dbinom(round(r * m / k), m, alpha)
       pooled_p <- sum(dbinom(round(r * m / k):m, m, alpha))
       adjust <- paste0("meff = ", m, " (user defined)")
@@ -33,13 +33,13 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
    
    } else {
       if (adjust == "none") {
-         info <- paste("number of significant individual tests:", r)
+         info <- paste0("number of significant individual tests = ", r)
          # test_stat <- dbinom(r, k, alpha)
          pooled_p <- sum(dbinom(r:k, k, alpha))
          adjust <- "none"
       } else if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
          m <- meff(R = R, method = adjust)
-         info <- paste("number of significant individual tests:", round(r * m / k), " (adjusted with meff)")
+         info <- paste0("number of significant individual tests ", round(r * m / k), " (adjusted with meff)")
          # test_stat <- dbinom(round(r * m / k), m, alpha)
          pooled_p <- sum(dbinom(round(r * m / k):m, m, alpha))
          adjust <- paste0("meff = ", m, " (", adjust, ")")
@@ -84,7 +84,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
                pooled_p_tmp <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                
                if (pooled_p_tmp > emp.step$thres[i]) {
-                  info <- paste("number of significant individual tests:", r)
+                  info <- paste0("number of significant individual tests = ", r)
                   # test_stat <- comb_p_tmp
                   pooled_p <- pooled_p_tmp
                   ci <- as.numeric(binom.test(sum(emp_dist <= comb_p_tmp) + 1, size + 1)$conf.int)
@@ -103,7 +103,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
                comb_p_tmp <- sum(dbinom(r:k, k, alpha))
                pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                ci <- as.numeric(binom.test(sum(emp_dist <= pooled_p) + 1, size + 1)$conf.int)
-               info <- paste("number of significant individual tests:", r)
+               info <- paste0("number of significant individual tests = ", r)
                # test_stat <- comb_p_tmp
                adjust <- "empirical"
             }
@@ -123,7 +123,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
             comb_p_tmp <- sum(dbinom(r:k, k, alpha))
             pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
             ci <- as.numeric(binom.test(sum(emp_dist <= comb_p_tmp) + 1, size + 1)$conf.int)
-            info <- paste("number of significant individual tests:", r)
+            info <- paste0("number of significant individual tests = ", r)
             # test_stat <- comb_p_tmp
             adjust <- "empirical"
          }
@@ -131,9 +131,9 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, seed,
    }
    
    if (exists("ci")) {
-      res <- list(p = pooled_p, ci = ci, info = info, adjust = adjust)
+      res <- list(p = pooled_p, ci = ci, adjust = adjust, info = info)
    } else {
-      res <- list(p = pooled_p, info = info, adjust = adjust)
+      res <- list(p = pooled_p, adjust = adjust, info = info)
    }
    
    class(res) <- "combp"

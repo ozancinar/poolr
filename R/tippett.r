@@ -22,7 +22,7 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
    if (!missing(m)) {
       m <- m
       pooled_p <- 1 - (1 - min(p))^m
-      info <- paste("minimum individual p-value:", min(p))
+      info <- paste0("minimum individual p-value = ", round(min(p), 3))
       # test_stat <- 1 - (1 - min(p))^m
       adjust <- paste0("meff = ", m, " (user defined)")
       
@@ -34,13 +34,13 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       if (adjust == "none") {
          # test_stat <- 1 - (1 - min(p))^k
          pooled_p <- 1 - (1 - min(p))^k
-         info <- paste("minimum individual p-value:", min(p))
+         info <- paste0("minimum individual p-value = ", round(min(p), 3))
          adjust <- "none"
       } else if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
          m <- meff(R = R, method = adjust)
          # test_stat <- 1 - (1 - min(p))^m
          pooled_p <- 1 - (1 - min(p))^m
-         info <- paste("minimum individual p-value:", min(p))
+         info <- paste0("minimum individual p-value = ", round(min(p), 3))
          adjust <- paste0("meff = ", m, " (", adjust, ")")
       } else if (adjust == "empirical") {
          # checking if the user wants to use a stepwise algorithm for empirical 
@@ -84,7 +84,7 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                pooled_p_tmp  <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                
                if (pooled_p_tmp > emp.step$thres[i]) {
-                  info <- paste("minimum individual p-value:", min(p))
+                  info <- paste0("minimum individual p-value = ", round(min(p), 3))
                   # test_stat <- comb_p_tmp
                   pooled_p <- pooled_p_tmp
                   adjust <- "empirical"
@@ -102,7 +102,7 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                comb_p_tmp  <- 1 - (1 - min(p))^k
                pooled_p  <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                ci <- as.numeric(binom.test(sum(emp_dist <= comb_p_tmp) + 1, size + 1)$conf.int)
-               info <- paste("minimum individual p-value:", min(p))
+               info <- paste0("minimum individual p-value = ", round(min(p), 3))
                # test_stat <- pooled_p
                adjust <- "empirical"
             }
@@ -122,7 +122,7 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
             comb_p_tmp <- 1 - (1 - min(p))^k
             pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
             ci <- as.numeric(binom.test(sum(emp_dist <= comb_p_tmp) + 1, size + 1)$conf.int)
-            info <- paste("minimum individual p-value:", min(p))
+            info <- paste0("minimum individual p-value = ", round(min(p), 3))
             # test_stat <- pooled_p
             adjust <- "empirical"
          }
@@ -130,9 +130,9 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
    }
    
    if (exists("ci")) {
-      res <- list(p = pooled_p, ci = ci, info = info, adjust = adjust)
+      res <- list(p = pooled_p, ci = ci, adjust = adjust, info = info)
    } else {
-      res <- list(p = pooled_p, info = info, adjust = adjust)
+      res <- list(p = pooled_p, adjust = adjust, info = info)
    }
    
    class(res) <- "combp"

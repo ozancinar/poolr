@@ -27,7 +27,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       m <- m
       test_stat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
       test_stat <- test_stat * (m / k)
-      info <- paste0("test statisic: ", test_stat, " ~ chi-square(", m, ")")
+      info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", m, ")")
       pooled_p <- pchisq(test_stat, df = m, lower.tail = FALSE)
       adjust <- paste0("meff = ", m, " (user defined)")
       
@@ -38,14 +38,14 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
    } else {
       if (adjust == "none") {
          test_stat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
-         info <- paste0("test statisic: ", test_stat, " ~ chi-square(", k, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", k, ")")
          pooled_p <- pchisq(test_stat, df = k, lower.tail = FALSE)
          adjust <- "none"
       } else if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
          m <- meff(R = R, method = adjust)
          test_stat <- sum(qchisq(p, df = 1, lower.tail = FALSE))
          test_stat <- test_stat * (m / k)
-         info <- paste0("test statisic: ", test_stat, " ~ chi-square(", m, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", m, ")")
          pooled_p <- pchisq(test_stat, df = m, lower.tail = FALSE)
          adjust <- paste0("meff = ", m, " (", adjust, ")")
       } else if (adjust == "empirical") {
@@ -91,7 +91,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                
                if (pooled_p_tmp > emp.step$thres[i]) {
                   # test_stat <- comb_p_tmp
-                  info <- paste0("test statisic: ", test_stat, " ~ chi-square(", k, ")")
+                  info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", k, ")")
                   pooled_p <- pooled_p_tmp
                   ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
                   adjust <- "empirical"
@@ -109,7 +109,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                comb_p_tmp <- pchisq(test_stat, df = k, lower.tail = FALSE)
                pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-               info <- paste0("test statisic: ", test_stat, " ~ chi-square(", k, ")")
+               info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", k, ")")
                adjust <- "empirical"
             }
          } else {
@@ -129,7 +129,7 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
             comb_p_tmp <- pchisq(test_stat, df = k, lower.tail = FALSE)
             pooled_p  <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
             ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-            info <- paste0("test statisic: ", test_stat, " ~ chi-square(", k, ")")
+            info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", k, ")")
             adjust <- "empirical"
          }
       } else if (adjust == "generalized") {
@@ -141,16 +141,16 @@ invchisq <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
          
          test_stat <- sum(qchisq(p = p, df = 1, lower.tail = FALSE))
          test_stat <- test_stat / cval
-         info <- paste0("test statisic: ", test_stat, " ~ chi-square(", fval, ")")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ chi-square(", fval, ")")
          pooled_p <- pchisq(test_stat, df = fval, lower.tail = FALSE)
          adjust <- "generalized (Inverse Chi-Squared)"
       }
    }
    
    if (exists("ci")) {
-      res <- list(p = pooled_p, ci = ci, info = info, adjust = adjust)
+      res <- list(p = pooled_p, ci = ci, adjust = adjust, info = info)
    } else {
-      res <- list(p = pooled_p, info = info, adjust = adjust)
+      res <- list(p = pooled_p, adjust = adjust, info = info)
    }
    
    class(res) <- "combp"

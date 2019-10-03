@@ -27,7 +27,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
       m <- m
       test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
       test_stat <- test_stat * sqrt(m / k)
-      info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+      info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
       pooled_p <- pnorm(test_stat, lower.tail = FALSE)
       adjust <- paste0("meff = ", m, " (user defined)")
       
@@ -38,19 +38,19 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
    } else {
       if (adjust == "none") {
          test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-         info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
          pooled_p <- pnorm(test_stat, lower.tail = FALSE)
          adjust <- "none"
       } else if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
          m <- meff(R = R, method = adjust)
          test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
          test_stat <- test_stat * sqrt(m / k)
-         info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
          pooled_p <- pnorm(test_stat, lower.tail = FALSE)
          adjust <- paste0("meff = ", m, " (", adjust, ")")
       } else if (adjust == "generalized") {
          test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(sum(R))
-         info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+         info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
          pooled_p <- pnorm(test_stat, lower.tail = FALSE)
          adjust <- "generalized (Strube)"
       } else if (adjust == "empirical") {
@@ -94,7 +94,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                pooled_p_tmp  <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                
                if (pooled_p_tmp > emp.step$thres[i]) {
-                  info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+                  info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
                   # test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
                   pooled_p <- pooled_p_tmp
                   ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
@@ -113,7 +113,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
                comb_p_tmp <- pnorm(test_stat, lower.tail = FALSE)
                pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
                ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-               info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+               info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
                adjust <- "empirical"
             }
          } else {
@@ -133,16 +133,16 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2,
             comb_p_tmp <- pnorm(test_stat, lower.tail = FALSE)
             pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
             ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-            info <- paste0("test statisic: ", test_stat, " ~ N(0, 1)")
+            info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
             adjust <- "empirical"
          }
       }
    }
    
    if (exists("ci")) {
-      res <- list(p = pooled_p, ci = ci, info = info, adjust = adjust)
+      res <- list(p = pooled_p, ci = ci, adjust = adjust, info = info)
    } else {
-      res <- list(p = pooled_p, info = info, adjust = adjust)
+      res <- list(p = pooled_p, adjust = adjust, info = info)
    }
    
    class(res) <- "combp"
