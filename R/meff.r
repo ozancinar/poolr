@@ -1,4 +1,3 @@
-
 meff <- function(R, eigen = FALSE, method, ...) {
   
    # match method argument
