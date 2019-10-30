@@ -1,10 +1,24 @@
+mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
-mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
+   # check if 'R' is specified
+   if (missing(R))
+      stop("Argument 'R' must be specified.", call.=FALSE)
 
-   # check that R is symmetric
+   # get name of calling function (NULL if called from global environment)
+   call.fun <- sys.call(-1)[1]
 
-   if (!isSymmetric(R))
-      stop("R is not symmetric.")
+   # if mvnconv() is called inside one of the poolr functions, check that 'R' is a symmetric matrix
+
+   if (!is.null(call.fun)) {
+
+      call.fun <- as.character(call.fun)
+
+      if (call.fun %in% c("fisher", "invchisq", "stouffer", "bonferroni", "tippett", "binotest")) {
+         if (!is.matrix(R) || !isSymmetric(unname(R)))
+            stop("Argument 'R' must be a symmetric matrix.")
+      }
+
+   }
 
    # checks for 'side' argument
 
@@ -14,13 +28,10 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
    if (!(side %in% c(1,2)))
       stop("Argument 'side' must be either 1 or 2.")
 
-   # get name of calling function (NULL if called from global environment)
+   if (is.null(call.fun)) {
 
-   call_fun <- sys.call(-1)[1]
+      # when calling mvnconv() from global environment, must specify 'target'
 
-   if (is.null(call_fun)) {
-
-      # when calling from global environment, must specify 'target'
       if (missing(target))
          stop("Argument 'target' must be specified.")
 
@@ -28,16 +39,16 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
 
       if (missing(target)) {
 
-         call_fun <- as.character(call_fun)
+         call.fun <- as.character(call.fun)
 
-         if (!(call_fun %in% c("fisher", "stouffer", "invchisq")))
+         if (!(call.fun %in% c("fisher", "stouffer", "invchisq")))
             stop("Argument 'target' must be specified.")
 
-         if (call_fun == "fisher")
+         if (call.fun == "fisher")
             target <- "m2lp"
-         if (call_fun == "stouffer")
+         if (call.fun == "stouffer")
             target <- "z"
-         if (call_fun == "invchisq")
+         if (call.fun == "invchisq")
             target <- "chisq1"
 
       }
@@ -54,22 +65,32 @@ mvnconv <- function(R, side = 2, target, covtocor = FALSE) {
    if (side == 2)
       column <- column + 1
 
-   # get lower triangular part of R
-   r <- R[lower.tri(R, diag=TRUE)]
+   # round elements in 'R' to two decimals (since mvnlookup[,1] values are in .01 steps)
+   R <- round(R, 2)
 
-   # round correlations to two decimals
-   r <- round(r, 2)
+   # replace -1 elements in 'R' with -0.99
+   R[R == -1] <- -0.99
 
-   # replace -1 correlations with -0.99
-   r[r == -1] <- -0.99
+   mvnlookup <- get(data(mvnlookup, package="poolr", envir = environment()))
 
-   # convert correlations into covariances for the chosen target
-   covs <- matrix(NA, nrow = nrow(R), ncol = ncol(R))
-   covs[lower.tri(covs, diag=TRUE)] <- poolr::mvnlookup[match(r, poolr::mvnlookup[, 1]), column]
-   covs[upper.tri(covs)] <- t(covs)[upper.tri(covs)]
+   if (is.matrix(R)) {
 
-   if (covtocor)
-      covs <- cov2cor(covs)
+      # get lower triangular part of R
+      r <- R[lower.tri(R, diag=TRUE)]
+
+      # convert correlations to covariances for the chosen target
+      covs <- matrix(NA, nrow = nrow(R), ncol = ncol(R))
+      covs[lower.tri(covs, diag=TRUE)] <- mvnlookup[match(r, mvnlookup[,1]), column]
+      covs[upper.tri(covs)] <- t(covs)[upper.tri(covs)]
+
+      if (cov2cor)
+         covs <- stats::cov2cor(covs)
+
+   } else {
+
+      covs <- mvnlookup[match(R, mvnlookup[,1]), column]
+
+   }
 
    return(covs)
 

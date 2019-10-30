@@ -1,9 +1,9 @@
 \name{meff}
 \alias{meff}
-\title{Number of Effective Tests}
-\description{Function to calculate the number of effective tests based on one of the four methods.}
+\title{Calculate the Number of Effective Tests}
+\description{Calculate the number of effective tests.}
 \usage{
-meff(R, eigen = FALSE, method, \dots)
+meff(R, eigen, method, \dots)
 }
 \arguments{
    \item{R}{main input for the function. It can be a matrix for which the number of effective tests is calculated. Or, it can be pre-calculated eigenvalues of the matrix. If this is the case, the second argument eigen should be TRUE.}
@@ -12,7 +12,7 @@ meff(R, eigen = FALSE, method, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to calculate the effective number of tests based on one of the four methods. \code{poolR} provides four PCA-based methods to calculate the effective number of tests. In order to find the effective number of tests with any of these methods, first the eigen values based on the correlation matrix are computed where \eqn{\lambda_i} denotes the \eqn{i}th eigen-value. Then, the computations of effective number of tests based on the eigen-values are shown below. 
+   The function can be used to calculate the effective number of tests based on one of four methods. \code{poolR} provides four PCA-based methods to calculate the effective number of tests. In order to find the effective number of tests with any of these methods, first the eigen values based on the correlation matrix are computed where \eqn{\lambda_i} denotes the \eqn{i}th eigen-value. Then, the computations of effective number of tests based on the eigen-values are shown below.
 
    - Nyholt (2004): \eqn{m_\textrm{eff} = 1 + (k - 1) \left(1 - \frac{\mbox{Var}(\lambda)}{k}\right)}
 
@@ -24,11 +24,11 @@ meff(R, eigen = FALSE, method, \dots)
 
    - Gao et al. (2008): \eqn{m_\textrm{eff} = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C}
 
-   where \eqn{\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}} denote the eigen values in a decreasing order and \eqn{C} is a pre-defined parameter which is set to 0.995. 
+   where \eqn{\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}} denote the eigen values in a decreasing order and \eqn{C} is a pre-defined parameter which is set to 0.995.
 
    - Galwey (2009): \eqn{m_\textrm{eff} = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i}\right)^2}{\sum_{i = 1}^k \lambda_i}}
 
-   In real life studies, researchers probably have the correlations among the interchanging elements or the test-statistics. For techniques to estimate the correlations among the \eqn{p}-values based on the correlation matrix at hand, please see \code{?mvnconv}. 
+   In real life studies, researchers probably have the correlations among the interchanging elements or the test-statistics. For techniques to estimate the correlations among the \eqn{p}-values based on the correlation matrix at hand, please see \code{?mvnconv}.
 
 }
 \value{

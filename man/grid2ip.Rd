@@ -3,15 +3,11 @@
 \alias{grid2ip}
 \title{LD matrix and p-values from gene GRID2IP}
 \description{Linkage Disequilibrium (LD) matrix among the single-nucleotide polymorphisms (SNPs) in gene GRID2IP and p-values of these SNPs (Van Assche et al. 2017).}
-
-\usage{
-	data(grid2ip)
-}
-
+\usage{grid2ip}
 \format{The data frame contains the following objects:
 \tabular{lll}{
-	\bold{ld_mat}     	\tab \code{matrix}  	\tab LD matrix \cr
-	\bold{p_vals}   	\tab \code{numeric} 	\tab p-values \cr
+   \bold{ld_mat} \tab \code{matrix}  \tab LD matrix \cr
+   \bold{p_vals} \tab \code{numeric} \tab p-values \cr
 }
 }
 \details{

@@ -5,10 +5,11 @@
    Print method for objects of class \code{"combp"}.
 }
 \usage{
-\method{print}{combp}(x, \dots)
+\method{print}{combp}(x, digits=3, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"combp"}.}
+   \item{digits}{integer.}
    \item{\dots}{other arguments.}
 }
 \details{

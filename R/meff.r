@@ -1,57 +1,64 @@
-meff <- function(R, eigen = FALSE, method, ...) {
-  
-   # match method argument
+meff <- function(R, eigen, method, ...) {
+
+   # match 'method' argument
    method <- match.arg(method, c("nyholt", "liji", "gao", "galwey"))
-   
-   if (eigen) {
-      # can pass eigenvalues directly to function if eigen is TRUE
-      
-      if (!class(R) %in% c("numeric", "integer"))
-         stop("eigenvalues are not numeric or integer.")
-      
-      evs <- R
-      abs_evs <- abs(evs)
-   } else {
-      # check that R is symmetric
-      if (!isSymmetric(R))
-         stop("R is not symmetric.")
-      
+
+   if (missing(eigen)) {
+
+      # check if 'R' is specified
+      if (missing(R))
+         stop("Argument 'R' must be specified.", call.=FALSE)
+
+      # check that 'R' is a symmetric matrix
+      if (!is.matrix(R) || !isSymmetric(unname(R)))
+         stop("Argument 'R' must be a symmetric matrix.", call.=FALSE)
+
       # ensure that the correlation matrix is positive semi-definite
-      #R <- as.matrix(nearPD(R)$mat)
-      
-      # get eigenvalues and absolute eigenvalues of R matrix
-      evs <- eigen(R)$values
-      abs_evs <- abs(evs)
+      #R <- as.matrix(Matrix::nearPD(R)$mat)
+
+      # get eigenvalues and absolute eigenvalues of 'R' matrix
+      evs <- base::eigen(R)$values
+
+   } else {
+
+      # can pass eigenvalues directly to function via 'eigen'
+
+      if (!is.vector(eigen) || !is.numeric(eigen))
+         stop("Argument 'eigen' must be a numeric vector.", call.=FALSE)
+
+      evs <- eigen
+
    }
-   
-   k <- length(evs)
-   
+
+   abs.evs <- abs(evs)
+
    if (method == "nyholt") {
       # effective number of tests (based on Nyholt, 2004)
+      k <- length(evs)
       m <- 1 + (k - 1) * (1 - var(evs) / k)
    }
-   
+
    if (method == "liji") {
       # effective number of tests (based on Li & Ji, 2005)
       # adding a small value to the eigenvalues to overcome numerical imprecisions
-      abs_evs <- abs_evs + sqrt(.Machine$double.eps)
-      m <- sum(ifelse(abs_evs >= 1, 1, 0) + (abs_evs - floor(abs_evs)))
+      abs.evs <- abs.evs + sqrt(.Machine$double.eps)
+      m <- sum(ifelse(abs.evs >= 1, 1, 0) + (abs.evs - floor(abs.evs)))
    }
-   
+
    if (method == "gao") {
       # effective number of tests (based on Gao, 2008)
-      m <- which(cumsum(sort(abs_evs, decreasing = TRUE)) / sum(abs_evs) > 0.995)[1]
+      m <- which(cumsum(sort(abs.evs, decreasing = TRUE)) / sum(abs.evs) > 0.995)[1]
    }
-   
+
    if (method == "galwey") {
       # effective number of tests (based on Galwey, 2009)
       evs[evs < 0] <- 0
       m <- sum(sqrt(evs))^2 / sum(evs)
    }
-   
-   # always round down estimated value
+
+   # always round down the estimated value
    m <- floor(m)
-   
+
    return(m)
 
 }

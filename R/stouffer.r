@@ -1,151 +1,109 @@
-
-stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, type = 2, 
+stouffer <- function(p, adjust = "none", m, R, size = 10000, seed, side = 2,
                      emp.loop = FALSE, emp.step, ...) {
 
-   # checking whether the number of p-values match with the dimensions of R.
-   # !!! somehow this confuses the function when it is used with mnvcon().
-   # !!! so, I am going to discard this check for now.
-   # !!! however, I need to come back here and correct this problem.
-   # !!! because, otherwise it works even when the dimensions of the p vector and R matrix do not match.
-   # if(!missing(R) && length(p) != nrow(R))
-   #   stop("the number of p-values to be combined does not match with the dimensions of the correlation matrix provided as R.")
-   
-   # checking if dependence is accounted for when a correlation matrix is supplied.
-   if (adjust == "none" && !missing(R))
-      warning("although you specified a correlation matrix with argument R, you chose to assume independence with adjust == 'none'. If you want to account for dependence, please specify an adjustment method. See ?bonferroni for details.")
-   
-   # if the adjust is not given, it will be set to "none".
-   if (missing(adjust)) 
-      adjust <- "none"
-   
-   adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
-   
+   # checks for 'p' argument
+   .check.p(p)
+
    k <- length(p)
-   
-   # if m is provided by the user, then we don't need to check the adjustment method.
-   if (!missing(m)) {
-      m <- m
-      test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-      test_stat <- test_stat * sqrt(m / k)
-      info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-      pooled_p <- pnorm(test_stat, lower.tail = FALSE)
-      adjust <- paste0("meff = ", m, " (user defined)")
-      
-      # warning the user if the user-defined m is larger than the number of p-values.
-      if (m > k)
-         warning("the user-defined effective number of test is larger than the number of p-values that were combined.")
-   
+
+   # match 'adjust' argument
+   adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+
+   # if m is specified, apply effective number of test adjustment with user-defined m
+   if (!missing(m))
+      adjust <- "user"
+
+   # get name of function
+   fun <- as.character(sys.call()[1])
+
+   if (missing(R)) {
+
+      # check if 'R' is specified when using an adjustment method (does not apply to "user")
+      if (adjust %in% c("nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+         stop("Argument 'R' must be specified when using an adjustment method.")
+
    } else {
-      if (adjust == "none") {
-         test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-         pooled_p <- pnorm(test_stat, lower.tail = FALSE)
-         adjust <- "none"
-      } else if (adjust %in% c("nyholt", "liji", "gao", "galwey")) {
+
+      R # force evaluation of 'R' argument, so that R=mvnconv(R) works
+
+      # checks for 'R' argument
+      .check.R(R, k = k, adjust = adjust, fun = fun)
+
+   }
+
+   # compute test statistic
+   statistic <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
+
+   # set some defaults
+   ci <- NULL
+   m <- k
+
+   if (adjust == "none") {
+
+      pval <- pnorm(statistic, lower.tail = FALSE)
+
+   }
+
+   if (adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
+
+      if (adjust != "user") {
          m <- meff(R = R, method = adjust)
-         test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-         test_stat <- test_stat * sqrt(m / k)
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-         pooled_p <- pnorm(test_stat, lower.tail = FALSE)
-         adjust <- paste0("meff = ", m, " (", adjust, ")")
-      } else if (adjust == "generalized") {
-         test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(sum(R))
-         info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-         pooled_p <- pnorm(test_stat, lower.tail = FALSE)
-         adjust <- "generalized (Strube)"
-      } else if (adjust == "empirical") {
-         # checking if the user wants to use a stepwise algorithm for empirical adjustment.
-         if (!missing(emp.step)) {
-            # checking if emp.step is a list.
-            if (!is.list(emp.step))
-               stop("emp.dist should be a list.")
-            
-            # checking if there are two vectors in the emp.step.
-            if (!length(emp.step) == 2)
-               stop("emp.dist should include two lists. Please see ?stouffer.")
-            
-            # checking if the lengths of the vectors in the emp.step are correct.
-            if (!(length(emp.step[[1]]) - length(emp.step[[2]])) %in% c(-1, 1))
-               stop("the lengths of the vectors in emp.step are not correct. Please see ?stouffer.")
-            
-            # checking if the vectors have names.
-            if (is.null(names(emp.step))) {
-               # if they don't have names, they will be named.
-               names(emp.step)[which.max(unlist(lapply(emp.step, length)))] <- "size"
-               names(emp.step)[which.min(unlist(lapply(emp.step, length)))] <- "thres"
-            } else {
-               # if the names of the vectors are not correct, they will be corrected.
-               if (!all(names(emp.step) %in% c("size", "thres"))) {
-                  names(emp.step)[which.max(unlist(lapply(emp.step, length)))] <- "size"
-                  names(emp.step)[which.min(unlist(lapply(emp.step, length)))] <- "thres"
-               }
-            }
-            # setting the seed before starting to generate sets to obtain mutually exclusive sets.
-            if (!missing(seed))
-               set.seed(seed)
-            
-            for (i in 1:length(emp.step$thres)) {
-               size <- emp.step$size[i]
-               emp_dist <- empirical(R = R, method = "stouffer", type = type, 
-                                     size = size, emp.loop = emp.loop)
-               
-               test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-               comb_p_tmp <- pnorm(test_stat, lower.tail = FALSE)
-               pooled_p_tmp  <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
-               
-               if (pooled_p_tmp > emp.step$thres[i]) {
-                  info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-                  # test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-                  pooled_p <- pooled_p_tmp
-                  ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-                  adjust <- "empirical"
-                  break
-               }
-            }
-            # if the threshold could not be achieved in the loop, then we are going
-            # to use the largest sample size. 
-            if (!exists("pooled_p")) {
-               size <- tail(emp.step$size, n = 1)
-               emp_dist <- empirical(R = R, method = "stouffer", type = type, 
-                                     size = size, seed = seed, emp.loop = emp.loop)
-               
-               test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-               comb_p_tmp <- pnorm(test_stat, lower.tail = FALSE)
-               pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
-               ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-               info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-               adjust <- "empirical"
-            }
-         } else {
-            tmp <- list(...)
-            
-            # if an empirical distribution is not provided by the user, we will use 
-            # empirical() to generate an empirical distribution.
-            if (is.null(tmp$emp.dis)) {
-               emp_dist <- empirical(R = R, method = "stouffer", type = type, 
-                                     size = size, seed = seed, emp.loop = emp.loop)
-               
-            } else { # otherwise, the function will use the user-given empirical distribution.
-               emp_dist <- tmp$emp.dist
-            }
-            
-            test_stat <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
-            comb_p_tmp <- pnorm(test_stat, lower.tail = FALSE)
-            pooled_p <- (sum(emp_dist <= comb_p_tmp) + 1) / (size + 1)
-            ci <- as.numeric(binom.test((sum(emp_dist <= comb_p_tmp) + 1), (size + 1))$conf.int)
-            info <- paste0("test statisic = ", round(test_stat, 3), " ~ N(0, 1)")
-            adjust <- "empirical"
-         }
+      } else {
+         # warn the user if the user-defined m is larger than the number of p-values
+         if (m > k)
+            warning("User-defined effective number of tests is larger than the number of p-values.")
       }
+
+      statistic <- statistic * sqrt(m / k)
+      pval <- pnorm(statistic, lower.tail = FALSE)
+
    }
-   
-   if (exists("ci")) {
-      res <- list(p = pooled_p, ci = ci, adjust = adjust, info = info)
-   } else {
-      res <- list(p = pooled_p, adjust = adjust, info = info)
+
+   if (adjust == "generalized") {
+
+      statistic <- statistic * sqrt(k) / sqrt(sum(R))
+      pval <- pnorm(statistic, lower.tail = FALSE)
+
    }
-   
+
+   if (adjust == "empirical") {
+
+      tmp <- list(...)
+
+      # checks/fixes for 'emp.step' argument
+      emp.step <- .check.emp.step(emp.step, size = size, tmp = tmp)
+
+      # observed pooled p-value
+      pval.obs <- pnorm(statistic, lower.tail = FALSE)
+
+      for (i in 1:length(emp.step$size)) {
+
+         if (!is.null(tmp$verbose) && tmp$verbose)
+            cat("Size:", emp.step$size[i], " Threshold:", emp.step$thres[i], "\n")
+
+         size <- emp.step$size[i]
+
+         if (is.null(tmp$emp.dist)) {
+            emp.dist <- empirical(R = R, method = fun, side = side,
+                                  size = size, seed = seed, emp.loop = emp.loop)
+         } else {
+            emp.dist <- tmp$emp.dist
+         }
+
+         pval <- (sum(emp.dist <= pval.obs) + 1) / (size + 1)
+
+         if (pval >= emp.step$thres[i]) {
+            ci <- as.numeric(binom.test((sum(emp.dist <= pval.obs) + 1), (size + 1))$conf.int)
+            break
+         }
+
+      }
+
+   }
+
+   res <- list(p = pval, ci = ci, k = k, m = m, fun = fun, adjust = adjust, statistic = statistic)
+
    class(res) <- "combp"
    return(res)
-   
+
 }
