@@ -1,4 +1,4 @@
-empirical <- function(R, method, side, size = 10000, seed, emp.loop = FALSE, ...) {
+empirical <- function(R, method, side, size = 10000, emp.loop = FALSE, ...) {
 
    # check if 'R' is specified
    if (missing(R))
@@ -21,10 +21,6 @@ empirical <- function(R, method, side, size = 10000, seed, emp.loop = FALSE, ...
       warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
    }
 
-   # set seed if specified
-   if (!missing(seed))
-      set.seed(seed)
-
    mu <- rep(0, nrow(R))
 
    if (!emp.loop) {
@@ -37,27 +33,14 @@ empirical <- function(R, method, side, size = 10000, seed, emp.loop = FALSE, ...
       if (side == 2)
          p <- 2 * pnorm(abs(z), lower.tail = FALSE)
 
-      if (method == "fisher")
-         emp.dist <- apply(p, 1, function(x) fisher(x)$p)
-
-      if (method == "stouffer")
-         emp.dist <- apply(p, 1, function(x) stouffer(x)$p)
-
-      if (method == "invchisq")
-         emp.dist <- apply(p, 1, function(x) invchisq(x)$p)
-
-      if (method == "binotest")
-         emp.dist <- apply(p, 1, function(x) binotest(x)$p)
-
-      if (method == "bonferroni")
-         emp.dist <- apply(p, 1, function(x) bonferroni(x)$p)
-
-      if (method == "tippett")
-         emp.dist <- apply(p, 1, function(x) tippett(x)$p)
+      #emp.dist <- apply(p, 1, function(x) do.call(method, list(x))$p)
+      emp.dist <- eval(parse(text=paste0("apply(p, 1, function(x) ", method, "(x)$p)")))
 
    } else {
 
       emp.dist <- rep(NA_real_, size)
+
+      fcall <- parse(text=paste0(method, "(p)$p"))
 
       for (i in 1:size) {
 
@@ -69,23 +52,7 @@ empirical <- function(R, method, side, size = 10000, seed, emp.loop = FALSE, ...
          if (side == 2)
             p <- 2 * pnorm(abs(z), lower.tail = FALSE)
 
-         if (method == "fisher")
-            emp.dist[i] <- fisher(p)$p
-
-         if (method == "stouffer")
-            emp.dist[i] <- stouffer(p)$p
-
-         if (method == "invchisq")
-            emp.dist[i] <- invchisq(p)$p
-
-         if (method == "binotest")
-            emp.dist[i] <- binotest(p)$p
-
-         if (method == "bonferroni")
-            emp.dist[i] <- bonferroni(p)$p
-
-         if (method == "tippett")
-            emp.dist[i] <- tippett(p)$p
+         emp.dist[i] <- eval(fcall)
 
       }
 

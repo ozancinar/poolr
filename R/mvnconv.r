@@ -7,27 +7,6 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    # get name of calling function (NULL if called from global environment)
    call.fun <- sys.call(-1)[1]
 
-   # if mvnconv() is called inside one of the poolr functions, check that 'R' is a symmetric matrix
-
-   if (!is.null(call.fun)) {
-
-      call.fun <- as.character(call.fun)
-
-      if (call.fun %in% c("fisher", "invchisq", "stouffer", "bonferroni", "tippett", "binotest")) {
-         if (!is.matrix(R) || !isSymmetric(unname(R)))
-            stop("Argument 'R' must be a symmetric matrix.")
-      }
-
-   }
-
-   # checks for 'side' argument
-
-   if (length(side) != 1)
-      stop("Argument 'side' must be of length 1.")
-
-   if (!(side %in% c(1,2)))
-      stop("Argument 'side' must be either 1 or 2.")
-
    if (is.null(call.fun)) {
 
       # when calling mvnconv() from global environment, must specify 'target'
@@ -37,9 +16,16 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    } else {
 
-      if (missing(target)) {
+      # if mvnconv() is called inside one of the poolr functions, check that 'R' is a symmetric matrix
 
-         call.fun <- as.character(call.fun)
+      call.fun <- as.character(call.fun)
+
+      if (call.fun %in% c("fisher", "invchisq", "stouffer", "bonferroni", "tippett", "binotest")) {
+         if (!is.matrix(R) || !isSymmetric(unname(R)))
+            stop("Argument 'R' must be a symmetric matrix.")
+      }
+
+      if (missing(target)) {
 
          if (!(call.fun %in% c("fisher", "stouffer", "invchisq")))
             stop("Argument 'target' must be specified.")
@@ -54,6 +40,14 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       }
 
    }
+
+   # checks for 'side' argument
+
+   if (length(side) != 1)
+      stop("Argument 'side' must be of length 1.")
+
+   if (!(side %in% c(1,2)))
+      stop("Argument 'side' must be either 1 or 2.")
 
    column <- pmatch(target, c("m2lp", "z", "chisq1", "p"))
 
@@ -89,6 +83,11 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    } else {
 
       covs <- mvnlookup[match(R, mvnlookup[,1]), column]
+
+      if (cov2cor) {
+         var <- tail(mvnlookup[,column], 1)
+         covs <- covs / var
+      }
 
    }
 

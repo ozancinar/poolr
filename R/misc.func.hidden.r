@@ -34,13 +34,27 @@
 
 }
 
-.check.emp.step <- function(emp.step, size, tmp) {
+.check.m <- function(R, adjust, m, k) {
+
+   if (adjust != "user") {
+      m <- meff(R = R, method = adjust)
+   } else {
+      # warn the user if the user-defined m is larger than the number of p-values
+      if (m > k)
+         warning("User-defined effective number of tests is larger than the number of p-values.")
+   }
+
+   return(m)
+
+}
+
+.check.emp.step <- function(emp.step, size, ddd) {
 
    # get name of calling function
    call.fun <- as.character(sys.call(-1)[1])
 
    # if 'emp.step' is not used, set it to the chosen size with threshold 0
-   if (missing(emp.step) || !is.null(tmp$emp.dist))
+   if (missing(emp.step) || !is.null(ddd$emp.dist))
       emp.step <- list(size = size, thres = 0)
 
    # check if 'emp.step' is a list
@@ -111,11 +125,40 @@
          names(emp.step)[2] <- "size"
       }
 
-      # set missing treshold value to 0
+      # set missing threshold value to 0
       emp.step$thres <- c(emp.step$thres, 0)
 
    }
 
    return(emp.step)
+
+}
+
+.do.emp <- function(pval.obs, emp.step, ddd, R, method, side, emp.loop) {
+
+   for (i in 1:length(emp.step$size)) {
+
+      if (!is.null(ddd$verbose) && ddd$verbose)
+         cat("Size:", emp.step$size[i], " Threshold:", emp.step$thres[i], "\n")
+
+      size <- emp.step$size[i]
+
+      if (is.null(ddd$emp.dist)) {
+         emp.dist <- empirical(R = R, method = method, side = side,
+                               size = size, emp.loop = emp.loop)
+      } else {
+         emp.dist <- ddd$emp.dist
+      }
+
+      pval <- (sum(emp.dist <= pval.obs) + 1) / (size + 1)
+
+      if (pval >= emp.step$thres[i]) {
+         ci <- as.numeric(binom.test((sum(emp.dist <= pval.obs) + 1), (size + 1))$conf.int)
+         break
+      }
+
+   }
+
+   return(list(pval = pval, ci = ci))
 
 }

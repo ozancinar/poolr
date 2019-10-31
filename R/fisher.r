@@ -1,4 +1,4 @@
-fisher <- function(p, adjust = "none", m, R, size = 10000, seed, side = 2,
+fisher <- function(p, adjust = "none", m, R, size = 10000, side = 2,
                    emp.loop = FALSE, emp.step, ...) {
 
    # checks for 'p' argument
@@ -33,6 +33,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, side = 2,
 
    # compute test statistic
    statistic <- -2 * sum(log(p))
+   attr(statistic, "df") <- 2 * k
 
    # set some defaults
    ci <- NULL
@@ -41,19 +42,12 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, side = 2,
    if (adjust == "none") {
 
       pval <- pchisq(statistic, df = 2 * k, lower.tail = FALSE)
-      attr(statistic, "df") <- 2 * k
 
    }
 
    if (adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
 
-      if (adjust != "user") {
-         m <- meff(R = R, method = adjust)
-      } else {
-         # warn the user if the user-defined m is larger than the number of p-values
-         if (m > k)
-            warning("User-defined effective number of tests is larger than the number of p-values.")
-      }
+      m <- .check.m(R = R, adjust = adjust, m = m, k = k)
 
       statistic <- statistic * (m / k)
       pval <- pchisq(statistic, df = 2 * m, lower.tail = FALSE)
@@ -77,37 +71,20 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, seed, side = 2,
 
    if (adjust == "empirical") {
 
-      tmp <- list(...)
+      ddd <- list(...)
 
       # checks/fixes for 'emp.step' argument
-      emp.step <- .check.emp.step(emp.step, size = size, tmp = tmp)
+      emp.step <- .check.emp.step(emp.step, size = size, ddd = ddd)
 
       # observed pooled p-value
       pval.obs <- pchisq(statistic, df = 2 * k, lower.tail = FALSE)
 
-      for (i in 1:length(emp.step$size)) {
+      # get empirically derived p-value
+      tmp <- .do.emp(pval.obs = pval.obs, emp.step = emp.step, ddd = ddd,
+                     R = R, method = fun, side = side, emp.loop = emp.loop)
 
-         if (!is.null(tmp$verbose) && tmp$verbose)
-            cat("Size:", emp.step$size[i], " Threshold:", emp.step$thres[i], "\n")
-
-         size <- emp.step$size[i]
-
-         if (is.null(tmp$emp.dist)) {
-            emp.dist <- empirical(R = R, method = fun, side = side,
-                                  size = size, seed = seed, emp.loop = emp.loop)
-         } else {
-            emp.dist <- tmp$emp.dist
-         }
-
-         pval <- (sum(emp.dist <= pval.obs) + 1) / (size + 1)
-
-         if (pval >= emp.step$thres[i]) {
-            attr(statistic, "df") <- 2 * k
-            ci <- as.numeric(binom.test((sum(emp.dist <= pval.obs) + 1), (size + 1))$conf.int)
-            break
-         }
-
-      }
+      pval <- tmp$pval
+      ci <- tmp$ci
 
    }
 
