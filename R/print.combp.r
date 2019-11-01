@@ -19,8 +19,20 @@ print.combp <- function(x, digits=3, ...) {
 
    if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
 
+      if (x$adjust == "nyholt")
+         x$adjust <- "Nyholt, 2004"
+
+      if (x$adjust == "liji")
+         x$adjust <- "Li and Ji, 2005"
+
+      if (x$adjust == "gao")
+         x$adjust <- "Gao, 2008"
+
+      if (x$adjust == "galwey")
+         x$adjust <- "Galwey, 2009"
+
       if (x$adjust == "user")
-         x$adjust <- "user-defined"
+         x$adjust <- "user-defined"   
 
       x$adjust <- paste0("effective number of tests (m) = ", x$m, " (", x$adjust, ")")
 

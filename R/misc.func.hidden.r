@@ -48,100 +48,84 @@
 
 }
 
-.check.emp.step <- function(emp.step, size, ddd) {
+.check.emp.setup <- function(size, thres, ddd) {
 
    # get name of calling function
    call.fun <- as.character(sys.call(-1)[1])
 
-   # if 'emp.step' is not used, set it to the chosen size with threshold 0
-   if (missing(emp.step) || !is.null(ddd$emp.dist))
-      emp.step <- list(size = size, thres = 0)
+   # check if 'size' is numeric
+   if (!is.numeric(size)) 
+     stop("Argument 'size' must be numeric. See help(", call.fun, ").", call.=FALSE)
 
-   # check if 'emp.step' is a list
-   if (!is.list(emp.step))
-      stop("Argument 'emp.step' must be a list. See help(", call.fun, ").", call.=FALSE)
-
-   # check if there are two vectors in 'emp.step'
-   if (!length(emp.step) == 2)
-      stop("Argument 'emp.step' must contain two vectors. See help(", call.fun, ").", call.=FALSE)
-
-   # get lengths of the two vectors in 'emp.step'
-   len <- sapply(emp.step, length)
-
-   # check that vectors in 'emp.step' are not of length 0
-   if (any(len == 0))
-      stop("Vectors in 'emp.step' must have positive lengths. See help(", call.fun, ").", call.=FALSE)
-
-   if (len[1] == len[2]) {
-
-      # if vectors in 'emp.step' are of the same length ...
-
-      if (is.null(names(emp.step))) {
-
-         # if vectors don't have names, check which vector is the threshold vector (all its values must be <= 1)
-
-         is.thres1 <- all(emp.step[1] <= 1)
-         is.thres2 <- all(emp.step[2] <= 1)
-
-         if ((is.thres1 && is.thres2) || (!is.thres1 && !is.thres2))
-            stop("Cannot identify 'size' and 'thres' vectors in 'emp.step'. See help(", call.fun, ").", call.=FALSE)
-
-         if (is.thres1) {
-            names(emp.step)[1] <- "thres"
-            names(emp.step)[2] <- "size"
-         } else {
-            names(emp.step)[1] <- "size"
-            names(emp.step)[2] <- "thres"
-         }
-
-      } else {
-
-         # if vectors do have names, check that they are 'size' and 'thres'
-
-         if (any(!(names(emp.step) %in% c("size", "thres"))))
-            stop("Vectors in 'emp.step' must be named 'size' and 'thres'. See help(", call.fun, ").", call.=FALSE)
-
-      }
-
-      # set last threshold value to 0
-      emp.step$thres[length(emp.step$thres)] <- 0
-
-   } else {
-
-      # if vectors in 'emp.step' are NOT of the same length ...
-
-      # check that the lengths of the vectors in 'emp.step' only differ by 1 element
-
-      if (abs(len[1] - len[2]) != 1)
-         stop("The lengths of the vectors in 'emp.step' must only differ by one element. See help(", call.fun, ").", call.=FALSE)
-
-      # if so, the longer vector is for 'size', the other for 'thres' (regardless of how they are named)
-
-      if (len[1] > len[2]) {
-         names(emp.step)[1] <- "size"
-         names(emp.step)[2] <- "thres"
-      } else {
-         names(emp.step)[1] <- "thres"
-         names(emp.step)[2] <- "size"
-      }
-
-      # set missing threshold value to 0
-      emp.step$thres <- c(emp.step$thres, 0)
-
+   # check if 'size' contains appropriate values
+   if (any(size < 1)) {
+     stop("Argument 'size' must include values greater than 1. See help(", call.fun, ").", call.=FALSE) 
    }
 
-   return(emp.step)
+   # check if 'thres' is appropriate when it is given
+   if (!is.null(thres)) {
+      if (!is.numeric(thres))
+      stop("Argument 'thres' must be numeric. See help(", call.fun, ").", call.=FALSE)
+
+      if (any(thres > 1) || any(thres < 0))
+     stop("Argument 'thres' must include values between 0 and 1. See help(", call.fun, ").", call.=FALSE) 
+   }
+
+   # check if 'thres' is given when 'size' is a vector
+   if (length(size) > 1 & is.null(thres)) {
+      stop("Argument 'thres' must be specified when 'size' is a vector. See help(", call.fun, ").", call.=FALSE)
+   }
+
+   # check the compatibility of the length of 'thres' when 'size' is a vector
+   if (length(size) > 1) {
+      step.length <- length(size)
+      compatible.lengths <- c(1, step.length, step.length - 1)
+      if (!length(thres) %in% compatible.lengths) 
+         stop("Incompatible vector length for 'thres'. See help(", call.fun, ").", call.=FALSE)
+   }
+
+   # if 'size' is set to a vector while an empirical distribution is provided by the user
+   if (length(size) > 1 & !is.null(ddd$emp.dist))
+      stop("Stepwise algorithm cannot be used with a user-defined empirical distribution. See help(", call.fun, ").", call.=FALSE)
+
+   # if 'thres' is set to a vector while 'size' is a single numeric
+   if (length(size) == 1 & length(thres) > 1) {
+      emp.setup <- list(size = size, thres = 0)
+      warning("Multiple thresholds cannot be used with a single sample size. Threshold was set to 0. See help(", call.fun, ").", call.=FALSE)
+   }
+
+   # if 'size' is a single numeric, set it to the chosen size with threshold 0
+   if (length(size) == 1 || !is.null(ddd$emp.dist))
+      emp.setup <- list(size = size, thres = 0)
+
+   # if 'thres' is a single numeric when 'size' is a vector
+   if (length(size) > 1 & length(thres) == 1) {
+      emp.setup <- list(size = size, thres = c(rep(thres, length(size) - 1), 0))
+   }
+
+   # if the length of 'thres' is one less than the length of 'size'
+   if (length(size) > 1 & length(thres) == length(size) - 1) {
+      emp.setup <- list(size = size, thres = c(thres, 0))
+   }
+
+   # if 'thres' and 'size' have the same length
+   if (length(size) > 1 & length(thres) == length(size)) {
+      emp.setup <- list(size = size, thres = c(thres[1:length(size) - 1], 0))
+      warning("Arguments 'thres' and 'size' have the same length. The last threshold is ignored. See help(", call.fun, ").", call.=FALSE)
+   }
+
+   return(emp.setup)
 
 }
 
-.do.emp <- function(pval.obs, emp.step, ddd, R, method, side, emp.loop) {
+.do.emp <- function(pval.obs, emp.setup, ddd, R, method, side, emp.loop) {
 
-   for (i in 1:length(emp.step$size)) {
+   for (i in 1:length(emp.setup$size)) {
 
       if (!is.null(ddd$verbose) && ddd$verbose)
-         cat("Size:", emp.step$size[i], " Threshold:", emp.step$thres[i], "\n")
+         cat("Size:", emp.setup$size[i], " Threshold:", emp.setup$thres[i], "\n")
 
-      size <- emp.step$size[i]
+      size <- emp.setup$size[i]
 
       if (is.null(ddd$emp.dist)) {
          emp.dist <- empirical(R = R, method = method, side = side,
@@ -152,7 +136,7 @@
 
       pval <- (sum(emp.dist <= pval.obs) + 1) / (size + 1)
 
-      if (pval >= emp.step$thres[i]) {
+      if (pval >= emp.setup$thres[i]) {
          ci <- as.numeric(binom.test((sum(emp.dist <= pval.obs) + 1), (size + 1))$conf.int)
          break
       }

@@ -1,5 +1,5 @@
-bonferroni <- function(p, adjust = "none", m, R, size = 10000, side = 2,
-                       emp.loop = FALSE, emp.step, ...) {
+bonferroni <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
+                       emp.loop = FALSE, ...) {
 
    # checks for 'p' argument
    .check.p(p)
@@ -56,14 +56,18 @@ bonferroni <- function(p, adjust = "none", m, R, size = 10000, side = 2,
 
       ddd <- list(...)
 
-      # checks/fixes for 'emp.step' argument
-      emp.step <- .check.emp.step(emp.step, size = size, ddd = ddd)
+      # setting 'thres' to NULL if it is missing for further checks
+      if (missing(thres))
+         thres <- NULL
 
+      # checks/fixes for 'size' and 'thres' arguments
+      emp.setup <- .check.emp.setup(size = size, thres = thres, ddd = ddd)
+      
       # observed pooled p-value
       pval.obs <- min(1, statistic * k)
 
       # get empirically derived p-value
-      tmp <- .do.emp(pval.obs = pval.obs, emp.step = emp.step, ddd = ddd,
+      tmp <- .do.emp(pval.obs = pval.obs, emp.setup = emp.setup, ddd = ddd,
                      R = R, method = fun, side = side, emp.loop = emp.loop)
 
       pval <- tmp$pval

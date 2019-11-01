@@ -4,18 +4,17 @@
 \description{Function to carry out inverse Chi-Squared method.}
 \usage{
 invchisq(p, adjust = "none", m, R,
-         size = 10000, seed, side = 2, emp.loop = FALSE, emp.step, \dots)
+         size = 10000, thres, side = 2, emp.loop = FALSE, \dots)
 }
 \arguments{
    \item{p}{vector with the (one- or two-sided) p-values.}
    \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis. Finally, this argument can be set to "generalized" to compute the combined \eqn{p}-value under dependence. For specification of covariance matrix under this selection, please see the explanation for "R" argument below.}
    \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
    \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
-   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used.}
-   \item{seed}{seed for the random number generation if the empirically-derived null hypothesis is going to be used.}
+   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used. For a stepwise algorithm this qrgument can be given as a numeric vector to specify the sample sizes at different steps.}
+   \item{thres}{a numeric vector to specify significance thresholds for the stepwise algorithm. This option is used when \code{size} is set to a vector. Then, \code{thres} should be set to a vector with a length of one less than the length of \code{size}. If these two vectors have the same lengths, the last threshold in \code{thres} is going to be ignored. Alternatively, \code{thres} can be a single value which will be used for the signficance threshold for all the steps except for the last step.}
    \item{side}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
    \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emp.loop = TRUE}.}
-   \item{emp.step}{an argument to apply a stepwise algortihm for empirically-derived null distributions. See details for further information.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -61,9 +60,10 @@ invchisq(p2, adjust = "liji", R = mvnconv(R = r, side = 2, target = "p"))
 # using empirically-derived null distributions
 invchisq(p1, adjust = "empirical", R = r, side = 1)
 invchisq(p2, adjust = "empirical", R = r) # side = 2 as default.
-invchisq(p2, adjust = "empirical", R = r, seed = 321) # setting the seed for reproducibility
-invchisq(p2, adjust = "empirical", R = r,
-         emp.step = list(size = c(1000, 10000, 100000), thres = c(0.5, 0.5)))
+
+# using empirically-derived null distributions with a stepwise algorithm.
+invchisq(p2 / 5, adjust = "empirical", R = r,
+         size = c(1000, 10000, 100000), thres = c(0.5, 0.5), verbose = TRUE)
 
 # computing the combined p-value under dependence
 invchisq(p1, adjust = "generalized", R = mvnconv(R = r, side = 1, target = "chisq1"))

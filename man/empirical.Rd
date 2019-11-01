@@ -3,14 +3,13 @@
 \title{Generate Empirically-Derived Null Distributions}
 \description{Function to derive the empirical distribution of the combined p-value under the null hypothesis.}
 \usage{
-empirical(R, method, side, size = 10000, seed, emp.loop = FALSE, \dots)
+empirical(R, method, side, size = 10000, emp.loop = FALSE, \dots)
 }
 \arguments{
    \item{R}{a symmetric matrix that includes pairwise correlations between the p-values. If it is NULL then the p-values are assumed to be independent.}
    \item{method}{an argument to specify the method to be used to derive the empirical distribution of the p-values under the null hypothesis. It can be set to one of the base function name, "fisher", "stouffer", "invchisq", "binotest", "bonferroni", or "tippett".}
    \item{side}{the side of the hypothesis test. It can take values 1 or 2 for one-sided or two-sided p-values, respectively.}
    \item{size}{size of the empirical distribution. It is set to 10000 as default.}
-   \item{seed}{an argument that can be used to set the seed for random number generation.}
    \item{emp.loop}{a logical argument to decide to generate the empirical distribution in a loop. If the size of the empirical distribution to be generated is too large, we recommend you to use emp.loop = TRUE.}
    \item{\dots}{other arguments.}
 }
