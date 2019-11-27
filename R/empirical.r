@@ -25,7 +25,7 @@ empirical <- function(R, method, side, size = 10000, emp.loop = FALSE, ...) {
 
    if (!emp.loop) {
 
-      z <- mvrnorm(size, mu = mu, Sigma = R)
+      z <- MASS::mvrnorm(size, mu = mu, Sigma = R)
 
       if (side == 1)
          p <- pnorm(z, lower.tail = FALSE)
@@ -44,7 +44,7 @@ empirical <- function(R, method, side, size = 10000, emp.loop = FALSE, ...) {
 
       for (i in 1:size) {
 
-         z <- mvrnorm(1, mu = mu, Sigma = R)
+         z <- MASS::mvrnorm(1, mu = mu, Sigma = R)
 
          if (side == 1)
             p <- pnorm(z, lower.tail = FALSE)
