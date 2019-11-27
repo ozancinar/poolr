@@ -38,7 +38,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
    # set some defaults
    ci <- NULL
    if (adjust != "user")
-      m <- k
+      m <- NULL
 
    if (adjust == "none") {
 

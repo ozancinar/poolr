@@ -37,7 +37,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
    # set some defaults
    ci <- NULL
    if (adjust != "user")
-      m <- k
+      m <- NULL
 
    if (adjust == "none") {
 

@@ -32,6 +32,10 @@
    if (adjust == "none")
       warning("Although argument 'R' was specified, no adjustment method was chosen via the 'adjust' argument.\n  To account for dependence, specify an adjustment method. See help(", fun, ") for details.", call.=FALSE)
 
+   # if 'm' has been specified, then warn the user that 'R' matrix is actually ignored
+   if (adjust == "user")
+      warning("When 'm' is specified, argument 'R' is irrelevant and ignored.")
+
 }
 
 .check.m <- function(R, adjust, m, k, ...) {
@@ -53,66 +57,84 @@
    # get name of calling function
    call.fun <- as.character(sys.call(-1)[1])
 
+   if (!is.null(ddd$emp.dist)) {
+
+      # special case: empirical distribution is provided by the user
+
+      # if 'size' is set to a vector or 'thres' is not null, issue a warning
+      if (length(size) > 1L || !is.null(thres))
+         warning("Stepwise algorithm cannot be used with a user-defined empirical distribution. See help(", call.fun, ").", call.=FALSE)
+
+      # set 'size' to the length of the empirical distribution provided by the user
+      size <- length(ddd$emp.dist)
+
+      # and set 'thres' to 0
+      emp.setup <- list(size = size, thres = 0)
+
+      return(emp.setup)
+
+   }
+
    # check if 'size' is numeric
    if (!is.numeric(size))
      stop("Argument 'size' must be numeric. See help(", call.fun, ").", call.=FALSE)
 
-   # check if 'size' contains appropriate values
-   if (any(size < 1)) {
-     stop("Argument 'size' must include values greater than 1. See help(", call.fun, ").", call.=FALSE)
-   }
+   # check if all values in 'size' are >= 1
+   if (any(size < 1))
+     stop("Values in 'size' must be >= 1. See help(", call.fun, ").", call.=FALSE)
 
-   # check if 'thres' is appropriate when it is given
-   if (!is.null(thres)) {
+   #                                     thres
+   #             | NULL                    | scalar                                  | vector
+   #      -------+-------------------------+-----------------------------------------+------------------------------------------
+   #      scalar | ok, set thres=0         | set thres=0 and warn that this happened | <- same
+   # size -------+-------------------------+-----------------------------------------+------------------------------------------
+   #      vector | error (must spec thres) | ok, rep thres as needed, set last to 0  | ok, check lengths and make sure last is 0
+   #      -------+-------------------------+-----------------------------------------+------------------------------------------
+
+   length.size  <- length(size)
+
+   if (length.size == 1L) {
+
+      # if 'size' is a scalar, argument 'thres' is ignored (it is always set to 0)
+      if (!is.null(thres))
+         warning("Argument 'thres' not relevant with a single sample size. Threshold was set to 0. See help(", call.fun, ").", call.=FALSE)
+
+      thres <- 0
+
+   } else {
+
+      # if 'size' is a vector but 'thres' was not specified, issue an error
+      if (is.null(thres))
+         stop("Argument 'thres' must be specified when 'size' is a vector. See help(", call.fun, ").", call.=FALSE)
+
+      # check if 'thres' is appropriate when it is given
       if (!is.numeric(thres))
-      stop("Argument 'thres' must be numeric. See help(", call.fun, ").", call.=FALSE)
-
+         stop("Argument 'thres' must be numeric. See help(", call.fun, ").", call.=FALSE)
       if (any(thres > 1) || any(thres < 0))
-     stop("Argument 'thres' must include values between 0 and 1. See help(", call.fun, ").", call.=FALSE)
+         stop("Values in 'thres' must be between 0 and 1. See help(", call.fun, ").", call.=FALSE)
+
+      # if 'thres' is a scalar, rep it as needed and set last value to 0
+      if (length(thres) == 1L)
+         thres <- c(rep(thres, length.size - 1), 0)
+
+      # if length of 'thres' is one less than length of 'size', add 0 to the 'thres' vector
+      if (length(thres) == length.size - 1)
+         thres <- c(thres, 0)
+
+      # check compatibility of the lengths of the 'size' and 'thres' arguments
+      if (length(thres) != length.size)
+         stop("Length of 'thres' argument is not compatible with length of 'size' argument. See help(", call.fun, ").", call.=FALSE)
+
+      length.thres <- length(thres)
+
+      if (thres[length.thres] != 0) {
+         warning("Last value of 'thres' is not 0. Last threshold set to 0. See help(", call.fun, ").", call.=FALSE)
+         thres[length.thres] <- 0
+      }
+
    }
 
-   # check if 'thres' is given when 'size' is a vector
-   if (length(size) > 1 & is.null(thres)) {
-      stop("Argument 'thres' must be specified when 'size' is a vector. See help(", call.fun, ").", call.=FALSE)
-   }
-
-   # check the compatibility of the length of 'thres' when 'size' is a vector
-   if (length(size) > 1) {
-      step.length <- length(size)
-      compatible.lengths <- c(1, step.length, step.length - 1)
-      if (!length(thres) %in% compatible.lengths)
-         stop("Incompatible vector length for 'thres'. See help(", call.fun, ").", call.=FALSE)
-   }
-
-   # if 'size' is set to a vector while an empirical distribution is provided by the user
-   if (length(size) > 1 & !is.null(ddd$emp.dist))
-      stop("Stepwise algorithm cannot be used with a user-defined empirical distribution. See help(", call.fun, ").", call.=FALSE)
-
-   # if 'thres' is set to a vector while 'size' is a single numeric
-   if (length(size) == 1 & length(thres) > 1) {
-      emp.setup <- list(size = size, thres = 0)
-      warning("Multiple thresholds cannot be used with a single sample size. Threshold was set to 0. See help(", call.fun, ").", call.=FALSE)
-   }
-
-   # if 'size' is a single numeric, set it to the chosen size with threshold 0
-   if (length(size) == 1 || !is.null(ddd$emp.dist))
-      emp.setup <- list(size = size, thres = 0)
-
-   # if 'thres' is a single numeric when 'size' is a vector
-   if (length(size) > 1 & length(thres) == 1) {
-      emp.setup <- list(size = size, thres = c(rep(thres, length(size) - 1), 0))
-   }
-
-   # if the length of 'thres' is one less than the length of 'size'
-   if (length(size) > 1 & length(thres) == length(size) - 1) {
-      emp.setup <- list(size = size, thres = c(thres, 0))
-   }
-
-   # if 'thres' and 'size' have the same length
-   if (length(size) > 1 & length(thres) == length(size)) {
-      emp.setup <- list(size = size, thres = c(thres[1:length(size) - 1], 0))
-      warning("Arguments 'thres' and 'size' have the same length. The last threshold is ignored. See help(", call.fun, ").", call.=FALSE)
-   }
+   emp.setup <- list(size = size, thres = thres)
 
    return(emp.setup)
 
@@ -120,7 +142,7 @@
 
 .do.emp <- function(pval.obs, emp.setup, ddd, R, method, side, emp.loop) {
 
-   for (i in 1:length(emp.setup$size)) {
+   for (i in seq_along(emp.setup$size)) {
 
       if (!is.null(ddd$verbose) && ddd$verbose)
          cat("Size:", emp.setup$size[i], " Threshold:", emp.setup$thres[i], "\n")

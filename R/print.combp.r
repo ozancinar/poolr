@@ -1,13 +1,13 @@
 print.combp <- function(x, digits=3, ...) {
 
    if (x$fun %in% c("fisher", "invchisq"))
-      info <- paste0("test statistic = ", round(x$statistic, 3), " ~ chi-square(", round(attr(x$statistic, "df"), digits), ")")
+      info <- paste0("test statistic = ", round(x$statistic, digits), " ~ chi-square(", round(attr(x$statistic, "df"), digits), ")")
 
    if (x$fun == "stouffer")
-      info <- paste0("test statistic = ", round(x$statistic, 3), " ~ N(0,1)")
+      info <- paste0("test statistic = ", round(x$statistic, digits), " ~ N(0,1)")
 
    if (x$fun %in% c("bonferroni", "tippett"))
-      info <- paste0("minimum p-value = ", round(x$statistic, 3))
+      info <- paste0("minimum p-value = ", round(x$statistic, digits))
 
    if (x$fun == "binotest") {
       if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
@@ -23,7 +23,7 @@ print.combp <- function(x, digits=3, ...) {
          x$adjust <- "Nyholt, 2004"
 
       if (x$adjust == "liji")
-         x$adjust <- "Li and Ji, 2005"
+         x$adjust <- "Li & Ji, 2005"
 
       if (x$adjust == "gao")
          x$adjust <- "Gao, 2008"
@@ -32,7 +32,7 @@ print.combp <- function(x, digits=3, ...) {
          x$adjust <- "Galwey, 2009"
 
       if (x$adjust == "user")
-         x$adjust <- "user-defined"   
+         x$adjust <- "user-defined"
 
       x$adjust <- paste0("effective number of tests (m) = ", x$m, " (", x$adjust, ")")
 

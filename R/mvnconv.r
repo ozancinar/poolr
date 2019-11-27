@@ -20,7 +20,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
       call.fun <- as.character(call.fun)
 
-      if (call.fun %in% c("fisher", "invchisq", "stouffer", "bonferroni", "tippett", "binotest")) {
+      if (call.fun %in% c("fisher", "stouffer", "invchisq")) {
          if (!is.matrix(R) || !isSymmetric(unname(R)))
             stop("Argument 'R' must be a symmetric matrix.")
       }
@@ -49,11 +49,16 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    if (!(side %in% c(1,2)))
       stop("Argument 'side' must be either 1 or 2.")
 
+   target <- match.arg(target, c("m2lp", "z", "chisq1", "p"))
+
+   # check for incompatibility between poolr base function and the specified target
+
+   if (!is.null(call.fun)) {
+      if (which(c("fisher", "stouffer", "invchisq") %in% call.fun) != which(c("m2lp", "z", "chisq1") %in% target))
+         warning(paste0("Using mvnconv(..., target=\"", target, "\") is not compatible with ", call.fun, "()."))
+   }
+
    column <- pmatch(target, c("m2lp", "z", "chisq1", "p"))
-
-   if (is.na(column))
-      stop("Unknown 'target' specified.")
-
    column <- column * 2
 
    if (side == 2)

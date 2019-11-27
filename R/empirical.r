@@ -42,7 +42,7 @@ empirical <- function(R, method, side, size = 10000, emp.loop = FALSE, ...) {
 
       fcall <- parse(text=paste0(method, "(p)$p"))
 
-      for (i in 1:size) {
+      for (i in seq_len(size)) {
 
          z <- MASS::mvrnorm(1, mu = mu, Sigma = R)
 
