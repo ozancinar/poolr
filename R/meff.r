@@ -16,7 +16,7 @@ meff <- function(R, eigen, method, ...) {
       # ensure that the correlation matrix is positive semi-definite
       #R <- as.matrix(Matrix::nearPD(R)$mat)
 
-      # get eigenvalues and absolute eigenvalues of 'R' matrix
+      # get eigenvalues of 'R' matrix
       evs <- base::eigen(R)$values
 
    } else {
@@ -30,8 +30,6 @@ meff <- function(R, eigen, method, ...) {
 
    }
 
-   abs.evs <- abs(evs)
-
    if (method == "nyholt") {
       # effective number of tests (based on Nyholt, 2004)
       k <- length(evs)
@@ -40,14 +38,14 @@ meff <- function(R, eigen, method, ...) {
 
    if (method == "liji") {
       # effective number of tests (based on Li & Ji, 2005)
-      # adding a small value to the eigenvalues to overcome numerical imprecisions
-      abs.evs <- abs.evs + sqrt(.Machine$double.eps)
+      # adding a small value to the absolute eigenvalues to overcome numerical imprecisions
+      abs.evs <- abs(evs) + sqrt(.Machine$double.eps)
       m <- sum(ifelse(abs.evs >= 1, 1, 0) + (abs.evs - floor(abs.evs)))
    }
 
    if (method == "gao") {
       # effective number of tests (based on Gao, 2008)
-      m <- which(cumsum(sort(abs.evs, decreasing = TRUE)) / sum(abs.evs) > 0.995)[1]
+      m <- which(cumsum(sort(evs, decreasing = TRUE)) / sum(evs) > 0.995)[1]
    }
 
    if (method == "galwey") {
