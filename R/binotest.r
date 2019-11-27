@@ -36,7 +36,8 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
 
    # set some defaults
    ci <- NULL
-   m <- k
+   if (adjust != "user")
+      m <- k
 
    if (adjust == "none") {
 
@@ -46,7 +47,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
 
    if (adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
 
-      m <- .check.m(R = R, adjust = adjust, m = m, k = k)
+      m <- .check.m(R = R, adjust = adjust, m = m, k = k, ...)
 
       pval <- sum(dbinom(round(statistic * m / k):m, m, alpha))
 
@@ -62,7 +63,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
 
       # checks/fixes for 'size' and 'thres' arguments
       emp.setup <- .check.emp.setup(size = size, thres = thres, ddd = ddd)
-      
+
       # observed pooled p-value
       pval.obs <- sum(dbinom(statistic:k, k, alpha))
 

@@ -3,8 +3,6 @@ meff <- function(R, eigen, method, ...) {
    # match 'method' argument
    method <- match.arg(method, c("nyholt", "liji", "gao", "galwey"))
 
-   ddd <- list(...)
-
    if (missing(eigen)) {
 
       # check if 'R' is specified
@@ -52,6 +50,8 @@ meff <- function(R, eigen, method, ...) {
    if (method == "gao") {
 
       # effective number of tests (based on Gao, 2008)
+
+      ddd <- list(...)
 
       # allow user to specify value of C via ... but otherwise use 0.995
       if (!is.null(ddd$C)) {

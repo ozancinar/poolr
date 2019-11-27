@@ -34,10 +34,10 @@
 
 }
 
-.check.m <- function(R, adjust, m, k) {
+.check.m <- function(R, adjust, m, k, ...) {
 
    if (adjust != "user") {
-      m <- meff(R = R, method = adjust)
+      m <- meff(R = R, method = adjust, ...)
    } else {
       # warn the user if the user-defined m is larger than the number of p-values
       if (m > k)
@@ -54,12 +54,12 @@
    call.fun <- as.character(sys.call(-1)[1])
 
    # check if 'size' is numeric
-   if (!is.numeric(size)) 
+   if (!is.numeric(size))
      stop("Argument 'size' must be numeric. See help(", call.fun, ").", call.=FALSE)
 
    # check if 'size' contains appropriate values
    if (any(size < 1)) {
-     stop("Argument 'size' must include values greater than 1. See help(", call.fun, ").", call.=FALSE) 
+     stop("Argument 'size' must include values greater than 1. See help(", call.fun, ").", call.=FALSE)
    }
 
    # check if 'thres' is appropriate when it is given
@@ -68,7 +68,7 @@
       stop("Argument 'thres' must be numeric. See help(", call.fun, ").", call.=FALSE)
 
       if (any(thres > 1) || any(thres < 0))
-     stop("Argument 'thres' must include values between 0 and 1. See help(", call.fun, ").", call.=FALSE) 
+     stop("Argument 'thres' must include values between 0 and 1. See help(", call.fun, ").", call.=FALSE)
    }
 
    # check if 'thres' is given when 'size' is a vector
@@ -80,7 +80,7 @@
    if (length(size) > 1) {
       step.length <- length(size)
       compatible.lengths <- c(1, step.length, step.length - 1)
-      if (!length(thres) %in% compatible.lengths) 
+      if (!length(thres) %in% compatible.lengths)
          stop("Incompatible vector length for 'thres'. See help(", call.fun, ").", call.=FALSE)
    }
 

@@ -36,7 +36,8 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
 
    # set some defaults
    ci <- NULL
-   m <- k
+   if (adjust != "user")
+      m <- k
 
    if (adjust == "none") {
 
@@ -46,7 +47,7 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
 
    if (adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
 
-      m <- .check.m(R = R, adjust = adjust, m = m, k = k)
+      m <- .check.m(R = R, adjust = adjust, m = m, k = k, ...)
 
       pval <- 1 - (1 - statistic)^m
 
@@ -62,7 +63,7 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
 
       # checks/fixes for 'size' and 'thres' arguments
       emp.setup <- .check.emp.setup(size = size, thres = thres, ddd = ddd)
-      
+
       # observed pooled p-value
       pval.obs <- 1 - (1 - statistic)^k
 

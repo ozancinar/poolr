@@ -37,7 +37,8 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
 
    # set some defaults
    ci <- NULL
-   m <- k
+   if (adjust != "user")
+      m <- k
 
    if (adjust == "none") {
 
@@ -47,7 +48,7 @@ fisher <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
 
    if (adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
 
-      m <- .check.m(R = R, adjust = adjust, m = m, k = k)
+      m <- .check.m(R = R, adjust = adjust, m = m, k = k, ...)
 
       statistic <- statistic * (m / k)
       pval <- pchisq(statistic, df = 2 * m, lower.tail = FALSE)
