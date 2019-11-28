@@ -53,7 +53,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    # check for incompatibility between poolr base function and the specified target
 
-   if (!is.null(call.fun)) {
+   if (!is.null(call.fun) && call.fun %in% c("fisher", "stouffer", "invchisq")) {
       if (which(c("fisher", "stouffer", "invchisq") %in% call.fun) != which(c("m2lp", "z", "chisq1") %in% target))
          warning(paste0("Using mvnconv(..., target=\"", target, "\") is not compatible with ", call.fun, "()."))
    }
