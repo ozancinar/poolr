@@ -3,15 +3,15 @@
 \title{Fisher's Method}
 \description{Function to carry out Fisher's method.}
 \usage{
-fisher(p, adjust = "none", m, R, size = 10000, thres, side = 2, batchsize, \dots)
+fisher(p, adjust = "none", m, R, size = 10000, threshold, side = 2, batchsize, \dots)
 }
 \arguments{
    \item{p}{vector of length \eqn{k} with the (one- or two-sided) p-values to be combined.}
    \item{adjust}{character string to specify an adjustment method to account for dependence. Default is \code{"none"}, in which case no adjustment method is applied. Methods \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} are adjustments based on the effective number of tests (see \code{\link{meff}}). Adjustment method \code{"empirical"} uses an empirically-derived null distribution using pseudo replicates. Finally, method \code{"generalized"} uses a generalization of Fisher's method based on multivariate theory. See \sQuote{Details}.}
-   \item{m}{optional scalar (between 1 and \eqn{k}) to manually specify the effective number of tests (instead of estimating it via one of the methods described above).}
    \item{R}{a symmetric matrix that reflects the dependence structure among the tests. Must be specified if \code{adjust} is set to something other than \code{"none"} (or the effective number of tests is directly provided via the \code{m} argument).}
+   \item{m}{optional scalar (between 1 and \eqn{k}) to manually specify the effective number of tests (instead of estimating it via one of the methods described above).}
    \item{size}{size of the empirically-derived null distribution. Can also be a numeric vector of sizes, in which case a stepwise algorithm is used. This (and the following arguments) are only relevant when \code{adjust = "empirical"}.}
-   \item{thres}{numeric vector to specify the significance thresholds for the stepwise algorithm (only relevant when \code{size} is a vector).}
+   \item{threshold}{numeric vector to specify the significance thresholds for the stepwise algorithm (only relevant when \code{size} is a vector).}
    \item{side}{scalar to specify the sidedness of the \eqn{p}-values that are used to generate the empirically-derived null distribution (2, by default, for two-sided tests, 1 for one-sided tests).}
    \item{batchsize}{logical that defines how the empirically-derived null distribution is constructed. When \code{FALSE} (the default), this is done in a typically faster but more memory intensive vectorized manner. When \code{TRUE}, a typically slower but less memory intensive loop is used.}
    \item{\dots}{other arguments.}
@@ -42,12 +42,12 @@ fisher(p, adjust = "none", m, R, size = 10000, thres, side = 2, batchsize, \dots
 
    Generating the null distribution can be done in two ways. When \code{emploop=FALSE} (the default), this is done in a typically faster but more memory intensive vectorized manner, which requires generating a matrix with dimensions \code{[size,k]}. For large \code{size} and/or \code{k}, allocating the memory for this matrix might not be possible. In that case, one can set \code{emploop=TRUE}, which uses a typically slower but less memory intensive loop.
 
-   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{thres} argument. In that case, a stepwise algorithm is used that proceeds as follows (see also Liu et al., 2010). For \code{j = 1, ..., length(size)},
+   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{threshold} argument. In that case, a stepwise algorithm is used that proceeds as follows (see also Liu et al., 2010). For \code{j = 1, ..., length(size)},
    \enumerate{
       \item estimate the combined \eqn{p}-value based on \code{size[j]}
-      \item if the combined \eqn{p}-value is \eqn{\ge} than \code{thres[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
+      \item if the combined \eqn{p}-value is \eqn{\ge} than \code{threshold[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
    }
-   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 100000, 10000000)} and \code{thres} to decreasing values (e.g., \code{thres = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge .10}), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{thres} should, and is forced to be, 0 so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{thres}, so \code{thres = c(.10, .01)} would also work in the example above).
+   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 100000, 10000000)} and \code{threshold} to decreasing values (e.g., \code{threshold = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge .10}), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{threshold} should, and is forced to be, 0 so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{threshold}, so \code{threshold = c(.10, .01)} would also work in the example above).
 
    \bold{Adjustment Based on Multivariate Theory}
 
@@ -96,7 +96,7 @@ fisher(p2, adjust = "empirical", R = r) # side = 2 is default
 
 # using empirically-derived null distributions with a stepwise algorithm.
 fisher(p2 / 5, adjust = "empirical", R = r,
-       size = c(1000, 10000, 100000), thres = c(0.5, 0.5), verbose = TRUE)
+       size = c(1000, 10000, 100000), threshold = c(0.5, 0.5), verbose = TRUE)
 
 # compute combined p-value under dependence
 fisher(p1, adjust = "generalized", R = mvnconv(r, side = 1, target = "m2lp"))

@@ -1,4 +1,4 @@
-tippett <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2, batchsize, ...) {
+tippett <- function(p, adjust = "none", m, R, size = 10000, threshold, side = 2, batchsize, ...) {
 
    # checks for 'p' argument
    .check.p(p)
@@ -60,12 +60,12 @@ tippett <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2, bat
       if (missing(batchsize))
          batchsize <- NULL
 
-      # setting 'thres' to NULL if it is missing for further checks
-      if (missing(thres))
-         thres <- NULL
+      # setting 'threshold' to NULL if it is missing for further checks
+      if (missing(threshold))
+         threshold <- NULL
 
-      # checks/fixes for 'size' and 'thres' arguments
-      emp.setup <- .check.emp.setup(size = size, thres = thres, ddd = ddd)
+      # checks/fixes for 'size' and 'threshold' arguments
+      emp.setup <- .check.emp.setup(size = size, threshold = threshold, ddd = ddd)
 
       # observed pooled p-value
       pval.obs <- 1 - (1 - statistic)^k
