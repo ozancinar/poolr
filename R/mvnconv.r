@@ -20,12 +20,14 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
       call.fun <- as.character(call.fun)
 
-      if (call.fun %in% c("fisher", "stouffer", "invchisq")) {
+      if (call.fun %in% c("fisher", "stouffer", "invchisq", "bonferroni", "tippett", "binotest")) {
          if (!is.matrix(R) || !isSymmetric(unname(R)))
             stop("Argument 'R' must be a symmetric matrix.")
       }
 
       if (missing(target)) {
+
+         # for fisher(), stouffer(), and invchisq(), set the default 'target' if it not specified
 
          if (!(call.fun %in% c("fisher", "stouffer", "invchisq")))
             stop("Argument 'target' must be specified.")
@@ -41,6 +43,18 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    }
 
+   target <- match.arg(target, c("m2lp", "z", "chisq1", "p"))
+
+   # check for incompatibility between poolr base function and the specified target (only when adjust = "generalized")
+
+   if (!is.null(call.fun) && call.fun %in% c("fisher", "stouffer", "invchisq")) {
+      # need this in case the 'adjust' argument is abbreviated
+      call.fun.args <- as.list(match.call(definition = sys.function(-1), call = sys.call(-1), expand.dots = FALSE))
+      adjust <- match.arg(call.fun.args$adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+      if (adjust == "generalized" && which(c("fisher", "stouffer", "invchisq") %in% call.fun) != which(c("m2lp", "z", "chisq1") %in% target))
+         warning(paste0("Using mvnconv(..., target=\"", target, "\") is not compatible with ", call.fun, "()."))
+   }
+
    # checks for 'side' argument
 
    if (length(side) != 1)
@@ -49,14 +63,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    if (!(side %in% c(1,2)))
       stop("Argument 'side' must be either 1 or 2.")
 
-   target <- match.arg(target, c("m2lp", "z", "chisq1", "p"))
-
-   # check for incompatibility between poolr base function and the specified target
-
-   if (!is.null(call.fun) && call.fun %in% c("fisher", "stouffer", "invchisq")) {
-      if (which(c("fisher", "stouffer", "invchisq") %in% call.fun) != which(c("m2lp", "z", "chisq1") %in% target))
-         warning(paste0("Using mvnconv(..., target=\"", target, "\") is not compatible with ", call.fun, "()."))
-   }
+   # set correct column of 'mvnlookup' for converting values in R to target values
 
    column <- pmatch(target, c("m2lp", "z", "chisq1", "p"))
    column <- column * 2
