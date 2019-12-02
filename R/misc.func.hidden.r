@@ -140,7 +140,7 @@
 
 }
 
-.do.emp <- function(pval.obs, emp.setup, ddd, R, method, side, emp.loop) {
+.do.emp <- function(pval.obs, emp.setup, ddd, R, method, side, emploop) {
 
    for (i in seq_along(emp.setup$size)) {
 
@@ -151,7 +151,7 @@
 
       if (is.null(ddd$emp.dist)) {
          emp.dist <- empirical(R = R, method = method, side = side,
-                               size = size, emp.loop = emp.loop)
+                               size = size, emploop = emploop)
       } else {
          emp.dist <- ddd$emp.dist
       }

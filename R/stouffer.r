@@ -1,5 +1,5 @@
 stouffer <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
-                     emp.loop = FALSE, ...) {
+                     emploop = FALSE, ...) {
 
    # checks for 'p' argument
    .check.p(p)
@@ -77,7 +77,7 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2,
 
       # get empirically derived p-value
       tmp <- .do.emp(pval.obs = pval.obs, emp.setup = emp.setup, ddd = ddd,
-                     R = R, method = fun, side = side, emp.loop = emp.loop)
+                     R = R, method = fun, side = side, emploop = emploop)
 
       pval <- tmp$pval
       ci <- tmp$ci

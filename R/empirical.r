@@ -1,4 +1,4 @@
-empirical <- function(R, method, side, size = 10000, emp.loop = FALSE, ...) {
+empirical <- function(R, method, side, size = 10000, emploop = FALSE, ...) {
 
    # check if 'R' is specified
    if (missing(R))
@@ -23,7 +23,7 @@ empirical <- function(R, method, side, size = 10000, emp.loop = FALSE, ...) {
 
    mu <- rep(0, nrow(R))
 
-   if (!emp.loop) {
+   if (!emploop) {
 
       z <- MASS::mvrnorm(size, mu = mu, Sigma = R)
 
