@@ -6,4 +6,4 @@ import(utils)
 import(Matrix)
 import(MASS)
 
-S3method(print, combp)
+S3method(print, poolr)

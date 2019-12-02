@@ -1,14 +1,14 @@
-\name{print.combp}
-\alias{print.combp}
-\title{Print Method for 'combp' Objects}
+\name{print.poolr}
+\alias{print.poolr}
+\title{Print Method for 'poolr' Objects}
 \description{
-   Print method for objects of class \code{"combp"}.
+   Print method for objects of class \code{"poolr"}.
 }
 \usage{
-\method{print}{combp}(x, digits=3, \dots)
+\method{print}{poolr}(x, digits=3, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"combp"}.}
+   \item{x}{an object of class \code{"poolr"}.}
    \item{digits}{integer.}
    \item{\dots}{other arguments.}
 }

@@ -6,12 +6,6 @@
 \description{
    The \pkg{poolr} package is a collection of functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-squared method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-squared method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-squared method).
 }
-\section{Purpose}{
-   The problem to be addressed can be succinctly stated as follows. Let \eqn{p_i} denote the \eqn{p}-value corresponding to the \eqn{i}th null hypothesis, \eqn{H_i}, where \eqn{i = 1, \ldots, k}. The tests being used to generate the \eqn{p_i} values are assumed to have nominal properties (i.e., the Type I error rates are equal to the chosen \eqn{\alpha} value), which implies \eqn{p_i \sim Uniform(0,1)} when \eqn{H_i} is true. The goal is to combine the \eqn{p}-values into a single \eqn{p}-value to test the joint null hypothesis that \eqn{H_i} is true for all \eqn{k} tests.
-}
-\section{Methods}{
-   Blah.
-}
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr

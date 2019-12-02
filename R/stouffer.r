@@ -87,9 +87,9 @@ stouffer <- function(p, adjust = "none", m, R, size = 10000, threshold, side = 2
 
    }
 
-   res <- list(p = pval, ci = ci, k = k, m = m, fun = fun, adjust = adjust, statistic = statistic)
+   res <- list(p = pval, ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, fun = fun)
 
-   class(res) <- "combp"
+   class(res) <- "poolr"
    return(res)
 
 }

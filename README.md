@@ -3,7 +3,7 @@ poolr: Package for Pooling the Results from (Dependent) Tests
 
 ## Description
 
-The `poolr` package is a collection of functions for pooling the results (i.e., p-values) of tests, which may possibly be dependent.
+The `poolr` package contains functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-squared method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-squared method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-squared method).
 
 ## Meta
 

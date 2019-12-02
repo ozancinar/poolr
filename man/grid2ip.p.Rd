@@ -1,18 +1,13 @@
-\name{grid2ip.p}
+\name{grid2ip}
 \docType{data}
 \alias{grid2ip.p}
-\title{p-values from gene GRID2IP}
-\description{p-values of the single-nucleotide polymorphisms (SNPs) in gene GRID2IP (Van Assche et al. 2017).}
+\alias{grid2ip.ld}
+\alias{grid2ip}
+\title{Results from testing the association between depressive symptoms and 23 SNPs in the GRID2IP gene}
+\description{Results from testing the association between depressive symptoms and 23 single-nucleotide polymorphisms (SNPs) in the GRID2IP gene (Van Assche et al., 2017).}
 \usage{grid2ip.p}
-\format{The data frame contains the following objects:
-\tabular{lll}{
-   \bold{grid2ip.p} \tab \code{numeric} \tab p-values \cr
-}
-}
-\details{
-   An example data set for combining p-values in a single gene.
-}
+\format{Object \code{grid2ip.p} is a vector with the 23 \eqn{p}-values of the tests. Object \code{grid2ip.ld} contains a matrix with the linkage disequilibrium (LD) correlations among the 23 SNPs.}
 \references{
-   Van Assche E, Moons T, Cinar O, Viechtbauer W, Oldehinkel AJ, Van Leeuwen K, Verschueren K, Colpin H, Lambrechts D, Van den Noortgate W, et al. (2017). “Gene-based interaction analysis shows GABA ergic genes interacting with parenting in adolescent depressive symptoms.” \emph{Journal of Child Psychology and Psychiatry}, 58(12), 1301–1309.
+   Van Assche, E., Moons, T., Cinar, O., Viechtbauer, W., Oldehinkel, A. J., Van Leeuwen, K., Verschueren, K., Colpin, H., Lambrechts, D., Van den Noortgate, W., Goossens, L., Claes, S., & van Winkel, R. (2017). Gene-based interaction analysis shows GABAergic genes interacting with parenting in adolescent depressive symptoms. \emph{Journal of Child Psychology and Psychiatry, 58}(12), 1301-1309.
 }
 \keyword{datasets}

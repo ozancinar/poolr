@@ -1,4 +1,4 @@
-print.combp <- function(x, digits=3, ...) {
+print.poolr <- function(x, digits=3, ...) {
 
    if (x$fun %in% c("fisher", "invchisq"))
       info <- paste0("test statistic = ", round(x$statistic, digits), " ~ chi-square(", round(attr(x$statistic, "df"), digits), ")")
