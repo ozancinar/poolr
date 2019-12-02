@@ -140,25 +140,26 @@
 
 }
 
-.do.emp <- function(pval.obs, emp.setup, ddd, R, method, side, emploop) {
+.do.emp <- function(pval.obs, emp.setup, ddd, R, method, side, batchsize) {
 
-   for (i in seq_along(emp.setup$size)) {
+   for (j in seq_along(emp.setup$size)) {
 
       if (!is.null(ddd$verbose) && ddd$verbose)
-         cat("Size:", emp.setup$size[i], " Threshold:", emp.setup$thres[i], "\n")
+         cat("Size:", emp.setup$size[j], " Threshold:", emp.setup$thres[j], "\n")
 
-      size <- emp.setup$size[i]
+      size <- emp.setup$size[j]
 
       if (is.null(ddd$emp.dist)) {
-         emp.dist <- empirical(R = R, method = method, side = side,
-                               size = size, emploop = emploop)
+         empirical.args <- c(list(R = R, method = method, side = side, size = size, batchsize = batchsize), ddd)
+         emp.dist <- do.call(empirical, empirical.args)
+         #emp.dist <- empirical(R = R, method = method, side = side, size = size, batchsize = batchsize)
       } else {
          emp.dist <- ddd$emp.dist
       }
 
       pval <- (sum(emp.dist <= pval.obs) + 1) / (size + 1)
 
-      if (pval >= emp.setup$thres[i]) {
+      if (pval >= emp.setup$thres[j]) {
          ci <- as.numeric(binom.test((sum(emp.dist <= pval.obs) + 1), (size + 1))$conf.int)
          break
       }
@@ -167,4 +168,43 @@
 
    return(list(pval = pval, ci = ci))
 
+}
+
+.simmvn <- function(n = 1, mu, Sigma) {
+   p <- length(mu)
+   eS <- eigen(Sigma, symmetric = TRUE)
+   ev <- eS$values
+   X <- matrix(rnorm(p * n), n)
+   X <- mu + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(X)
+   t(X)
+}
+
+.fisher <- function(p, k, alpha) {
+   statistic <- -2 * sum(log(p))
+   pchisq(statistic, df = 2 * k, lower.tail = FALSE)
+}
+
+.stouffer <- function(p, k, alpha) {
+   statistic <- sum(qnorm(p, lower.tail = FALSE)) / sqrt(k)
+   pnorm(statistic, lower.tail = FALSE)
+}
+
+.invchisq <- function(p, k, alpha) {
+   statistic <- sum(qchisq(p, df = 1, lower.tail = FALSE))
+   pchisq(statistic, df = k, lower.tail = FALSE)
+}
+
+.bonferroni <- function(p, k, alpha) {
+   statistic <- min(p)
+   min(1, statistic * k)
+}
+
+.tippett <- function(p, k, alpha) {
+   statistic <- min(p)
+   1 - (1 - statistic)^k
+}
+
+.binotest <- function(p, k, alpha) {
+   statistic <- sum(p <= alpha)
+   sum(dbinom(statistic:k, k, alpha))
 }

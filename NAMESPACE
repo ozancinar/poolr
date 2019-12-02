@@ -2,8 +2,8 @@ exportPattern("^[^\\.]")
 
 import(methods)
 import(stats)
+import(utils)
 import(Matrix)
 import(MASS)
-importFrom("utils", "data")
 
 S3method(print, combp)

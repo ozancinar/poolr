@@ -3,19 +3,17 @@
 \title{Binomial Test}
 \description{Function to combine \eqn{p}-values using the binomial distribution.}
 \usage{
-binotest(p, adjust = "none", m, R, alpha = 0.05,
-         size = 10000, thres, side = 2, emploop = FALSE, \dots)
+binotest(p, adjust = "none", m, R, size = 10000, thres, side = 2, batchsize, \dots)
 }
 \arguments{
    \item{p}{vector of the (one- or two-sided) \eqn{p}-values to be combined.}
    \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis.}
    \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. Once this argument is set to a value, the function will not use \code{adjust} and \code{R} arguments.}
    \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
-   \item{alpha}{significance level of the test. It is set to 0.05 as default.}
    \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used. For a stepwise algorithm this qrgument can be given as a numeric vector to specify the sample sizes at different steps.}
    \item{thres}{a numeric vector to specify significance thresholds for the stepwise algorithm. This option is used when \code{size} is set to a vector. Then, \code{thres} should be set to a vector with a length of one less than the length of \code{size}. If these two vectors have the same lengths, the last threshold in \code{thres} is going to be ignored. Alternatively, \code{thres} can be a single value which will be used for the signficance threshold for all the steps except for the last step.}
    \item{side}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
-   \item{emploop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emploop = TRUE}.}
+   \item{batchsize}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emploop = TRUE}.}
    \item{\dots}{other arguments.}
 }
 \details{

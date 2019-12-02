@@ -1,5 +1,4 @@
-binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres, side = 2,
-                     emploop = FALSE, ...) {
+binotest <- function(p, adjust = "none", m, R, size = 10000, thres, side = 2, batchsize, ...) {
 
    # checks for 'p' argument
    .check.p(p)
@@ -16,6 +15,8 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
    # get name of function
    fun <- as.character(sys.call()[1])
 
+   ddd <- list(...)
+
    if (missing(R)) {
 
       # check if 'R' is specified when using an adjustment method (does not apply to "user")
@@ -29,6 +30,12 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
       # checks for 'R' argument
       .check.R(R, k = k, adjust = adjust, fun = fun)
 
+   }
+
+   if (is.null(ddd$alpha)) {
+      alpha <- .05
+   } else {
+      alpha <- ddd$alpha
    }
 
    # compute test statistic
@@ -55,7 +62,9 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
 
    if (adjust == "empirical") {
 
-      ddd <- list(...)
+      # setting 'batchsize' to NULL if it is missing
+      if (missing(batchsize))
+         batchsize <- NULL
 
       # setting 'thres' to NULL if it is missing for further checks
       if (missing(thres))
@@ -69,7 +78,7 @@ binotest <- function(p, adjust = "none", m, R, alpha = 0.05, size = 10000, thres
 
       # get empirically derived p-value
       tmp <- .do.emp(pval.obs = pval.obs, emp.setup = emp.setup, ddd = ddd,
-                     R = R, method = fun, side = side, emploop = emploop)
+                     R = R, method = fun, side = side, batchsize = batchsize)
 
       pval <- tmp$pval
       ci <- tmp$ci

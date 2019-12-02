@@ -3,40 +3,55 @@
 \title{Fisher's Method}
 \description{Function to carry out Fisher's method.}
 \usage{
-fisher(p, adjust = "none", m, R,
-       size = 10000, thres, side = 2, emploop = FALSE, \dots)
+fisher(p, adjust = "none", m, R, size = 10000, thres, side = 2, batchsize, \dots)
 }
 \arguments{
-   \item{p}{vector with the (one- or two-sided) p-values.}
-   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis. Finally, this argument can be set to "generalized" to compute the combined \eqn{p}-value under dependence. For specification of covariance matrix under this selection, please see the explanation for "R" argument below.}
-   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
-   \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
-   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used. For a stepwise algorithm this qrgument can be given as a numeric vector to specify the sample sizes at different steps.}
-   \item{thres}{a numeric vector to specify significance thresholds for the stepwise algorithm. This option is used when \code{size} is set to a vector. Then, \code{thres} should be set to a vector with a length of one less than the length of \code{size}. If these two vectors have the same lengths, the last threshold in \code{thres} is going to be ignored. Alternatively, \code{thres} can be a single value which will be used for the signficance threshold for all the steps except for the last step.}
-   \item{side}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
-   \item{emploop}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emploop = TRUE}.}
+   \item{p}{vector of length \eqn{k} with the (one- or two-sided) p-values to be combined.}
+   \item{adjust}{character string to specify an adjustment method to account for dependence. Default is \code{"none"}, in which case no adjustment method is applied. Methods \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} are adjustments based on the effective number of tests (see \code{\link{meff}}). Adjustment method \code{"empirical"} uses an empirically-derived null distribution using pseudo replicates. Finally, method \code{"generalized"} uses a generalization of Fisher's method based on multivariate theory. See \sQuote{Details}.}
+   \item{m}{optional scalar (between 1 and \eqn{k}) to manually specify the effective number of tests (instead of estimating it via one of the methods described above).}
+   \item{R}{a symmetric matrix that reflects the dependence structure among the tests. Must be specified if \code{adjust} is set to something other than \code{"none"} (or the effective number of tests is directly provided via the \code{m} argument).}
+   \item{size}{size of the empirically-derived null distribution. Can also be a numeric vector of sizes, in which case a stepwise algorithm is used. This (and the following arguments) are only relevant when \code{adjust = "empirical"}.}
+   \item{thres}{numeric vector to specify the significance thresholds for the stepwise algorithm (only relevant when \code{size} is a vector).}
+   \item{side}{scalar to specify the sidedness of the \eqn{p}-values that are used to generate the empirically-derived null distribution (2, by default, for two-sided tests, 1 for one-sided tests).}
+   \item{batchsize}{logical that defines how the empirically-derived null distribution is constructed. When \code{FALSE} (the default), this is done in a typically faster but more memory intensive vectorized manner. When \code{TRUE}, a typically slower but less memory intensive loop is used.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to apply Fisher's method. Under independence, Fisher's test-statistics can be computed as:
 
-   \eqn{X^2 = -2 \sum_{i = 1}^k \ln(p_i)}
+   \bold{Fisher's Method}
 
-   where \eqn{p_1, p_2, \ldots, p_k} are the individual \eqn{k} \eqn{p}-values. Fisher's test-statistic computed with this equation follows a chi-squared distribution with \eqn{2k} degrees of freedom which is used to compute the combined \eqn{p}-value.
+   By default (i.e., when \code{adjust = "none"}), the function applies Fisher's (1932) method to the \eqn{p}-values passed to the function. The test statistic is then computed with \deqn{X^2 = -2 \sum_{i = 1}^k \ln(p_i)} where \eqn{p_1, p_2, \ldots, p_k} are the individual \eqn{p}-values of the \eqn{k} hypothesis tests. Under the joint null hypothesis, the test statistic follows a chi-squared distribution with \eqn{2k} degrees of freedom which is used to compute the combined \eqn{p}-value.
 
-   When the hypothesis tests from which the individual \eqn{p}-values have been obtained are not completely independent, this process can be modified with several techniques. First, users can utilize the effective number of tests by setting \code{adjust} argument to one of the four PCA-based methods \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"} (see \code{?meff} for details) and providing the correlation among the \eqn{p}-values (see \code{?mvnconv} for more details). Alternatively, users can provide an effective number of tests which is computed by another method by submitting this value to \code{m} argument. Note that once a user-defined effective number of tests is provided with \code{m} argument, he/she does not have to provide a correlation matrix to \code{R} argument anymore. Once the effective number of tests, \eqn{m_\textrm{eff}}, is computed, the test-statistic calculated above can be modified as:
+   Fisher's method assumes that the \eqn{p}-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust Fisher's method to account for such dependence.
 
-   \eqn{\tilde{X}^2 = \frac{m_{\textrm{eff}}}{k} \times X^2}
+   \bold{Adjustment Based on the Effective Number of Tests}
 
-   which follows a chi-squared distribution with \eqn{2k_{\textrm{eff}}} degrees of freedoms.
+   The method can be adjusted based on an estimate of the effective number of tests. For this, set \code{adjust} to \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"} (see \code{\link{meff}} for details on these methods for estimating the effective number of tests) and argument \code{R} to a correlation matrix that reflects the dependence structure among the tests.
 
-   Alternatively, researchers can utilize the empirically-derived null distributions in order to calculate the combined \eqn{p}-value under a given correlation structure. This can be done by setting \code{adjust} to \code{"empirical"} and providing the correlation matrix to \code{R} argument. Then, the function will generate an empirical distribution of the combined \eqn{p}-values under the null hypothesis and compute a combined \eqn{p}-value using the percentiles of this distribution. In order to quicken the computations, researchers can use a stepwise algorithm. For details, please see below.
+   There is no general solution for constructing such a correlation matrix, as this depends on the type of test that generated the \eqn{p}-values and the sidedness of these tests. In case that the \eqn{p}-values are obtained from tests whose test statistics can be assumed to follow (at least asymptotically) a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \eqn{p}-values, which can then be passed to the \code{R} argument. See \sQuote{Examples}.
+
+   Once the effective number of tests, \eqn{m}, is estimated based on \code{R} using one of the four methods described above, the test statistic of Fisher's method can be modified with \deqn{\tilde{X}^2 = \frac{m}{k} \times X^2} which is then assumed to follow a chi-squared distribution with \eqn{2m} degrees of freedom.
+
+   Alternatively, one can also directly specify the effective number of tests via the \code{m} argument (e.g., if some other method not implemented in the \pkg{poolr} package is used to estimate the effective number of tests). In that case, argument \code{R} is irrelevant and doesn't need to be specified.
+
+   \bold{Adjustment Based on an Empirically-Derived Null Distribution}
+
+   When \code{adjust="empirical"}, the combined \eqn{p}-value is computed based on an empirically-derived null distribution of Fisher's method using pseudo replicates. This is appropriate if the test statistics that generated the \eqn{p}-values to be combined can be assumed to follow (at least asymptotically) a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the \code{R} argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided \eqn{p}-values (depending on the \code{side} argument), and Fisher's method is applied. Repeating this process \code{size} times yields a null distribution based on which the combined \eqn{p}-value can be computed, or more precisely, estimated, since repeated applications of this method will yield (slightly) different results.
+
+   To obtain a stable estimate of the combined \eqn{p}-value, especially in case the combined \eqn{p}-value ends up being quite low (i.e., close to 0), \code{size} should be set to a large value (the default is \code{10000}, but this might need to be increased for a more precise estimate).
+
+   Generating the null distribution can be done in two ways. When \code{emploop=FALSE} (the default), this is done in a typically faster but more memory intensive vectorized manner, which requires generating a matrix with dimensions \code{[size,k]}. For large \code{size} and/or \code{k}, allocating the memory for this matrix might not be possible. In that case, one can set \code{emploop=TRUE}, which uses a typically slower but less memory intensive loop.
+
+   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{thres} argument. In that case, a stepwise algorithm is used that proceeds as follows (see also Liu et al., 2010). For \code{j = 1, ..., length(size)},
+   \enumerate{
+      \item estimate the combined \eqn{p}-value based on \code{size[j]}
+      \item if the combined \eqn{p}-value is \eqn{\ge} than \code{thres[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
+   }
+   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 100000, 10000000)} and \code{thres} to decreasing values (e.g., \code{thres = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge .10}), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{thres} should, and is forced to be, 0 so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{thres}, so \code{thres = c(.10, .01)} would also work in the example above).
+
+   \bold{Adjustment Based on Multivariate Theory}
 
    Finally, the test-statistics can be calculated under dependence which provides the combined \eqn{p}-value that accounts for the correlation structure (Brown, 1975). This requires the calculation of the correlations among the test-statistics which can be done by using \code{mvnconv()}. For details, see \code{?mvnconv)} and examples below.
-
-  \bold{Stepwise Algorithm for Empirically-Derived Null Distributions}
-
-   As an option the \code{empirical} adjustment can be applied in a stepwise manner. With this approach, the function expects the user to set different number of sample size values for the empirical data set, and respective significance thresholds for these sample size values except for the largest sample size. This information should be given to the function as a list, containing two vectors for sample size and significance threshold values. Optimally, these vectors should be named \code{size} for sample size values and \code{thres} for significance threshold values, where the length of \code{thres} should be one less number than the length of \code{size} (although these names are going to be set by the function if they are not given by the user, as long as the list object has appropriate vectors). Then, the function will follow a loop over the sample size values in the order that is given in the \code{size} vector except for the last sample size value. Note that the algorithm will follow the order that is given by the user. Therefore, we advise you to give the sample size values in the \code{size} vector in an ascending order and their respective significance threshold values to benefit this algorithm optimally. Until the last sample size value, the function will generate an empirical distribution with the given sample size value in the order. This empirical distribution is going to be used to calculate the combined p-value. If the combined p-value is larger than the respective significance threshold, the algorithm will stop and give this p-value and the respective test statistic as the result. If the combined p-value is smaller than the respective significance threshold, then the algorithm will continue with the next sample size value until the second last sample size value in the set. If none of the combined p-values from these sample size values are below the respective significance threshold values, then the algorithm will generate one last empirical distribution with the last sample size value in the list and calculate the combined p-value and the test statistic based on this empirical distribution. For another explanation please see Liu et al. (2010).
 }
 \value{
    The function returns the (pooled) p-value based on Fisher's method and the selected adjustment method.
@@ -48,9 +63,9 @@ fisher(p, adjust = "none", m, R,
 \references{
    Brown, MB (1975): \emph{400: A method for combining non-independent, one-sided tests of significance}. Biometrics, 987-992.
 
-   Fisher, R. A. (1932). \emph{Statistical methods for research workers} (4th ed.). Oliver and Boyd
+   Fisher, R. A. (1932). \emph{Statistical Methods for Research Workers} (4th ed.). Edinburgh: Oliver and Boyd.
 
-   Jimmy Z. Liu, Allan F. Mcrae, Dale R. Nyholt, Sarah E. Medland, Naomi R. Wray, Kevin M. Brown, AMFS Investigators, Nicholas K. Hayward, Grant W. Montgomery, Peter M. Visscher, Nicholas G. Martin, and Stuart Macgregor (2010). \emph{A versatile gene-based test for genome-wide association studies}. The American Journal of Human Genetics, 87(1), 139-145.
+   Liu, J. Z., McRae, A. F., Nyholt, D. R., Medland, S. E., Wray, N. R., Brown, K. M., AMFS Investigators, Hayward, N. K., Montgomery, G. W., Visscher, P. M., Martin, N. G., & Macgregor, S. (2010). A versatile gene-based test for genome-wide association studies. American Journal of Human Genetics, 87(1), 139-145.
 }
 \examples{
 # create a pseudo-correlation matrix for 10 test-statistics
