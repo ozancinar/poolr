@@ -16,7 +16,7 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
       stop("Argument 'R' must be a symmetric matrix.", call.=FALSE)
 
    # check if 'R' is positive definite; if not, make it
-   if (!all(eigen(R)$values > 0)) {
+   if (any(eigen(R)$values <= 0)) {
       R <- as.matrix(Matrix::nearPD(R, corr=TRUE)$mat)
       warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
    }

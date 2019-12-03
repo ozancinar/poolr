@@ -9,11 +9,11 @@
 }
 \arguments{
    \item{x}{an object of class \code{"poolr"}.}
-   \item{digits}{integer.}
+   \item{digits}{integer specifying the number of (significant) digits for rounding/presenting the results.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The output shows the combined p-value.
+   The output shows the combined p-value (with the specified number of significant digits), the test statistic (and its assumed null distribution), and the adjustment method that was applied.
 }
 \value{
    The function does not return an object.

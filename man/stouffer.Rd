@@ -3,85 +3,126 @@
 \title{Stouffer's Method}
 \description{Function to carry out Stouffer's method.}
 \usage{
-stouffer(p, adjust = "none", m, R, size = 10000, threshold, side = 2, batchsize, \dots)
+stouffer(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \dots)
 }
 \arguments{
-   \item{p}{vector with the (one- or two-sided) p-values.}
-   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis. Finally, this argument can be set to "generalized" to compute the combined \eqn{p}-value under dependence. For specification of covariance matrix under this selection, please see the explanation for "R" argument below.}
-   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. This argument can only be used when the "adjust" argument is set to one of the four PCA-based methods.}
-   \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
-   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used. For a stepwise algorithm this qrgument can be given as a numeric vector to specify the sample sizes at different steps.}
-   \item{threshold}{a numeric vector to specify significance thresholds for the stepwise algorithm. This option is used when \code{size} is set to a vector. Then, \code{thres} should be set to a vector with a length of one less than the length of \code{size}. If these two vectors have the same lengths, the last threshold in \code{thres} is going to be ignored. Alternatively, \code{thres} can be a single value which will be used for the signficance threshold for all the steps except for the last step.}
-   \item{side}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
-   \item{batchsize}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emploop = TRUE}.}
+   \item{p}{vector of length \eqn{k} with the (one- or two-sided) p-values to be combined.}
+   \item{adjust}{character string to specify an adjustment method to account for dependence. The default is \code{"none"}, in which case no adjustment is applied. Methods \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} are adjustments based on an estimate of the effective number of tests (see \code{\link{meff}}). Adjustment method \code{"empirical"} uses an empirically-derived null distribution using pseudo replicates. Finally, method \code{"generalized"} uses a generalization of Stouffer's method based on multivariate theory. See \sQuote{Details}.}
+   \item{R}{a \eqn{k \times k} symmetric matrix that reflects the dependence structure among the tests. Must be specified if \code{adjust} is set to something other than \code{"none"}. See \sQuote{Details}.}
+   \item{m}{optional scalar (between 1 and \eqn{k}) to manually specify the effective number of tests (instead of estimating it via one of the methods described above).}
+   \item{size}{size of the empirically-derived null distribution. Can also be a numeric vector of sizes, in which case a stepwise algorithm is used. This (and the following arguments) are only relevant when \code{adjust = "empirical"}.}
+   \item{threshold}{numeric vector to specify the significance thresholds for the stepwise algorithm (only relevant when \code{size} is a vector).}
+   \item{side}{scalar to specify the sidedness of the \eqn{p}-values that are used to simulate the null distribution (2, by default, for two-sided tests; 1 for one-sided tests).}
+   \item{batchsize}{optional scalar to specify the batch size for generating the null distribution. When unspecified (the default), this is done in a single batch.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to apply Stouffer's method. It is known that \eqn{p}-values follow a uniform(0, 1) distribution under the null hypothesis which can be used to transform the individual \eqn{p}-values (denoted by \eqn{z_1, z_2, \ldots, z_k}) to standardized normal values (denoted by \eqn{z_1, z_2, \ldots, z_k}) where \eqn{k} is the number of \eqn{p}-values using \eqn{z_i = \Phi^{-1}(p_i)} where \eqn{\Phi^{-1}} is the inverse of the distribution function of the standard normal distribution. Then, a combined test-statistic can be computed using:
 
-   \eqn{z = \sum_{i = 1}^k z_i / \sqrt{k}}
+   \bold{Stouffer's Method}
 
-   which follows \eqn{N(0, 1)} and it can be used to compute the combined \eqn{p}-value, \eqn{p}.
+   By default (i.e., when \code{adjust = "none"}), the function applies Stouffer's method to the \eqn{p}-values (Stouffer et al., 1949). Letting \eqn{p_1, p_2, \ldots, p_k} denote the individual (one- or two-sided) \eqn{p}-values of the \eqn{k} hypothesis tests to be combined, the test statistic is then computed with \deqn{z = \sum_{i = 1}^k z_i / \sqrt{k}} where \eqn{z_i = \Phi^{-1}(1 - p_i)} and \eqn{\Phi^{-1}(\cdot)} denotes the inverse of the cumulative distribution function of a standard normal distribution. Under the joint null hypothesis, the test statistic follows a standard normal distibution which is used to compute the combined \eqn{p}-value.
 
-   When the hypothesis tests from which the individual \eqn{p}-values have been obtained are not completely independent, this process can be modified with several techniques. First, users can utilize the effective number of tests by setting \code{adjust} argument to one of the four PCA-based methods \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"} (see \code{?meff} for details) and providing the correlation among the \eqn{p}-values (see \code{?mvnconv} for more details). Alternatively, users can provide an effective number of tests which is computed by another method by submitting this value to \code{m} argument. Note that once a user-defined effective number of tests is provided with \code{m} argument, he/she does not have to provide a correlation matrix to \code{R} argument anymore. Once the effective number of tests, \eqn{m_\textrm{eff}}, is computed, the test-statistic calculated above can be modified as:
+   Stouffer's method assumes that the \eqn{p}-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).
 
-   \eqn{\tilde{z} = \frac{k_{\textrm{eff}}}{k} \sum_{i = 1}^k z_i / \sqrt{m_{\textrm{eff}}}}
+   When \code{adjust} is set to \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}, Stouffer's method is adjusted based on an estimate of the effective number of tests (see \code{\link{meff}} for details on these methods for estimating the effective number of tests). In this case, argument \code{R} needs to be set to a correlation matrix that reflects the dependence structure among the tests.
 
-   which follows the standard normal distribution.
+   There is no general solution for constructing such a correlation matrix, as this depends on the type of test that generated the \eqn{p}-values and the sidedness of these tests. If the \eqn{p}-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \eqn{p}-values, which can then be passed to the \code{R} argument. See \sQuote{Examples}.
 
-   Alternatively, researchers can utilize the empirically-derived null distributions in order to calculate the combined \eqn{p}-value under a given correlation structure. This can be done by setting \code{adjust} to \code{"empirical"} and providing the correlation matrix to \code{R} argument. Then, the function will generate an empirical distribution of the combined \eqn{p}-values under the null hypothesis and compute a combined \eqn{p}-value using the percentiles of this distribution. In order to quicken the computations, researchers can use a stepwise algorithm. For details, please see below.
+   Once the effective number of tests, \eqn{m}, is estimated based on \code{R} using one of the four methods described above, the test statistic of Stouffer's method can be modified with \deqn{\tilde{z} = \sqrt{\frac{m}{k}} \times z} which is then assumed to follow a standard normal distibution.
 
-   Finally, the test-statistics can be calculated under dependence which provides the combined \eqn{p}-value that accounts for the correlation structure. This requires the calculation of the correlations among the test-statistics which can be done by using \code{mvnconv()}. For details, see \code{?mvnconv)} and examples below.
+   Alternatively, one can also directly specify the effective number of tests via the \code{m} argument (e.g., if some other method not implemented in the \pkg{poolr} package is used to estimate the effective number of tests). Argument \code{R} is then irrelevant and doesn't need to be specified.
 
-  \bold{Stepwise Algorithm for Empirically-Derived Null Distributions}
+   \bold{Adjustment Based on an Empirically-Derived Null Distribution}
 
-   As an option the \code{empirical} adjustment can be applied in a stepwise manner. With this approach, the function expects the user to set different number of sample size values for the empirical data set, and respective significance thresholds for these sample size values except for the largest sample size. This information should be given to the function as a list, containing two vectors for sample size and significance threshold values. Optimally, these vectors should be named \code{size} for sample size values and \code{thres} for significance threshold values, where the length of \code{thres} should be one less number than the length of \code{size} (although these names are going to be set by the function if they are not given by the user, as long as the list object has appropriate vectors). Then, the function will follow a loop over the sample size values in the order that is given in the \code{size} vector except for the last sample size value. Note that the algorithm will follow the order that is given by the user. Therefore, we advise you to give the sample size values in the \code{size} vector in an ascending order and their respective significance threshold values to benefit this algorithm optimally. Until the last sample size value, the function will generate an empirical distribution with the given sample size value in the order. This empirical distribution is going to be used to calculate the combined p-value. If the combined p-value is larger than the respective significance threshold, the algorithm will stop and give this p-value and the respective test statistic as the result. If the combined p-value is smaller than the respective significance threshold, then the algorithm will continue with the next sample size value until the second last sample size value in the set. If none of the combined p-values from these sample size values are below the respective significance threshold values, then the algorithm will generate one last empirical distribution with the last sample size value in the list and calculate the combined p-value and the test statistic based on this empirical distribution. For another explanation please see Liu et al. (2010).
+   When \code{adjust = "empirical"}, the combined \eqn{p}-value is computed based on an empirically-derived null distribution using pseudo replicates. This is appropriate if the test statistics that generated the \eqn{p}-values to be combined can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the \code{R} argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided \eqn{p}-values (depending on the \code{side} argument), and Stouffer's method is applied. Repeating this process \code{size} times yields a null distribution based on which the combined \eqn{p}-value can be computed, or more precisely, estimated, since repeated applications of this method will yield (slightly) different results. To obtain a stable estimate of the combined \eqn{p}-value, \code{size} should be set to a large value (the default is \code{10000}, but this can be increased for a more precise estimate). If we consider the combined \eqn{p}-value an estimate of the \sQuote{true} combined \eqn{p}-value that would be obtained for an infinite sample size, we can also construct a 95\% (pseudo) confidence interval based on a binomial distribution.
+
+   If \code{batchsize} is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions \code{[size,k]}. When \code{size} and/or \code{k} is large, allocating the memory for this matrix might not be possible. Instead, one can specify a \code{batchsize} value, in which case a matrix with dimensions \code{[batchsize,k]} is repeatedly simulated until the desired size of the null distribution has been obtained.
+
+   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{threshold} argument. In that case, a stepwise algorithm is used that proceeds as follows (see also Liu et al., 2010). For \code{j = 1, ..., length(size)},
+   \enumerate{
+      \item estimate the combined \eqn{p}-value based on \code{size[j]}
+      \item if the combined \eqn{p}-value is \eqn{\ge} than \code{threshold[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
+   }
+   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 100000, 10000000)}) and \code{threshold} to decreasing values (e.g., \code{threshold = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge} .10), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{threshold} should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{threshold}, so \code{threshold = c(.10, .01)} would also work in the example above). One can also specify a single \code{threshold} (which is replicated as often as necessary depending on the length of \code{size}).
+
+   \bold{Adjustment Based on Multivariate Theory}
+
+   When \code{adjust = "generalized"}, Stouffer's method is computed based on a multivariate normal distribution that accounts for the dependence among the tests, assuming that the test statistics that generated the \eqn{p}-values follow a multivariate normal distribution. In that case, \code{R} needs to be set equal to a matrix that contains the covariances among the \eqn{z_i} values. If a matrix is available that reflects the correlations among the test statistics, this can be converted into the required covariance matrix using the \code{\link{mvnconv}} function. See \sQuote{Examples}.
+
+   This generalization of Stouffer's method is sometimes called Strube's method, based on Strube (1986), although the paper only describes the method for combining one-sided p-values. Both one- and two-sided versions of Strube's method are implemented in \pkg{poolr}, but caution must be exercised when applying it to two-sided \eqn{p}-values (even if the test statistics follow a multivariate normal distribution, \eqn{z_1, z_2, \ldots, z_k} is then not multivariate normal, but this is implicitly assumed by the method).
+
 }
 \value{
-   The function returns the (pooled) p-value based on Stouffer's method and the selected adjustment method.
+   An object of class \code{"poolr"}. The object is a list containing the following components:
+   \item{p}{combined \eqn{p}-value.}
+   \item{ci}{confidence interval for the combined \eqn{p}-value (only when \code{adjust = "empirical"}; otherwise \code{NULL}).}
+   \item{k}{number of \eqn{p}-values that were combined.}
+   \item{m}{estimate of the effective number of tests (only when \code{adjust} is one of \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}; otherwise \code{NULL}).}
+   \item{adjust}{chosen adjustment method.}
+   \item{statistic}{value of the (adjusted) test statistic.}
+   \item{fun}{name of calling function.}
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Jimmy Z. Liu, Allan F. Mcrae, Dale R. Nyholt, Sarah E. Medland, Naomi R. Wray, Kevin M. Brown, AMFS Investigators, Nicholas K. Hayward, Grant W. Montgomery, Peter M. Visscher, Nicholas G. Martin, and Stuart Macgregor (2010). \emph{A versatile gene-based test for genome-wide association studies}. The American Journal of Human Genetics, 87(1), 139-145.
+   Stouffer, S. A., Suchman, E. A., DeVinney, L. C., Star, S. A., & Williams, R. M., Jr. (1949). \emph{The American Soldier: Adjustment During Army Life (Vol. 1)}. Princeton, NJ: Princeton University Press.
 
-   Strube, M. J. (1985). \emph{Combining and comparing significance levels from nonindependent hypothesis tests}. Psychological bulletin, 97(2), 334.
+   Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. \emph{Psychological Bulletin, 97}(2), 334-341.
 }
 \examples{
-# create a pseudo-correlation matrix for 10 test-statistics
-r <- matrix(0.3, 10, 10)
-diag(r) <- 1
+# copy p-values and LD correlation matrix into p and r
+# (see help(grid2ip) for details on these data)
+p <- grid2ip.p
+r <- grid2ip.ld
 
-# generating multivariate normal test-statistics with the given correlation structure
-set.seed(123)
-ts <- mvrnorm(n = 1, mu = rep(0, 10), Sigma = r)
+# apply Stouffer's method
+stouffer(p)
 
-# computing individual one-sided p-values from the test-statistics generated above
-p1 <- pnorm(ts)
+# use mvnconv() to convert the LD correlation matrix into a matrix with the
+# correlations among the (two-sided) p-values assuming that the test
+# statistics follow a multivariate normal distribution with correlation
+# matrix r (note: 'side = 2' by default in mvnconv())
+mvnconv(r, target = "p", cov2cor = TRUE)[1:5,1:5] # show only rows/columns 1-5
 
-# computing individual two-sided p-values from the test-statistics generated above
-p2 <- 2 * pnorm(abs(ts), lower.tail = FALSE)
+# adjustment based on estimates of the effective number of tests
+stouffer(p, adjust = "nyholt", R = mvnconv(r, target = "p", cov2cor = TRUE))
+stouffer(p, adjust = "liji",   R = mvnconv(r, target = "p", cov2cor = TRUE))
+stouffer(p, adjust = "gao",    R = mvnconv(r, target = "p", cov2cor = TRUE))
+stouffer(p, adjust = "galwey", R = mvnconv(r, target = "p", cov2cor = TRUE))
 
-# default Stouffer's method
-stouffer(p1)
-stouffer(p2)
+# setting argument 'm' manually
+stouffer(p, m = 12)
 
-# using a PCA-based method (Li & Ji)
-stouffer(p1, adjust = "liji", R = mvnconv(R = r, side = 1, target = "p"))
-stouffer(p2, adjust = "liji", R = mvnconv(R = r, side = 2, target = "p"))
+# adjustment based on an empirically-derived null distribution (setting the
+# seed for reproducibility)
+set.seed(1234)
+stouffer(p, adjust = "empirical", R = r)
 
-# using empirically-derived null distributions
-stouffer(p1, adjust = "empirical", R = r, side = 1)
-stouffer(p2, adjust = "empirical", R = r) # side = 2 as default
+# generate the empirical distribution in batches of size 100
+stouffer(p, adjust = "empirical", R = r, batchsize = 100)
 
-# using empirically-derived null distributions with a stepwise algorithm.
-stouffer(p2 / 5, adjust = "empirical", R = r,
-         size = c(1000, 10000, 100000), thres = c(0.5, 0.5), verbose = TRUE)
+# using the stepwise algorithm (and for each value of 'size', the empirical
+# distribution will be generated via batches of size 100); not run, because
+# for these data, the stepwise algorithm will eventually reach the largest
+# 'size' value, which takes a considerable amount of time to run
+\dontrun{
+stouffer(p, adjust = "empirical", R = r, size = c(1000, 100000, 10000000),
+         threshold = c(.10, .01, 0), batchsize = 100)
+}
 
-# computing the combined p-value under dependence
-stouffer(p1, adjust = "generalized", R = mvnconv(R = r, side = 1, target = "z"))
-stouffer(p2, adjust = "generalized", R = mvnconv(R = r, side = 2, target = "z"))
+# use mvnconv() to convert the LD correlation matrix into a matrix with the
+# covariances among the (two-sided) 'z_i' values assuming that the
+# test statistics follow a multivariate normal distribution with correlation
+# matrix r (note: 'side = 2' by default in mvnconv())
+mvnconv(r, target = "z")[1:5,1:5] # show only rows/columns 1-5
+
+# adjustment based on generalized method
+stouffer(p, adjust = "generalized", R = mvnconv(r, target = "z"))
+
+# when using mvnconv() inside stouffer() with adjust = "generalized", the
+# 'target' argument is automatically set and doesn't need to be specified
+stouffer(p, adjust = "generalized", R = mvnconv(r))
 }
 \keyword{htest}

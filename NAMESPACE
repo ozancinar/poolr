@@ -4,6 +4,5 @@ import(methods)
 import(stats)
 import(utils)
 import(Matrix)
-import(MASS)
 
 S3method(print, poolr)

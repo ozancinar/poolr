@@ -4,6 +4,9 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    if (missing(R))
       stop("Argument 'R' must be specified.", call.=FALSE)
 
+   if (any(abs(R) > 1))
+      stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].")
+
    # get name of calling function (NULL if called from global environment)
    call.fun <- sys.call(-1)[1]
 

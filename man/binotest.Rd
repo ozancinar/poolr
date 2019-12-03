@@ -1,85 +1,109 @@
 \name{binotest}
 \alias{binotest}
 \title{Binomial Test}
-\description{Function to combine \eqn{p}-values using the binomial distribution.}
+\description{Function to carry out the binomial test.}
 \usage{
-binotest(p, adjust = "none", m, R, size = 10000, threshold, side = 2, batchsize, \dots)
+binotest(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \dots)
 }
 \arguments{
-   \item{p}{vector of the (one- or two-sided) \eqn{p}-values to be combined.}
-   \item{adjust}{adjustment method while combining the \eqn{p}-values. It is set to \code{"none"} as default which assumes the p-values are independent. The process of combining \eqn{p}-values can be modified with PCA-based methods by setting this argument to one of the four such methods which are \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} (for details of PCA-based methods, see \code{?meff}). Or, this argument can be set to \code{"empirical"} to use empirically-derived distributions under the null hypothesis.}
-   \item{m}{an optional argument that can be used to set the effective number of tests to a user-defined value. Once this argument is set to a value, the function will not use \code{adjust} and \code{R} arguments.}
-   \item{R}{a symmetric matrix that stores pairwise correlations among the \eqn{p}-values. The user must submit a matrix when the \code{adjust} set to a value other than \code{"none"} or an effective number of tests is provided with \code{m} argument. To estimate the correlations among the \eqn{p}-values for different methods, please see \code{?mvnconv}.}
-   \item{size}{size of the emprical distribution if the empirically-derived null hypothesis is going to be used. For a stepwise algorithm this qrgument can be given as a numeric vector to specify the sample sizes at different steps.}
-   \item{threshold}{a numeric vector to specify significance thresholds for the stepwise algorithm. This option is used when \code{size} is set to a vector. Then, \code{threshold} should be set to a vector with a length of one less than the length of \code{size}. If these two vectors have the same lengths, the last threshold in \code{threshold} is going to be ignored. Alternatively, \code{threshold} can be a single value which will be used for the signficance threshold for all the steps except for the last step.}
-   \item{side}{type of the \eqn{p}-values that are generated in empirical distribution. As default, it is set to 2 for two-sided tests. For one-sided \eqn{p}-values it should be set to 1.}
-   \item{batchsize}{a logical argument to decide to generate the empirical distribution in a loop. It is set to \code{FALSE} as default. However, if the size of the empirical distribution to be generated is so large that it leads to memory problem, we recommend you to switch \code{emploop = TRUE}.}
+   \item{p}{vector of length \eqn{k} with the (one- or two-sided) p-values to be combined.}
+   \item{adjust}{character string to specify an adjustment method to account for dependence. The default is \code{"none"}, in which case no adjustment is applied. Methods \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} are adjustments based on an estimate of the effective number of tests (see \code{\link{meff}}). Adjustment method \code{"empirical"} uses an empirically-derived null distribution using pseudo replicates. See \sQuote{Details}.}
+   \item{R}{a \eqn{k \times k} symmetric matrix that reflects the dependence structure among the tests. Must be specified if \code{adjust} is set to something other than \code{"none"}. See \sQuote{Details}.}
+   \item{m}{optional scalar (between 1 and \eqn{k}) to manually specify the effective number of tests (instead of estimating it via one of the methods described above).}
+   \item{size}{size of the empirically-derived null distribution. Can also be a numeric vector of sizes, in which case a stepwise algorithm is used. This (and the following arguments) are only relevant when \code{adjust = "empirical"}.}
+   \item{threshold}{numeric vector to specify the significance thresholds for the stepwise algorithm (only relevant when \code{size} is a vector).}
+   \item{side}{scalar to specify the sidedness of the \eqn{p}-values that are used to simulate the null distribution (2, by default, for two-sided tests; 1 for one-sided tests).}
+   \item{batchsize}{optional scalar to specify the batch size for generating the null distribution. When unspecified (the default), this is done in a single batch.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function can be used to combine p-values based on a binomial distribution. It is known that \eqn{p}-values follow Uniform(0, 1) under the null hypothesis. Therefore, rejecting the null hypothesis (i.e., a Type I Error) is equal to \eqn{\alpha}. A combined \eqn{p}-value, \eqn{p}, that indicates an ``excess significance'' can then be calculated under independence as:
 
-   \eqn{p = \sum_{x = r}^m {m \choose x} \alpha^x (1 - \alpha)^{m - x}}
+   \bold{Binomial Test}
 
-   where \eqn{r} is the number of individual \eqn{p}-values that are smaller than \eqn{\alpha}.
+   By default (i.e., when \code{adjust = "none"}), the function applies the binomial test to the \eqn{p}-values (Wilkinson, 1951). Letting \eqn{p_1, p_2, \ldots, p_k} denote the individual (one- or two-sided) \eqn{p}-values of the \eqn{k} hypothesis tests to be combined, the combined \eqn{p}-value is then computed with \deqn{p_c = \sum_{x = r}^k {k \choose x} \alpha^x (1 - \alpha)^{k - x}} where \deqn{r = \sum_{i = 1}^k I(p_i \le \alpha)} denotes the number of hypothesis tests that are significant at \eqn{\alpha}.
 
-   When the hypothesis tests from which the individual \eqn{p}-values have been obtained are not completely independent, this process can be modified with several techniques. First, users can utilize the effective number of tests by setting \code{adjust} argument to one of the four PCA-based methods \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"} (see \code{?meff} for details) and providing the correlation among the \eqn{p}-values (see \code{?mvnconv} for more details). Alternatively, users can provide an effective number of tests which is computed by another method by submitting this value to \code{m} argument. Note that once a user-defined effective number of tests is provided with \code{m} argument, he/she does not have to provide a correlation matrix to \code{R} argument anymore. Once the effective number of tests, \eqn{m_\textrm{eff}}, is computed, the combined \eqn{p}-value can be modified with it as:
+   The binomial test assumes that the \eqn{p}-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).
 
-   \eqn{p = \sum_{x=\tilde{r}}^{m_{\textrm{eff}}} {m_{\textrm{eff}} \choose x} \alpha_p^x (1-\alpha_p)^{m_{\textrm{eff}}-x}}
+   \bold{Adjustment Based on the Effective Number of Tests}
 
-   where \eqn{\tilde{r} = \lfloor r \frac{k_{\textrm{eff}}}{k} \rfloor}.
+   When \code{adjust} is set to \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}, the binomial test is adjusted based on an estimate of the effective number of tests (see \code{\link{meff}} for details on these methods for estimating the effective number of tests). In this case, argument \code{R} needs to be set to a correlation matrix that reflects the dependence structure among the tests.
 
-   Alternatively, researchers can utilize the empirically-derived null distributions in order to calculate the combined \eqn{p}-value under a given correlation structure. This can be done by setting \code{adjust} to \code{"empirical"} and providing the correlation matrix to \code{R} argument. Then, the function will generate an empirical distribution of the combined \eqn{p}-values under the null hypothesis and compute a combined \eqn{p}-value using the percentiles of this distribution. In order to quicken the computations, researchers can use a stepwise algorithm. For details, please see below.
+   There is no general solution for constructing such a correlation matrix, as this depends on the type of test that generated the \eqn{p}-values and the sidedness of these tests. If the \eqn{p}-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \eqn{p}-values, which can then be passed to the \code{R} argument. See \sQuote{Examples}.
 
-   \bold{Stepwise Algorithm for Empirically-Derived Null Distributions}
+   Once the effective number of tests, \eqn{m}, is estimated based on \code{R} using one of the four methods described above, the combined \eqn{p}-value is then computed with \deqn{p_c = \sum_{x = \tilde{r}}^m {m \choose x} \alpha^x (1 - \alpha)^{m - x}} where \deqn{\tilde{r} = \lfloor r \times m / k \rfloor} and \eqn{\lfloor \cdot \rfloor} is the floor function.
 
-   As an option the \code{empirical} adjustment can be applied in a stepwise manner. With this approach, the function expects the user to set different number of sample size values for the empirical data set, and respective significance thresholds for these sample size values except for the largest sample size. This information should be given to the function as a list, containing two vectors for sample size and significance threshold values. Optimally, these vectors should be named \code{size} for sample size values and \code{thres} for significance threshold values, where the length of \code{thres} should be one less number than the length of \code{size} (although these names are going to be set by the function if they are not given by the user, as long as the list object has appropriate vectors). Then, the function will follow a loop over the sample size values in the order that is given in the \code{size} vector except for the last sample size value. Note that the algorithm will follow the order that is given by the user. Therefore, we advise you to give the sample size values in the \code{size} vector in an ascending order and their respective significance threshold values to benefit this algorithm optimally. Until the last sample size value, the function will generate an empirical distribution with the given sample size value in the order. This empirical distribution is going to be used to calculate the combined p-value. If the combined p-value is larger than the respective significance threshold, the algorithm will stop and give this p-value and the respective test statistic as the result. If the combined p-value is smaller than the respective significance threshold, then the algorithm will continue with the next sample size value until the second last sample size value in the set. If none of the combined p-values from these sample size values are below the respective significance threshold values, then the algorithm will generate one last empirical distribution with the last sample size value in the list and calculate the combined p-value and the test statistic based on this empirical distribution. For another explanation please see Liu et al. (2010).
+   Alternatively, one can also directly specify the effective number of tests via the \code{m} argument (e.g., if some other method not implemented in the \pkg{poolr} package is used to estimate the effective number of tests). Argument \code{R} is then irrelevant and doesn't need to be specified.
+
+   \bold{Adjustment Based on an Empirically-Derived Null Distribution}
+
+   When \code{adjust = "empirical"}, the combined \eqn{p}-value is computed based on an empirically-derived null distribution using pseudo replicates. This is appropriate if the test statistics that generated the \eqn{p}-values to be combined can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the \code{R} argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided \eqn{p}-values (depending on the \code{side} argument), and the binomial test is applied. Repeating this process \code{size} times yields a null distribution based on which the combined \eqn{p}-value can be computed, or more precisely, estimated, since repeated applications of this method will yield (slightly) different results. To obtain a stable estimate of the combined \eqn{p}-value, \code{size} should be set to a large value (the default is \code{10000}, but this can be increased for a more precise estimate). If we consider the combined \eqn{p}-value an estimate of the \sQuote{true} combined \eqn{p}-value that would be obtained for an infinite sample size, we can also construct a 95\% (pseudo) confidence interval based on a binomial distribution.
+
+   If \code{batchsize} is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions \code{[size,k]}. When \code{size} and/or \code{k} is large, allocating the memory for this matrix might not be possible. Instead, one can specify a \code{batchsize} value, in which case a matrix with dimensions \code{[batchsize,k]} is repeatedly simulated until the desired size of the null distribution has been obtained.
+
+   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{threshold} argument. In that case, a stepwise algorithm is used that proceeds as follows (see also Liu et al., 2010). For \code{j = 1, ..., length(size)},
+   \enumerate{
+      \item estimate the combined \eqn{p}-value based on \code{size[j]}
+      \item if the combined \eqn{p}-value is \eqn{\ge} than \code{threshold[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
+   }
+   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 100000, 10000000)}) and \code{threshold} to decreasing values (e.g., \code{threshold = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge} .10), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{threshold} should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{threshold}, so \code{threshold = c(.10, .01)} would also work in the example above). One can also specify a single \code{threshold} (which is replicated as often as necessary depending on the length of \code{size}).
+
 }
 \value{
-   The function returns the (pooled) p-value calculated with binomial distribution and the selected adjustment method.
+   An object of class \code{"poolr"}. The object is a list containing the following components:
+   \item{p}{combined \eqn{p}-value.}
+   \item{ci}{confidence interval for the combined \eqn{p}-value (only when \code{adjust = "empirical"}; otherwise \code{NULL}).}
+   \item{k}{number of \eqn{p}-values that were combined.}
+   \item{m}{estimate of the effective number of tests (only when \code{adjust} is one of \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}; otherwise \code{NULL}).}
+   \item{adjust}{chosen adjustment method.}
+   \item{statistic}{value of the (adjusted) test statistic.}
+   \item{fun}{name of calling function.}
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Jimmy Z. Liu, Allan F. Mcrae, Dale R. Nyholt, Sarah E. Medland, Naomi R. Wray, Kevin M. Brown, AMFS Investigators, Nicholas K. Hayward, Grant W. Montgomery, Peter M. Visscher, Nicholas G. Martin, and Stuart Macgregor (2010). \emph{A versatile gene-based test for genome-wide association studies}. The American Journal of Human Genetics, 87(1), 139-145.
-
-   Wilkinson, B. (1951). \emph{A statistical consideration in psychological research}. Psychological Bulletin, 48(2), 156-158.
+   Wilkinson, B. (1951). A statistical consideration in psychological research. \emph{Psychological Bulletin, 48}(2), 156-158.
 }
-
 \examples{
-# create a pseudo-correlation matrix for 10 test-statistics.
-r <- matrix(0.3, 10, 10)
-diag(r) <- 1
+# copy p-values and LD correlation matrix into p and r
+# (see help(grid2ip) for details on these data)
+p <- grid2ip.p
+r <- grid2ip.ld
 
-# generating multivariate normal test-statistics with the given
-# correlation structure.
-set.seed(123)
-ts <- mvrnorm(n = 1, mu = rep(0, 10), Sigma = r)
+# apply the binomial test
+binotest(p)
 
-# computing individual one-sided p-values from the test-statistics
-# generated above.
-p1 <- pnorm(ts)
+# use mvnconv() to convert the LD correlation matrix into a matrix with the
+# correlations among the (two-sided) p-values assuming that the test
+# statistics follow a multivariate normal distribution with correlation
+# matrix r (note: 'side = 2' by default in mvnconv())
+mvnconv(r, target = "p", cov2cor = TRUE)[1:5,1:5] # show only rows/columns 1-5
 
-# computing individual two-sided p-values from the test-statistics
-# generated above.
-p2 <- 2 * pnorm(abs(ts), lower.tail = FALSE)
+# adjustment based on estimates of the effective number of tests
+binotest(p, adjust = "nyholt", R = mvnconv(r, target = "p", cov2cor = TRUE))
+binotest(p, adjust = "liji",   R = mvnconv(r, target = "p", cov2cor = TRUE))
+binotest(p, adjust = "gao",    R = mvnconv(r, target = "p", cov2cor = TRUE))
+binotest(p, adjust = "galwey", R = mvnconv(r, target = "p", cov2cor = TRUE))
 
-# default binomial test method.
-binotest(p = p1)
-binotest(p = p2)
+# setting argument 'm' manually
+binotest(p, m = 12)
 
-# using a PCA-based method (Li & Ji).
-binotest(p = p1, adjust = "liji", R = mvnconv(R = r, side = 1, target = "p"))
-binotest(p = p2, adjust = "liji", R = mvnconv(R = r, side = 2, target = "p"))
+# adjustment based on an empirically-derived null distribution (setting the
+# seed for reproducibility)
+set.seed(1234)
+binotest(p, adjust = "empirical", R = r)
 
-# using empirically-derived null distributions.
-binotest(p = p1, adjust = "empirical", R = r, side = 1)
-binotest(p = p2, adjust = "empirical", R = r)  # side = 2 as default.
+# generate the empirical distribution in batches of size 100
+binotest(p, adjust = "empirical", R = r, batchsize = 100)
 
-# using empirically-derived null distributions with a stepwise algorithm.
-binotest(p = p2 / 5, adjust = "empirical", R = r,
-         size = c(1000, 10000, 100000), thres = c(0.5, 0.05), verbose = TRUE)
+# using the stepwise algorithm (and for each value of 'size', the empirical
+# distribution will be generated via batches of size 100); not run, because
+# for these data, the stepwise algorithm will eventually reach the largest
+# 'size' value, which takes a considerable amount of time to run
+\dontrun{
+binotest(p, adjust = "empirical", R = r, size = c(1000, 100000, 10000000),
+         threshold = c(.10, .01, 0), batchsize = 100)
+}
 }
 \keyword{htest}

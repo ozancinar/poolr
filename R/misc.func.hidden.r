@@ -176,6 +176,8 @@
 
 ############################################################################
 
+# simplified version of MASS::mvrnorm()
+
 .simmvn <- function(n = 1, mu, Sigma) {
    p <- length(mu)
    eS <- eigen(Sigma, symmetric = TRUE)

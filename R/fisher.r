@@ -1,4 +1,4 @@
-fisher <- function(p, adjust = "none", m, R, size = 10000, threshold, side = 2, batchsize, ...) {
+fisher <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, ...) {
 
    # checks for 'p' argument
    .check.p(p)
