@@ -1,2 +1,7 @@
-.git
-\.travis\.yml
+^\.git$
+^\.github$
+^\.travis\.yml$
+^_pkgdown\.yml$
+^docs$
+^vignettes/pkgdown$
+^misc$
