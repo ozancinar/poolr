@@ -2,11 +2,14 @@
 
 # Code to create the mvnlookup.rdata file.
 
+# note: 15865 secs for "pracma" (with n=1000) on 'psysim' using 18 cores
+#        2853 secs for "cubature" on 'psysim' using 18 cores
+
 ############################################################################
 
 library(parallel)
 
-cl <- makePSOCKcluster(2)
+cl <- makePSOCKcluster(18)
 
 # vector of rho values for which we obtain the covariances
 rhos <- seq(-0.99, 1, by = 0.01)
@@ -23,7 +26,7 @@ lims <- 5
 tol  <- 1e-07
 
 # value to round final results to
-rnd <- 5
+rnd <- 4
 
 # load required packages in workers
 invisible(clusterEvalQ(cl, {
@@ -42,25 +45,40 @@ time.start <- proc.time()
 
 ############################################################################
 
-doint <- function(fun, xa = -5, xb = 5, ya = -5, yb = 5, n = 32, rho){
-   !any(is.numeric(xa), length(xa) == 1, is.numeric(ya), length(ya) == 1,
-        is.numeric(xb), length(xb) == 1, is.numeric(yb), length(yb) == 1)
-   cx <- gaussLegendre(n, xa, xb)
-   x <- cx$x
-   wx <- cx$w
-   cy <- gaussLegendre(n, ya, yb)
-   y <- cy$x
-   wy <- cy$w
-   mgrid <- meshgrid(x, y)
-   Z <- matrix(NA, n, n)
-   for(a in 1:n) {
-      for(b in 1:n) {
-         Z[a, b] <- fun(c(mgrid$X[a, b], mgrid$Y[a, b]), rho)
+if (method == "pracma") {
+   doint <- function(fun, xa = -5, xb = 5, ya = -5, yb = 5, n = 32, rho) {
+      !any(is.numeric(xa), length(xa) == 1, is.numeric(ya), length(ya) == 1,
+           is.numeric(xb), length(xb) == 1, is.numeric(yb), length(yb) == 1)
+      cx <- gaussLegendre(n, xa, xb)
+      x <- cx$x
+      wx <- cx$w
+      cy <- gaussLegendre(n, ya, yb)
+      y <- cy$x
+      wy <- cy$w
+      mgrid <- meshgrid(x, y)
+      Z <- matrix(NA, n, n)
+      for(a in 1:n) {
+         for(b in 1:n) {
+            Z[a, b] <- fun(c(mgrid$X[a, b], mgrid$Y[a, b]), rho)
+         }
       }
+      Q <- wx %*% Z %*% as.matrix(wy)
+      Q <- as.numeric(Q)
+      return(Q)
    }
-   Q <- wx %*% Z %*% as.matrix(wy)
-   Q <- as.numeric(Q)
-   return(Q)
+}
+
+if (method == "cubature") {
+   doint <- function(rho, tol, lims) {
+      # adaptIntegrate() gets stuck in some cases when rho = 0, so skips this (we know that cov = 0 then anyway)
+      if (rho == 0) {
+         cov <- NA
+      } else {
+         # for 'z_2', using c(-lims,lims) leads to -Inf; make upper lims slightly larger to avoid this
+         cov <- adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims+.01,lims+.01), rho=rho)$integral
+      }
+      return(cov)
+   }
 }
 
 clusterExport(cl, "doint")
@@ -80,7 +98,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r)) - 4
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral) - 4
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims)) - 4
 
 covs[rhos == 1] <- 4
 mvnlookup$m2lp_1 <- covs
@@ -100,7 +118,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r)) - 4
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral) - 4
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims)) - 4
 
 covs[rhos == 1] <- 4
 mvnlookup$m2lp_2 <- covs
@@ -120,7 +138,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r))
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral)
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims))
 
 covs[rhos == 1] <- 1
 mvnlookup$z_1 <- covs
@@ -140,7 +158,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r))
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral)
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims))
 
 covs[rhos == 1] <- 1
 mvnlookup$z_2 <- covs
@@ -160,7 +178,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r)) - 1
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral) - 1
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims)) - 1
 
 covs[rhos == 1] <- 2
 mvnlookup$chisq1_1 <- covs
@@ -178,7 +196,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r)) - 1
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral) - 1
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims)) - 1
 
 covs[rhos == 1] <- 2
 mvnlookup$chisq1_2 <- covs
@@ -198,7 +216,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r)) - 1/4
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral) - 1/4
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims)) - 1/4
 
 covs[rhos == 1] <- 1/12
 mvnlookup$p_1 <- covs
@@ -218,7 +236,7 @@ clusterExport(cl, "intfun")
 if (method == "pracma")
    covs <- parSapplyLB(cl, rhos, function(r) doint(intfun, n=n, rho=r)) - 1/4
 if (method == "cubature")
-   covs <- parSapplyLB(cl, rhos, function(r) adaptIntegrate(intfun, tol=tol, lowerLimit=c(-lims,-lims), upperLimit=c(lims,lims), rho=r)$integral) - 1/4
+   covs <- parSapplyLB(cl, rhos, function(r) doint(rho=r, tol=tol, lims=lims)) - 1/4
 
 covs[rhos == 1] <- 1/12
 mvnlookup$p_2 <- covs
@@ -230,8 +248,9 @@ stopCluster(cl)
 time.end <- proc.time()
 secs <- unname(time.end - time.start)[3]
 
-# total running time in hours
-secs / 60 / 60
+# total running time in seconds and minutes
+print(round(secs))
+print(round(secs / 60, 1))
 
 # set all covs to 0 for rho = 0
 mvnlookup[rhos == 0,] <- 0
@@ -241,6 +260,7 @@ mvnlookup <- round(mvnlookup, rnd)
 
 # save results
 save(mvnlookup, file = "../data/mvnlookup.rdata")
+#save(mvnlookup, file = paste0("mvnlookup_", method, ".rdata"))
 
 ############################################################################
 
