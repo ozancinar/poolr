@@ -266,6 +266,8 @@ save(mvnlookup, file = "../data/mvnlookup.rdata")
 
 if (F) {
 
+   load("../data/mvnlookup.rdata")
+
    par(mfrow=c(4, 2))
 
    for (i in 1:8) {
@@ -292,6 +294,23 @@ if (F) {
       }
 
    }
+
+}
+
+if (F) {
+
+   # heuristically demonstrate that the integral for z_2 is convergent
+
+   load("../data/mvnlookup.rdata")
+
+   library(MASS)
+   rho <- 0.92
+   Sigma <- matrix(c(1,rho,rho,1), nrow=2)
+   titj <- mvrnorm(10^7, mu=c(0,0), Sigma=Sigma)
+   pipj <- 2 * pnorm(abs(titj), lower.tail=FALSE)
+   zizj <- qnorm(pipj, lower.tail=FALSE)
+   round(cov(zizj)[1,2], 4)
+   mvnlookup[mvnlookup$rho == rho, "z_2"]
 
 }
 

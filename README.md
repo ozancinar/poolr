@@ -3,7 +3,7 @@ poolr: Package for Pooling the Results from (Dependent) Tests
 
 <!-- [![Build Status](https://travis-ci.org/ozancinar/poolr.svg?branch=master)](https://travis-ci.org/ozancinar/poolr) -->
 ![CRAN Version](https://www.r-pkg.org/badges/version/poolr)
-![devel Version](https://img.shields.io/badge/devel-0.1--3-brightgreen.svg)
+![devel Version](https://img.shields.io/badge/devel-0.1--4-brightgreen.svg)
 
 ## Description
 
@@ -12,6 +12,13 @@ The `poolr` package contains functions for pooling/combining the results (i.e., 
 ## Documentation
 
 You can read the documentation of the `poolr` package online at [https://ozancinar.github.io/poolr/](https://ozancinar.github.io/poolr/) (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).
+
+## Installation
+
+After installing the [remotes](https://cran.r-project.org/package=remotes) package with ```install.packages("remotes")```, the development version of the `poolr` package can be installed with:
+```r
+remotes::install_github("ozancinar/poolr")
+```
 
 ## Meta
 
