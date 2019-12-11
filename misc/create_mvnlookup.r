@@ -19,7 +19,7 @@ method <- "pracma"
 #method <- "cubature"
 
 # number of nodes for pracma::gaussLegendre()
-n <- 500
+n <- 1000
 
 # limits and tolerance for cubature::adaptIntegrate()
 lims <- 5
