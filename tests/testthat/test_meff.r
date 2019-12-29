@@ -1,7 +1,10 @@
 
-### library(library); library(testthat); Sys.setenv(NOT_CRAN="true")
+### library(poolr); library(testthat); Sys.setenv(NOT_CRAN="true")
+library(poolr)
 
-tol <- 1e-06  # user-defined tolerance
+# tol <- 1e-06  # user-defined tolerance
+
+tol <- 0.1
 
 context("Checking meff() function")
 

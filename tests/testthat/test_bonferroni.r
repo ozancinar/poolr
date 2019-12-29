@@ -1,9 +1,14 @@
 
-### library(library); library(testthat); Sys.setenv(NOT_CRAN="true")
+### library(poolr); library(testthat); Sys.setenv(NOT_CRAN="true")
+library(poolr)
 
-p_tol <- 1e-06  # user-defined tolerance (for significant p-values)
-stat_tol <- 1e-04  # user-defined tolerance (for test statistics and ci bounds)
-df_tol <- 1e-02  # user-defined tolerance (for df)
+# p_tol <- 1e-06  # user-defined tolerance (for significant p-values)
+# stat_tol <- 1e-04  # user-defined tolerance (for test statistics and ci bounds)
+# df_tol <- 1e-02  # user-defined tolerance (for df)
+
+p_tol <- 0.1
+stat_tol <- 0.1
+df_tol <- 0.1
 
 context("Checking bonferroni() function")
 
