@@ -5,6 +5,7 @@ Title: Methods for Pooling P-Values from (Dependent) Tests
 Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = c("aut")))
 Depends: R (>= 3.5.0), Matrix
 Imports: methods, stats, utils
+Suggests: testthat
 Description: Functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method).
 License: GPL (>=2)
 ByteCompile: TRUE
