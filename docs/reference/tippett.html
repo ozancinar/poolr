@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -233,12 +233,12 @@
 <span class='co'># seed for reproducibility)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1234</span>)
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>)</div><div class='output co'>#&gt; number of p-values combined (k): 23 
-#&gt; combined p-value: 0.0508 (95% CI: 0.0466, 0.0553) 
+#&gt; combined p-value: 0.0494 (95% CI: 0.0452, 0.0538) 
 #&gt; minimum p-value: 0.003 
 #&gt; adjustment: empirical </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; number of p-values combined (k): 23 
-#&gt; combined p-value: 0.0553 (95% CI: 0.0509, 0.06) 
+#&gt; combined p-value: 0.0538 (95% CI: 0.0495, 0.0584) 
 #&gt; minimum p-value: 0.003 
 #&gt; adjustment: empirical </div><div class='input'>
 <span class='co'># using the stepwise algorithm (and for each value of 'size', the empirical</span>
@@ -247,7 +247,7 @@
 <span class='co'># 100000, since the the pooled p-value is &gt;= .01</span>
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>100000</span>, <span class='fl'>10000000</span>),
         <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>, <span class='fl'>0</span>), <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; number of p-values combined (k): 23 
-#&gt; combined p-value: 0.0514 (95% CI: 0.0501, 0.0528) 
+#&gt; combined p-value: 0.0512 (95% CI: 0.0498, 0.0526) 
 #&gt; minimum p-value: 0.003 
 #&gt; adjustment: empirical </div></pre>
   </div>

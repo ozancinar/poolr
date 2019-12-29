@@ -1,3 +1,3 @@
-# poolr 0.1-6 (2019-12-11)
+# poolr 0.1-7 (2019-12-29)
 
 - initial version for GitHub
