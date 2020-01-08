@@ -1,4 +1,4 @@
-p_tol    <- 1e-04  # user-defined tolerance (for p-values)
+p_tol    <- 1e-03  # user-defined tolerance (for p-values)
 stat_tol <- 1e-03  # user-defined tolerance (for test statistics and ci bounds)
 df_tol   <- 1e-01  # user-defined tolerance (for df)
 df_m     <- 0      # user-defined tolerance (for m)
