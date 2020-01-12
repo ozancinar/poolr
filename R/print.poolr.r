@@ -1,13 +1,30 @@
 print.poolr <- function(x, digits=3, ...) {
 
+   cat("combined p-values with:      ")
+
+   if (x$fun == "fisher")
+      cat("Fisher's method\n")
+   if (x$fun == "stouffer")
+      cat("Stouffer's method\n")
+   if (x$fun == "invchisq")
+      cat("inverse chi-square method\n")
+   if (x$fun == "bonferroni")
+      cat("Bonferroni method\n")
+   if (x$fun == "tippett")
+      cat("Tippett's method\n")
+   if (x$fun == "binotest")
+      cat("binomial test\n")
+
+   cat("number of p-values combined:", x$k, "\n")
+
    if (x$fun %in% c("fisher", "invchisq"))
-      testinfo <- paste0("test statistic: ", round(x$statistic, digits), " ~ chi-square(", round(attr(x$statistic, "df"), digits), ")")
+      testinfo <- paste0("test statistic:              ", round(x$statistic, digits), " ~ chi-square(", round(attr(x$statistic, "df"), digits), ")")
 
    if (x$fun == "stouffer")
-      testinfo <- paste0("test statistic: ", round(x$statistic, digits), " ~ N(0,1)")
+      testinfo <- paste0("test statistic:              ", round(x$statistic, digits), " ~ N(0,1)")
 
    if (x$fun %in% c("bonferroni", "tippett"))
-      testinfo <- paste0("minimum p-value: ", round(x$statistic, digits))
+      testinfo <- paste0("minimum p-value:             ", round(x$statistic, digits))
 
    if (x$fun == "binotest") {
       if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
@@ -16,6 +33,8 @@ print.poolr <- function(x, digits=3, ...) {
          testinfo <- paste0("number of significant tests: ", x$statistic)
       }
    }
+
+   cat(testinfo, "\n")
 
    if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
 
@@ -34,7 +53,7 @@ print.poolr <- function(x, digits=3, ...) {
       if (x$adjust == "user")
          x$adjust <- "user-defined"
 
-      x$adjust <- paste0("effective number of tests (m): ", x$m, " (", x$adjust, ")")
+      x$adjust <- paste0("effective number of tests (m=", x$m, "; ", x$adjust, ")")
 
    }
 
@@ -43,22 +62,19 @@ print.poolr <- function(x, digits=3, ...) {
       if (x$fun == "fisher")
          x$adjust <- "Brown's method"
       if (x$fun == "invchisq")
-         x$adjust <- "generalized inverse chi-square method"
+         x$adjust <- "Satterthwaite approximation"
       if (x$fun == "stouffer")
          x$adjust <- "Strube's method"
 
    }
 
-   cat("number of p-values combined (k):", x$k, "\n")
+   cat("adjustment:                 ", x$adjust, "\n")
 
    if (is.null(x$ci)) {
-      cat("combined p-value:", format.pval(x$p, digits), "\n")
+      cat("combined p-value:           ", format.pval(x$p, digits), "\n")
    } else {
-      cat("combined p-value:", format.pval(x$p, digits), paste0("(95% CI: ", format.pval(x$ci[1], digits), ", ", format.pval(x$ci[2], digits), ")"), "\n")
+      cat("combined p-value:           ", format.pval(x$p, digits), paste0("(95% CI: ", format.pval(x$ci[1], digits), ", ", format.pval(x$ci[2], digits), ")"), "\n")
    }
-
-   cat(testinfo, "\n")
-   cat("adjustment:", x$adjust, "\n")
 
    invisible()
 
