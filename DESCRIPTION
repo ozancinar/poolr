@@ -1,5 +1,5 @@
 Package: poolr
-Version: 0.1-10
+Version: 0.1-11
 Date: 2020-01-13
 Title: Methods for Pooling P-Values from (Dependent) Tests
 Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = c("aut")))

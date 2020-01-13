@@ -25,13 +25,13 @@ meff(R, eigen, method, \dots)
 
    \bold{Method by Gao et al. (2008)}
 
-   \deqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C} where \eqn{\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}} are the sorted eigenvalues in decreasing order and \eqn{C} is a pre-defined parameter which is set to 0.995.
+   \deqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C} where \eqn{\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}} are the sorted eigenvalues in decreasing order and \eqn{C} is a pre-defined parameter which is set to 0.995 by default.
 
    \bold{Method by Galwey (2009)}
 
    \deqn{m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}} where \eqn{\lambda_i' = 0} if \eqn{\lambda_i < 0} and \eqn{\lambda_i} otherwise.
 
-   \bold{Note:} For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \eqn{m} is rounded down to an integer.
+   \bold{Note:} For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \eqn{m} is rounded down to the nearest integer.
 
    \bold{Specifying the R Matrix}
 
@@ -46,6 +46,9 @@ meff(R, eigen, method, \dots)
 }
 \value{
    A scalar giving the estimate of the effective number of tests.
+}
+\note{
+   For \code{method = "gao"}, \code{C = .995} by default, but a different value of \code{C} can be passed to the function via \code{\dots} (e.g., \code{meff(R, method = "gao", C = .90)}).
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
