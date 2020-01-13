@@ -60,6 +60,9 @@ meff <- function(R, eigen, method, ...) {
          C <- 0.995
       }
 
+      if (C < 0 || C >= 1)
+         warning("Value of 'C' should be >= 0 and < 1.", call.=FALSE)
+
       m <- which(cumsum(sort(evs, decreasing = TRUE)) / sum(evs) > C)[1]
 
    }
