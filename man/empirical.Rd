@@ -24,7 +24,7 @@ empirical(R, method, side = 2, size = 10000, batchsize, \dots)
    A vector of combined \eqn{p}-values as simulated under the joint null hypothesis for a given method.
 }
 \note{
-   The \code{R} matrix must be positive definite. If it is not, the function uses code{\link[Matrix]{nearPD}} to find the nearest positive definite matrix (Higham, 2002) before simulating the null distribution.
+   The \code{R} matrix must be positive definite. If it is not, the function uses \code{\link[Matrix]{nearPD}} to find the nearest positive definite matrix (Higham, 2002) before simulating the null distribution.
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
