@@ -30,7 +30,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
       if (missing(target)) {
 
-         # for fisher(), stouffer(), and invchisq(), set the default 'target' if it not specified
+         # for fisher(), stouffer(), and invchisq(), set the default 'target' if it is not specified
 
          if (!(call.fun %in% c("fisher", "stouffer", "invchisq")))
             stop("Argument 'target' must be specified.")
