@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.12</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>R</th>
-      <td><p>a \(k \times k\) symmetric matrix that reflects the correlations structure among the tests.</p></td>
+      <td><p>a \(k \times k\) symmetric matrix that reflects the correlation structure among the tests.</p></td>
     </tr>
     <tr>
       <th>eigen</th>
@@ -150,16 +150,16 @@
 <p>$$m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}$$ where \(\lambda_i' = 0\) if \(\lambda_i &lt; 0\) and \(\lambda_i\) otherwise.</p>
 <p><b>Note:</b> For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \(m\) is rounded down to the nearest integer.</p>
 <p><b>Specifying the R Matrix</b></p>
-<p>The \(R\) matrix should reflect the correlation structure among the tests. There is no general solution for constructing such a correlation matrix, as this depends on the type of test and the sidedness of these tests. For example, we can use the correlations among related but changing elements across the analyses/tests, or a function thereof, as a proxy for the correlation structure. For example, when conducting \(k\) analyses with the same dependent variable and \(k\) different independent variables, the correlations among the independent variables could serve as such a proxy. Analogously, if analyses are conducted for \(k\) dependent variables with the same set of independent variables, the correlations among the dependent variables could be used instead.</p>
-<p>If the tests of interest have test statistics that can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which could be approximated by the correlations among the interchanging independent or dependent variables), then the <code><a href='mvnconv.html'>mvnconv</a></code> function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \(p\)-values, which can then be passed to the <code>R</code> argument. See &#8216;Examples&#8217;.</p>
+<p>The \(R\) matrix should reflect the correlation structure among the tests. There is no general solution on how such a correlation matrix should be constructed, as this depends on the type of test and the sidedness of these tests. For example, we can use the correlations among related but changing elements across the analyses/tests, or a function thereof, as a proxy for the correlation structure. For example, when conducting \(k\) analyses with the same dependent variable and \(k\) different independent variables, the correlations among the independent variables could serve as such a proxy. Analogously, if analyses are conducted for \(k\) dependent variables with the same set of independent variables, the correlations among the dependent variables could be used instead.</p>
+<p>If the tests of interest have test statistics that can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which might be approximated by the correlations among the interchanging independent or dependent variables), then the <code><a href='mvnconv.html'>mvnconv</a></code> function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \(p\)-values, which in turn can then be passed to the <code>R</code> argument. See &#8216;Examples&#8217;.</p>
 <p><b>Not Positive Semi-Definite R</b></p>
-<p>Depending on the way \(R\) is constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive semi-definite matrix (e.g., Higham 2002) before passing this matrix to the function (see <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> for a corresponding implementation).</p>
+<p>Depending on the way \(R\) is constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive semi-definite matrix (e.g., Higham 2002) before passing this matrix to the function (see <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> from the <span class="pkg">Matrix</span> package for a corresponding implementation).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A scalar giving the estimate of the effective number of tests.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>For <code>method = "gao"</code>, <code>C = .995</code> by default, but a different value of <code>C</code> can be passed to the function via <code>...</code> (e.g., <code>meff(R, method = "gao", C = .90)</code>).</p>
+    <p>For <code>method = "gao"</code>, <code>C = 0.995</code> by default, but a different value of <code>C</code> can be passed to the function via <code>...</code> (e.g., <code>meff(R, method = "gao", C = 0.95)</code>).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gao, X., Starmer, J., &amp; Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. <em>Genetic Epidemiology, 32</em>(4), 361-369.</p>
