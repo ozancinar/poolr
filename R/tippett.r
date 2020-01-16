@@ -28,7 +28,7 @@ tippett <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2,
       R # force evaluation of 'R' argument, so that R=mvnconv(R) works
 
       # checks for 'R' argument
-      .check.R(R, k = k, adjust = adjust, fun = fun)
+      R <- .check.R(R, k = k, adjust = adjust, fun = fun)
 
    }
 
@@ -79,7 +79,7 @@ tippett <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2,
 
    }
 
-   res <- list(p = pval, ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, fun = fun)
+   res <- list(p = c(pval), ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, fun = fun)
 
    class(res) <- "poolr"
    return(res)

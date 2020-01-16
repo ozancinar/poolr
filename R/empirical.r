@@ -7,19 +7,11 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
    # match 'method' argument
    method <- match.arg(method, c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))
 
-   # check 'side' argument
-   if (!side %in% c(1, 2))
-      stop("Argument 'side' must be either 1 or 2.", call.=FALSE)
+   # checks for 'side' argument
+   .check.side(side)
 
-   # check that 'R' is a symmetric matrix
-   if (!is.matrix(R) || !isSymmetric(unname(R)))
-      stop("Argument 'R' must be a symmetric matrix.", call.=FALSE)
-
-   # check if 'R' is positive definite; if not, make it
-   if (any(eigen(R)$values <= 0)) {
-      R <- as.matrix(Matrix::nearPD(R, corr=TRUE)$mat)
-      warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
-   }
+   # checks for 'R' argument
+   R <- .check.R(R, checkpd=TRUE, checkcor=TRUE, isbase=FALSE)
 
    ddd <- list(...)
 

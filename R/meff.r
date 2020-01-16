@@ -9,12 +9,8 @@ meff <- function(R, eigen, method, ...) {
       if (missing(R))
          stop("Argument 'R' must be specified.", call.=FALSE)
 
-      # check that 'R' is a symmetric matrix
-      if (!is.matrix(R) || !isSymmetric(unname(R)))
-         stop("Argument 'R' must be a symmetric matrix.", call.=FALSE)
-
-      # ensure that the correlation matrix is positive semi-definite
-      #R <- as.matrix(Matrix::nearPD(R)$mat)
+      # checks for 'R' argument
+      R <- .check.R(R, checkcor=TRUE, isbase=FALSE)
 
       # get eigenvalues of 'R' matrix
       evs <- base::eigen(R)$values

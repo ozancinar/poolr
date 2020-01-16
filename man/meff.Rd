@@ -41,7 +41,7 @@ meff(R, eigen, method, \dots)
 
    \bold{Not Positive Semi-Definite R}
 
-   Depending on the way \eqn{R} is constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive semi-definite matrix (e.g., Higham 2002) before passing this matrix to the function (see \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package for a corresponding implementation).
+   Depending on the way \eqn{R} is constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive (semi-)definite matrix (e.g., Higham 2002) before passing this matrix to the function (see \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package for a corresponding implementation).
 
 }
 \value{

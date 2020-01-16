@@ -16,27 +16,53 @@
 
 }
 
-.check.R <- function(R, k, adjust, fun) {
+.check.R <- function(R, checksym=TRUE, checkna=TRUE, checkpd=FALSE, checkcor=FALSE, isbase=TRUE, k, adjust, fun) {
+
+   # turn a "dpoMatrix" object (from nearPD()) into a 'plain' matrix (since is.matrix() is FALSE for such objects)
+   if (inherits(R, "dpoMatrix"))
+      R <- as.matrix(R)
+
+   # if R is a dataframe, turn it into a matrix
+   if (inherits(R, "data.frame"))
+      R <- as.matrix(R)
 
    # check that 'R' is a symmetric matrix
-   if (!is.matrix(R) || !isSymmetric(unname(R)))
+   if (checksym && !(is.matrix(R) && isSymmetric(unname(R))))
       stop("Argument 'R' must be a symmetric matrix.", call.=FALSE)
 
    # check if 'R' contains NAs
-   if (any(is.na(R)))
+   if (checkna && any(is.na(R)))
       stop("Values in 'R' vector must not contain NAs.", call.=FALSE)
 
-   # check that dimensions of 'R' match the length of 'p'
-   if (k != nrow(R))
-      stop("Length of 'p' vector (", k, ") does not match the dimensions of the 'R' matrix (", nrow(R), ",", ncol(R), ").", call.=FALSE)
+   # check if 'R' is positive definite; if not, make it
+   if (checkpd && any(eigen(R)$values <= 0)) {
+      R <- as.matrix(Matrix::nearPD(R, corr=TRUE)$mat)
+      warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
+   }
 
-   # check if user specified 'R' argument but no adjustment method
-   if (adjust == "none")
-      warning("Although argument 'R' was specified, no adjustment method was chosen via the 'adjust' argument.\n  To account for dependence, specify an adjustment method. See help(", fun, ") for details.", call.=FALSE)
+   # check that all values in R are between -1 and 1
+   if (checkcor && any(abs(R) > 1))
+      stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].", call.=FALSE)
 
-   # if 'm' has been specified, then warn the user that 'R' matrix is actually ignored
-   if (adjust == "user")
-      warning("When 'm' is specified, argument 'R' is irrelevant and ignored.")
+   # checks that are relevant only when called from the base functions
+
+   if (isbase) {
+
+      # check that dimensions of 'R' match the length of 'p'
+      if (k != nrow(R))
+         stop("Length of 'p' vector (", k, ") does not match the dimensions of the 'R' matrix (", nrow(R), ",", ncol(R), ").", call.=FALSE)
+
+      # check if user specified 'R' argument but no adjustment method
+      if (adjust == "none")
+         warning("Although argument 'R' was specified, no adjustment method was chosen via the 'adjust' argument.\n  To account for dependence, specify an adjustment method. See help(", fun, ") for details.", call.=FALSE)
+
+      # if 'm' has been specified, then warn the user that 'R' matrix is actually ignored
+      if (adjust == "user")
+         warning("When 'm' is specified, argument 'R' is irrelevant and ignored.")
+
+   }
+
+   return(R)
 
 }
 
@@ -51,6 +77,16 @@
    }
 
    return(m)
+
+}
+
+.check.side <- function(side) {
+
+   if (length(side) != 1)
+      stop("Argument 'side' must be of length 1.")
+
+   if (!(side %in% c(1,2)))
+      stop("Argument 'side' must be either 1 or 2.")
 
 }
 

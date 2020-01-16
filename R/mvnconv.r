@@ -4,36 +4,21 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    if (missing(R))
       stop("Argument 'R' must be specified.", call.=FALSE)
 
-   if (any(abs(R) > 1))
-      stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].")
+   # checks for 'R' argument
+   if (is.vector(R)) {
+      R <- .check.R(R, checksym=FALSE, checkna=FALSE, checkpd=FALSE, checkcor=TRUE, isbase=FALSE)
+   } else {
+      R <- .check.R(R, checksym=TRUE, checkna=FALSE, checkpd=FALSE, checkcor=TRUE, isbase=FALSE)
+   }
 
    # get name of calling function (NULL if called from global environment)
-   call.fun <- sys.call(-1)[1]
+   call.fun <- as.character(sys.call(-1)[1])
 
-   if (is.null(call.fun)) {
-
-      # when calling mvnconv() from global environment, must specify 'target'
-
-      if (missing(target))
-         stop("Argument 'target' must be specified.")
-
-   } else {
-
-      # if mvnconv() is called inside one of the poolr functions, check that 'R' is a symmetric matrix
-
-      call.fun <- as.character(call.fun)
-
-      if (call.fun %in% c("fisher", "stouffer", "invchisq", "bonferroni", "tippett", "binotest")) {
-         if (!is.matrix(R) || !isSymmetric(unname(R)))
-            stop("Argument 'R' must be a symmetric matrix.")
-      }
+   if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq"))) {
 
       if (missing(target)) {
 
          # for fisher(), stouffer(), and invchisq(), set the default 'target' if it is not specified
-
-         if (!(call.fun %in% c("fisher", "stouffer", "invchisq")))
-            stop("Argument 'target' must be specified.")
 
          if (call.fun == "fisher")
             target <- "m2lp"
@@ -44,13 +29,20 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
       }
 
+   } else {
+
+      # when calling mvnconv() from the global environment or some other function besides fisher(), stouffer(), or invchisq(), must specify 'target'
+
+      if (missing(target))
+         stop("Argument 'target' must be specified.")
+
    }
 
    target <- match.arg(target, c("m2lp", "z", "chisq1", "p"))
 
    # check for incompatibility between poolr base function and the specified target (only when adjust = "generalized")
 
-   if (!is.null(call.fun) && call.fun %in% c("fisher", "stouffer", "invchisq")) {
+   if (length(call.fun) > 0L && call.fun %in% c("fisher", "stouffer", "invchisq")) {
       # need this in case the 'adjust' argument is abbreviated
       call.fun.args <- as.list(match.call(definition = sys.function(-1), call = sys.call(-1), expand.dots = FALSE))
       adjust <- match.arg(call.fun.args$adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
@@ -60,11 +52,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    # checks for 'side' argument
 
-   if (length(side) != 1)
-      stop("Argument 'side' must be of length 1.")
-
-   if (!(side %in% c(1,2)))
-      stop("Argument 'side' must be either 1 or 2.")
+   .check.side(side)
 
    # set correct column of 'mvnlookup' for converting values in R to target values
 
