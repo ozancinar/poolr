@@ -11,7 +11,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       R <- .check.R(R, checksym=TRUE, checkna=FALSE, checkpd=FALSE, checkcor=TRUE, isbase=FALSE)
    }
 
-   # get name of calling function (NULL if called from global environment)
+   # get name of calling function (character(0) if called from global environment)
    call.fun <- as.character(sys.call(-1)[1])
 
    if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq"))) {
