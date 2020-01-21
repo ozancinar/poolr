@@ -14,6 +14,7 @@ stouffer <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
 
    # get name of function
    fun <- as.character(sys.call()[1])
+   fun <- gsub("^poolr::", "", fun)
 
    ddd <- list(...)
 

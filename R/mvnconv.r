@@ -13,6 +13,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    # get name of calling function (character(0) if called from global environment)
    call.fun <- as.character(sys.call(-1)[1])
+   call.fun <- gsub("^poolr::", "", call.fun)
 
    if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq"))) {
 
@@ -46,7 +47,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       # need this in case the 'adjust' argument is abbreviated
       call.fun.args <- as.list(match.call(definition = sys.function(-1), call = sys.call(-1), expand.dots = FALSE))
       adjust <- match.arg(call.fun.args$adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
-      if (adjust == "generalized" && which(c("fisher", "stouffer", "invchisq") %in% call.fun) != which(c("m2lp", "z", "chisq1") %in% target))
+      if (adjust == "generalized" && ((call.fun == "fisher" && target != "m2lp") || (call.fun == "stouffer" && target != "z") || (call.fun == "invchisq" && target != "chisq1")))
          warning(paste0("Using mvnconv(..., target=\"", target, "\") is not compatible with ", call.fun, "()."))
    }
 
