@@ -40,7 +40,7 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
 
    If \code{batchsize} is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions \code{[size,k]}. When \code{size} and/or \code{k} is large, allocating the memory for this matrix might not be possible. Instead, one can specify a \code{batchsize} value, in which case a matrix with dimensions \code{[batchsize,k]} is repeatedly simulated until the desired size of the null distribution has been obtained.
 
-   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{threshold} argument. In that case, a stepwise algorithm is used that proceeds as follows (see also Liu et al., 2010). For \code{j = 1, ..., length(size)},
+   One can also specify a vector for the \code{size} argument, in which case one must also specify a corresponding vector for the \code{threshold} argument. In that case, a stepwise algorithm is used that proceeds as follows. For \code{j = 1, ..., length(size)},
    \enumerate{
       \item estimate the combined \eqn{p}-value based on \code{size[j]}
       \item if the combined \eqn{p}-value is \eqn{\ge} than \code{threshold[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
@@ -69,11 +69,9 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics}, 987-992.
+   Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics, 31}(4), 987-992.
 
    Fisher, R. A. (1932). \emph{Statistical Methods for Research Workers} (4th ed.). Edinburgh: Oliver and Boyd.
-
-   Liu, J. Z., McRae, A. F., Nyholt, D. R., Medland, S. E., Wray, N. R., Brown, K. M., AMFS Investigators, Hayward, N. K., Montgomery, G. W., Visscher, P. M., Martin, N. G., & Macgregor, S. (2010). A versatile gene-based test for genome-wide association studies. \emph{American Journal of Human Genetics, 87}(1), 139-145.
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r
