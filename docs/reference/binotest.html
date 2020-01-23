@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
       </span>
     </div>
 
@@ -206,10 +206,10 @@
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
 <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
-#&gt; [1,] 1.00000000 0.02400960 0.021608643 0.012004802 0.097238896
-#&gt; [2,] 0.02400960 1.00000000 0.012004802 0.000000000 0.042016807
-#&gt; [3,] 0.02160864 0.01200480 1.000000000 0.006002401 0.006002401
-#&gt; [4,] 0.01200480 0.00000000 0.006002401 1.000000000 0.000000000
+#&gt; [1,] 1.00000000 0.02160864 0.021608643 0.010804322 0.097238896
+#&gt; [2,] 0.02160864 1.00000000 0.013205282 0.000000000 0.042016807
+#&gt; [3,] 0.02160864 0.01320528 1.000000000 0.006002401 0.006002401
+#&gt; [4,] 0.01080432 0.00000000 0.006002401 1.000000000 0.000000000
 #&gt; [5,] 0.09723890 0.04201681 0.006002401 0.000000000 1.000000000</div><div class='input'>
 <span class='co'># adjustment based on estimates of the effective number of tests</span>
 <span class='fu'>binotest</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      binomial test
@@ -242,13 +242,13 @@
 #&gt; number of p-values combined: 23 
 #&gt; number of significant tests: 11 
 #&gt; adjustment:                  empirical 
-#&gt; combined p-value:            4e-04 (95% CI: 0.000109, 0.00102) </div><div class='input'>
+#&gt; combined p-value:            6e-04 (95% CI: 0.00022, 0.00131) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>binotest</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      binomial test
 #&gt; number of p-values combined: 23 
 #&gt; number of significant tests: 11 
 #&gt; adjustment:                  empirical 
-#&gt; combined p-value:            8e-04 (95% CI: 0.000345, 0.00158) </div><div class='input'>
+#&gt; combined p-value:            9e-04 (95% CI: 0.000412, 0.00171) </div><div class='input'>
 <span class='co'># using the stepwise algorithm (and for each value of 'size', the empirical</span>
 <span class='co'># distribution will be generated via batches of size 100); not run, because</span>
 <span class='co'># for these data, the stepwise algorithm will eventually reach the largest</span>

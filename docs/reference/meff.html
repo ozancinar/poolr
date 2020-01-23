@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
       </span>
     </div>
 
@@ -179,10 +179,10 @@
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
 <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
-#&gt; [1,] 1.00000000 0.02400960 0.021608643 0.012004802 0.097238896
-#&gt; [2,] 0.02400960 1.00000000 0.012004802 0.000000000 0.042016807
-#&gt; [3,] 0.02160864 0.01200480 1.000000000 0.006002401 0.006002401
-#&gt; [4,] 0.01200480 0.00000000 0.006002401 1.000000000 0.000000000
+#&gt; [1,] 1.00000000 0.02160864 0.021608643 0.010804322 0.097238896
+#&gt; [2,] 0.02160864 1.00000000 0.013205282 0.000000000 0.042016807
+#&gt; [3,] 0.02160864 0.01320528 1.000000000 0.006002401 0.006002401
+#&gt; [4,] 0.01080432 0.00000000 0.006002401 1.000000000 0.000000000
 #&gt; [5,] 0.09723890 0.04201681 0.006002401 0.000000000 1.000000000</div><div class='input'>
 <span class='co'># use this matrix instead for estimating the effective number of tests</span>
 <span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>)</div><div class='output co'>#&gt; [1] 22</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"liji"</span>)</div><div class='output co'>#&gt; [1] 21</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gao"</span>)</div><div class='output co'>#&gt; [1] 23</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>)</div><div class='output co'>#&gt; [1] 20</div></pre>
