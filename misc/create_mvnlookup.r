@@ -12,7 +12,7 @@ library(parallel)
 cl <- makePSOCKcluster(18)
 
 # vector of rho values for which we obtain the covariances
-rhos <- seq(-0.99, 1, by = 0.01)
+rhos <- seq(1, -0.99, by = -0.01)
 
 # choose method for the numerical integration
 method <- "pracma"
