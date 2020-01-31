@@ -11,7 +11,7 @@ test_that("mvnconv() works correctly.", {
   mvnconv_vec_ex2 <- mvnconv(c(0.1, 0.2, 0.3), target = "m2lp", cov2cor = TRUE)
 
   expect_equivalent(mvnconv_vec_ex1, c(0.0390, 0.1563, 0.3519), tolerance = stat_tol)
-  expect_equivalent(mvnconv_vec_ex2, c(0.009750, 0.039075, 0.087975), tolerance = stat_tol)
+  expect_equivalent(mvnconv_vec_ex2, c(0.00975, 0.039075, 0.087975), tolerance = stat_tol)
   
 })
 
