@@ -29,18 +29,14 @@ test_that("Errors are thrown correctly.", {
   expect_error(fisher(), "Argument 'p' must be specified.")
   expect_error(fisher(matrix("a", 2, 2)), "Argument 'p' must be a numeric vector.")
   expect_error(fisher(c(0.1, NA)), "Values in 'p' vector must not contain NAs.")
-  # expect_error(fisher(c(1.1, 0.1)), "Values in 'p' vector (i.e., the p-values) must be between 0 and 1.")
-  expect_error(fisher(c(1.1, 0.1)))
+  expect_error(fisher(c(1.1, 0.1)), "Values in 'p' vector \\(i.e., the p-values\\) must be between 0 and 1.")
   
   expect_error(mvnconv(unsym_mat, target = "m2lp"), "Argument 'R' must be a symmetric matrix.")
   expect_error(meff(mat_w_mis, method = "liji"), "Values in 'R' vector must not contain NAs.")
-  # expect_warning(empirical(neg_def_mat, method = "fisher"), "Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.")
-  expect_warning(empirical(neg_def_mat, method = "fisher"))
-  # expect_error(meff(mat_out_bou, method = "liji"), "Argument 'R' must be a correlation matrix, but contains values outside [-1,1].")
-  expect_error(meff(mat_out_bou, method = "liji"))
+  expect_warning(empirical(neg_def_mat, method = "fisher"), "Matrix 'R' is not positive definite. Used Matrix::nearPD\\(\\) to make 'R' positive definite.")
+  expect_error(meff(mat_out_bou, method = "liji"), "Argument 'R' must be a correlation matrix, but contains values outside \\[-1,1\\].")
   
-  # expect_error(fisher(runif(3), adjust = "liji", R = approp_mat), "Length of 'p' vector (3) does not match the dimensions of the 'R' matrix (2,2).")
-  expect_error(fisher(runif(3), adjust = "liji", R = approp_mat))
+  expect_error(fisher(runif(3), adjust = "liji", R = approp_mat), "Length of 'p' vector \\(3\\) does not match the dimensions of the 'R' matrix \\(2,2\\).")
   expect_warning(fisher(runif(2), R = approp_mat))
   expect_warning(fisher(runif(2), m = 3, R = approp_mat))
   expect_warning(fisher(runif(2), m = 3))
@@ -50,23 +46,16 @@ test_that("Errors are thrown correctly.", {
   
   expect_warning(fisher(runif(2), adjust = "empirical", R = approp_mat, emp.dist = runif(10), threshold = 0.5))
 
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = "a"), "Argument 'size' must be numeric. See help(fisher).")
-  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = "a"))
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = -1), "Values in 'size' must be >= 1. See help(fisher).")
-  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = -1))
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = "a"), "Argument 'size' must be numeric. See help\\(fisher\\).")
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = -1), "Values in 'size' must be >= 1. See help\\(fisher\\).")
   
   expect_warning(fisher(runif(2), adjust = "empirical", R = approp_mat, threshold = 0.5))
   
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000)), "Argument 'threshold' must be specified when 'size' is a vector. See help(fisher).")
-  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000)))
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = "a"), "Argument 'threshold' must be numeric. See help(fisher).")
-  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = "a"))
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = 1.1), "Values in 'threshold' must be between 0 and 1. See help(fisher).")
-  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = 1.1))
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)), "Length of 'threshold' argument is not compatible with length of 'size' argument. See help(fisher).")
-  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)))
-  # expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)), "Length of 'threshold' argument is not compatible with length of 'size' argument. See help(fisher).")
-  expect_warning(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3)))
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000)), "Argument 'threshold' must be specified when 'size' is a vector. See help\\(fisher\\).")
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = "a"), "Argument 'threshold' must be numeric. See help\\(fisher\\).")
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = 1.1), "Values in 'threshold' must be between 0 and 1. See help\\(fisher\\).")
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)), "Length of 'threshold' argument is not compatible with length of 'size' argument. See help\\(fisher\\).")
+  expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)), "Length of 'threshold' argument is not compatible with length of 'size' argument. See help\\(fisher\\).")
   
   fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3), verbose = TRUE)
   
