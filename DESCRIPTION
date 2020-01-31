@@ -2,7 +2,7 @@ Package: poolr
 Version: 0.1-28
 Date: 2020-01-31
 Title: Methods for Pooling P-Values from (Dependent) Tests
-Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = c("aut")))
+Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = "aut", comment = c(ORCID = "0000-0003-3463-4063")))
 Depends: R (>= 3.5.0), Matrix
 Imports: methods, stats, utils
 Suggests: testthat
