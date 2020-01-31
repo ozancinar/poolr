@@ -26,5 +26,16 @@ test_that("meff() works correctly.", {
   expect_equivalent(m_lj2,  21, tolerance = df_m)
   expect_equivalent(m_gao2, 23, tolerance = df_m)
   expect_equivalent(m_gal2, 20, tolerance = df_m)
+  
+  m_lj_eigen <- meff(eigen = eigen(mvnconv(grid2ip.ld, side = 2, target = "p", cov2cor = TRUE))$values, method = "liji")
+  expect_equivalent(m_lj_eigen, 21, tolerance = df_m)
+
+})
+
+test_that("The arguments of meff() are checked correctly.", {
+  
+  expect_error(meff(method = "liji"), "Argument 'R' must be specified.")
+  expect_error(meff(eigen = c("a"), method = "liji"), "Argument 'eigen' must be a numeric vector.")
+  expect_warning(meff(mvnconv(grid2ip.ld, side = 2, target = "p", cov2cor = TRUE), method = "gao", C = "a"))
 
 })
