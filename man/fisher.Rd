@@ -45,7 +45,7 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
       \item estimate the combined \eqn{p}-value based on \code{size[j]}
       \item if the combined \eqn{p}-value is \eqn{\ge} than \code{threshold[j]}, stop (and report the combined \eqn{p}-value), otherwise go back to 1.
    }
-   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 100000, 10000000)}) and \code{threshold} to decreasing values (e.g., \code{threshold = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge} .10), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{threshold} should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{threshold}, so \code{threshold = c(.10, .01)} would also work in the example above). One can also specify a single \code{threshold} (which is replicated as often as necessary depending on the length of \code{size}).
+   By setting \code{size} to increasing values (e.g., \code{size = c(1000, 10000, 100000)}) and \code{threshold} to decreasing values (e.g., \code{threshold = c(.10, .01, 0)}), one can quickly obtain a fairly accurate estimate of the combined \eqn{p}-value if it is far from significant (e.g., \eqn{\ge} .10), but hone in on a more accurate estimate for a combined \eqn{p}-value that is closer to 0. Note that the last value of \code{threshold} should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of \code{threshold}, so \code{threshold = c(.10, .01)} would also work in the example above). One can also specify a single \code{threshold} (which is replicated as often as necessary depending on the length of \code{size}).
 
    \bold{Adjustment Based on Multivariate Theory}
 
@@ -105,14 +105,9 @@ fisher(p, adjust = "empirical", R = r)
 # generate the empirical distribution in batches of size 100
 fisher(p, adjust = "empirical", R = r, batchsize = 100)
 
-# using the stepwise algorithm (and for each value of 'size', the empirical
-# distribution will be generated via batches of size 100); not run, because
-# for these data, the stepwise algorithm will eventually reach the largest
-# 'size' value, which takes a considerable amount of time to run
-\dontrun{
-fisher(p, adjust = "empirical", R = r, size = c(1000, 100000, 10000000),
-       threshold = c(.10, .01, 0), batchsize = 100)
-}
+# using the stepwise algorithm
+fisher(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000),
+       threshold = c(.10, .01))
 
 # use mvnconv() to convert the LD correlation matrix into a matrix with the
 # covariances among the (two-sided) '-2ln(p_i)' values assuming that the

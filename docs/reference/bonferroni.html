@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.24</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@
 <p>One can also specify a vector for the <code>size</code> argument, in which case one must also specify a corresponding vector for the <code>threshold</code> argument. In that case, a stepwise algorithm is used that proceeds as follows. For <code>j = 1, ..., length(size)</code>,</p><ol>
 <li><p>estimate the combined \(p\)-value based on <code>size[j]</code></p></li>
 <li><p>if the combined \(p\)-value is \(\ge\) than <code>threshold[j]</code>, stop (and report the combined \(p\)-value), otherwise go back to 1.</p></li>
-</ol><p>By setting <code>size</code> to increasing values (e.g., <code>size = c(1000, 100000, 10000000)</code>) and <code>threshold</code> to decreasing values (e.g., <code>threshold = c(.10, .01, 0)</code>), one can quickly obtain a fairly accurate estimate of the combined \(p\)-value if it is far from significant (e.g., \(\ge\) .10), but hone in on a more accurate estimate for a combined \(p\)-value that is closer to 0. Note that the last value of <code>threshold</code> should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of <code>threshold</code>, so <code>threshold = c(.10, .01)</code> would also work in the example above). One can also specify a single <code>threshold</code> (which is replicated as often as necessary depending on the length of <code>size</code>).</p>
+</ol><p>By setting <code>size</code> to increasing values (e.g., <code>size = c(1000, 10000, 100000)</code>) and <code>threshold</code> to decreasing values (e.g., <code>threshold = c(.10, .01, 0)</code>), one can quickly obtain a fairly accurate estimate of the combined \(p\)-value if it is far from significant (e.g., \(\ge\) .10), but hone in on a more accurate estimate for a combined \(p\)-value that is closer to 0. Note that the last value of <code>threshold</code> should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of <code>threshold</code>, so <code>threshold = c(.10, .01)</code> would also work in the example above). One can also specify a single <code>threshold</code> (which is replicated as often as necessary depending on the length of <code>size</code>).</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>"poolr"</code>. The object is a list containing the following components:</p>
@@ -249,16 +249,13 @@
 #&gt; minimum p-value:             0.002 
 #&gt; adjustment:                  empirical 
 #&gt; combined p-value:            0.0334 (95% CI: 0.03, 0.0371) </div><div class='input'>
-<span class='co'># using the stepwise algorithm (and for each value of 'size', the empirical</span>
-<span class='co'># distribution will be generated via batches of size 100); terminates after</span>
-<span class='co'># computing the pooled p-value based on an empirical distribution of size</span>
-<span class='co'># 100000, since the the pooled p-value is &gt;= .01</span>
-<span class='fu'>bonferroni</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>100000</span>, <span class='fl'>10000000</span>),
-           <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>, <span class='fl'>0</span>), <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      Bonferroni method
+<span class='co'># using the stepwise algorithm</span>
+<span class='fu'>bonferroni</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>),
+           <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      Bonferroni method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
 #&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.0306 (95% CI: 0.0295, 0.0317) </div></pre>
+#&gt; combined p-value:            0.0296 (95% CI: 0.0264, 0.0331) </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

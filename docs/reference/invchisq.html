@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.24</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@
 <p>One can also specify a vector for the <code>size</code> argument, in which case one must also specify a corresponding vector for the <code>threshold</code> argument. In that case, a stepwise algorithm is used that proceeds as follows. For <code>j = 1, ..., length(size)</code>,</p><ol>
 <li><p>estimate the combined \(p\)-value based on <code>size[j]</code></p></li>
 <li><p>if the combined \(p\)-value is \(\ge\) than <code>threshold[j]</code>, stop (and report the combined \(p\)-value), otherwise go back to 1.</p></li>
-</ol><p>By setting <code>size</code> to increasing values (e.g., <code>size = c(1000, 100000, 10000000)</code>) and <code>threshold</code> to decreasing values (e.g., <code>threshold = c(.10, .01, 0)</code>), one can quickly obtain a fairly accurate estimate of the combined \(p\)-value if it is far from significant (e.g., \(\ge\) .10), but hone in on a more accurate estimate for a combined \(p\)-value that is closer to 0. Note that the last value of <code>threshold</code> should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of <code>threshold</code>, so <code>threshold = c(.10, .01)</code> would also work in the example above). One can also specify a single <code>threshold</code> (which is replicated as often as necessary depending on the length of <code>size</code>).</p>
+</ol><p>By setting <code>size</code> to increasing values (e.g., <code>size = c(1000, 10000, 100000)</code>) and <code>threshold</code> to decreasing values (e.g., <code>threshold = c(.10, .01, 0)</code>), one can quickly obtain a fairly accurate estimate of the combined \(p\)-value if it is far from significant (e.g., \(\ge\) .10), but hone in on a more accurate estimate for a combined \(p\)-value that is closer to 0. Note that the last value of <code>threshold</code> should be 0 (and is forced to be inside of the function), so that the algorithm is guaranteed to terminate (hence, one can also leave out the last value of <code>threshold</code>, so <code>threshold = c(.10, .01)</code> would also work in the example above). One can also specify a single <code>threshold</code> (which is replicated as often as necessary depending on the length of <code>size</code>).</p>
 <p><b>Adjustment Based on Multivariate Theory</b></p>
 <p>When <code>adjust = "generalized"</code>, the inverse chi-square method is computed based on a Satterthwaite approximation that accounts for the dependence among the tests, assuming that the test statistics that generated the \(p\)-values follow a multivariate normal distribution. In that case, <code>R</code> needs to be set equal to a matrix that contains the covariances among the \(F^{-1}(1 - p_i, 1)\) values. If a matrix is available that reflects the correlations among the test statistics, this can be converted into the required covariance matrix using the <code><a href='mvnconv.html'>mvnconv</a></code> function. See &#8216;Examples&#8217;.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -251,15 +251,13 @@
 #&gt; test statistic:              85.219 ~ chi-square(23) 
 #&gt; adjustment:                  empirical 
 #&gt; combined p-value:            0.0022 (95% CI: 0.00138, 0.00333) </div><div class='input'>
-<span class='co'># using the stepwise algorithm (and for each value of 'size', the empirical</span>
-<span class='co'># distribution will be generated via batches of size 100); not run, because</span>
-<span class='co'># for these data, the stepwise algorithm will eventually reach the largest</span>
-<span class='co'># 'size' value, which takes a considerable amount of time to run</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>100000</span>, <span class='fl'>10000000</span>),
-         <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>, <span class='fl'>0</span>), <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-}
-
+<span class='co'># using the stepwise algorithm</span>
+<span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>),
+         <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
+#&gt; number of p-values combined: 23 
+#&gt; test statistic:              85.219 ~ chi-square(23) 
+#&gt; adjustment:                  empirical 
+#&gt; combined p-value:            0.00118 (95% CI: 0.000977, 0.00141) </div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># covariances among the (two-sided) 'F(1-p_i,1)' values assuming that the</span>
 <span class='co'># test statistics follow a multivariate normal distribution with correlation</span>
