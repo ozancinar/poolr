@@ -89,7 +89,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       covs <- mvnlookup[match(R, mvnlookup[,1]), column]
 
       if (cov2cor) {
-         var <- tail(mvnlookup[,column], 1)
+         var <- mvnlookup[1,column]
          covs <- covs / var
       }
 
