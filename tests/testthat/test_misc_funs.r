@@ -66,7 +66,7 @@ test_that("Conversions work correctly.", {
   meff_neg_def_mat <- meff(neg_def_mat, method = "liji")
   meff_dat_fra_mat <- meff(dat_fra_mat, method = "liji")
   
-  expect_equivalent(meff_neg_def_mat, 4, tolerance = df_m)
-  expect_equivalent(meff_dat_fra_mat, 1, tolerance = df_m)
+  expect_equivalent(meff_neg_def_mat, 4, tolerance = m_tol)
+  expect_equivalent(meff_dat_fra_mat, 1, tolerance = m_tol)
 
 })
