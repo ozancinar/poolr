@@ -8,6 +8,7 @@ context("Checking bonferroni() function")
 test_that("bonferroni() works correctly under independence.", {
 
   res <- bonferroni(grid2ip.p)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.03881585, tolerance = p_tol)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol)
@@ -20,6 +21,11 @@ test_that("bonferroni() works correctly with effective number of tests.", {
   res_lj  <- bonferroni(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gao <- bonferroni(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- bonferroni(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  
+  out <- capture.output(print(res_nyh))
+  out <- capture.output(print(res_lj))
+  out <- capture.output(print(res_gao))
+  out <- capture.output(print(res_gal))
 
   expect_equivalent(c(res_nyh$p), 0.0371282, tolerance = p_tol)
   expect_equivalent(c(res_nyh$statistic), 0.001687646, tolerance = stat_tol)
@@ -39,6 +45,7 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.03059694, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
@@ -47,6 +54,7 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0303597, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
@@ -55,6 +63,7 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.03009997, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
@@ -63,6 +72,7 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.03149685, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)

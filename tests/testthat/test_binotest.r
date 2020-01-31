@@ -8,6 +8,7 @@ context("Checking binotest() function")
 test_that("binotest() works correctly under independence.", {
 
   res <- binotest(grid2ip.p)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 3.763872e-09, tolerance = p_tol)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol)
@@ -21,6 +22,11 @@ test_that("binotest() works correctly with effective number of tests.", {
   res_gao <- binotest(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- binotest(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
 
+  out <- capture.output(print(res_nyh))
+  out <- capture.output(print(res_lj))
+  out <- capture.output(print(res_gao))
+  out <- capture.output(print(res_gal))
+  
   expect_equivalent(c(res_nyh$p), 2.057712e-09, tolerance = p_tol)
   expect_equivalent(c(res_nyh$statistic), 11, tolerance = stat_tol)
 
@@ -39,6 +45,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.00059994, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
@@ -47,6 +54,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0003899961, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
@@ -55,6 +63,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0004289996, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
@@ -63,6 +72,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
+  out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0004799952, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
