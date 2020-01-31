@@ -106,8 +106,7 @@ fisher(p, adjust = "empirical", R = r)
 fisher(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm
-fisher(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000),
-       threshold = c(.10, .01))
+fisher(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 
 # use mvnconv() to convert the LD correlation matrix into a matrix with the
 # covariances among the (two-sided) '-2ln(p_i)' values assuming that the

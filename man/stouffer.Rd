@@ -104,8 +104,7 @@ stouffer(p, adjust = "empirical", R = r)
 stouffer(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm
-stouffer(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000),
-         threshold = c(.10, .01))
+stouffer(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 
 # use mvnconv() to convert the LD correlation matrix into a matrix with the
 # covariances among the (two-sided) 'z_i' values assuming that the

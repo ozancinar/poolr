@@ -98,7 +98,6 @@ tippett(p, adjust = "empirical", R = r)
 tippett(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm
-tippett(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000),
-        threshold = c(.10, .01))
+tippett(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 }
 \keyword{htest}

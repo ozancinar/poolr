@@ -98,7 +98,6 @@ binotest(p, adjust = "empirical", R = r)
 binotest(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm
-binotest(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000),
-         threshold = c(.10, .01))
+binotest(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 }
 \keyword{htest}

@@ -102,8 +102,7 @@ invchisq(p, adjust = "empirical", R = r)
 invchisq(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm
-invchisq(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000),
-         threshold = c(.10, .01))
+invchisq(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 
 # use mvnconv() to convert the LD correlation matrix into a matrix with the
 # covariances among the (two-sided) 'F(1-p_i,1)' values assuming that the
