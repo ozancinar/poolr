@@ -25,6 +25,7 @@ test_that("empirical() works correctly.", {
 test_that("The arguments of empirical() are checked correctly.", {
   
   expect_error(empirical(method = "fisher"), "Argument 'R' must be specified.")
+  expect_error(fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100, batchsize = 1000))
   # expect_error(fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000000, side = 1), "Matrix to be generated is too large. Try setting 'batchsize' (or to a lower number if it was set).")
   # expect_error(fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000000, side = 1))
   

@@ -27,7 +27,7 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
    if (missing(batchsize) || is.null(batchsize))
       batchsize <- size
 
-   if (batchsize < 1 && batchsize > size)
+   if (batchsize < 1 || batchsize > size)
       stop("Argument 'batchsize' must be between 1 and the value of the 'size' argument.")
 
    emp.dist <- rep(NA_real_, size)
