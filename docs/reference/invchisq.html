@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.27</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.28</span>
       </span>
     </div>
 
@@ -251,12 +251,12 @@
 #&gt; test statistic:              85.219 ~ chi-square(23) 
 #&gt; adjustment:                  empirical 
 #&gt; combined p-value:            0.0022 (95% CI: 0.00138, 0.00333) </div><div class='input'>
-<span class='co'># using the stepwise algorithm</span>
-<span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
-#&gt; number of p-values combined: 23 
-#&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.00118 (95% CI: 0.000977, 0.00141) </div><div class='input'>
+<span class='co'># using the stepwise algorithm (not run, because this takes slightly longer</span>
+<span class='co'># and can lead to a note when running the standard package checks)</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))
+}
+
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># covariances among the (two-sided) 'F(1-p_i,1)' values assuming that the</span>
 <span class='co'># test statistics follow a multivariate normal distribution with correlation</span>
