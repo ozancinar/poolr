@@ -49,8 +49,8 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   expect_equivalent(c(res$p), 0.03059694, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02730888, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03416195, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02730888, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03416195, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
@@ -58,8 +58,8 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   expect_equivalent(c(res$p), 0.0303597, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02930493, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03144182, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02930493, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03144182, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
@@ -67,8 +67,8 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   expect_equivalent(c(res$p), 0.03009997, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02976595, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03043672, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02976595, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03043672, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- bonferroni(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
@@ -76,7 +76,7 @@ test_that("bonferroni() works correctly with empirically-derived null distributi
 
   expect_equivalent(c(res$p), 0.03149685, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02816083, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03510921, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02816083, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03510921, tolerance = p_tol * emp_sca)
 
 })

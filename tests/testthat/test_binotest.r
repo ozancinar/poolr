@@ -49,8 +49,8 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.00059994, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0002201982, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001305356, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0002201982, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001305356, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
@@ -58,8 +58,8 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.0003899961, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0002773396, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0005330993, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0002773396, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0005330993, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
@@ -67,8 +67,8 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.0004289996, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.000389367, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0004715709, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.000389367, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0004715709, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
@@ -76,7 +76,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.0004799952, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0003539311, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0006363542, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0003539311, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0006363542, tolerance = p_tol * emp_sca)
 
 })

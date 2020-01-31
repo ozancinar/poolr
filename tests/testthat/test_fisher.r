@@ -50,8 +50,8 @@ test_that("fisher() works correctly with empirically-derived null distributions.
 
   expect_equivalent(c(res$p), 0.00079992, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 127.4818, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0003454099, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.00157555, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0003454099, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.00157555, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 46, tolerance = df_tol)
 
   set.seed(1234)
@@ -60,8 +60,8 @@ test_that("fisher() works correctly with empirically-derived null distributions.
 
   expect_equivalent(c(res$p), 0.0008599914, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 127.4818, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0006879379, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001061975, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0006879379, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001061975, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 46, tolerance = df_tol)
 
   set.seed(1234)
@@ -70,8 +70,8 @@ test_that("fisher() works correctly with empirically-derived null distributions.
 
   expect_equivalent(c(res$p), 0.000952999, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 127.4818, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0008934725, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001015446, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0008934725, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001015446, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 46, tolerance = df_tol)
 
   set.seed(1234)
@@ -80,8 +80,8 @@ test_that("fisher() works correctly with empirically-derived null distributions.
 
   expect_equivalent(c(res$p), 0.001149989, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 127.4818, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0009495239, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001380228, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0009495239, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001380228, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 46, tolerance = df_tol)
 
 })

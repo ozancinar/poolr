@@ -50,8 +50,8 @@ test_that("invchisq() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.00089991, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 85.21864, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0004115761, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001707619, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0004115761, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001707619, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 23, tolerance = df_tol)
 
   set.seed(1234)
@@ -60,8 +60,8 @@ test_that("invchisq() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.001059989, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 85.21864, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0008679115, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001281884, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0008679115, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001281884, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 23, tolerance = df_tol)
 
   set.seed(1234)
@@ -70,8 +70,8 @@ test_that("invchisq() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.001145999, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 85.21864, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.001080636, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001214278, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.001080636, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001214278, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 23, tolerance = df_tol)
 
   set.seed(1234)
@@ -80,8 +80,8 @@ test_that("invchisq() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.001299987, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 85.21864, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.001086246, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.001543441, tolerance = stat_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.001086246, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001543441, tolerance = p_tol * emp_sca)
   expect_equivalent(attributes(res$statistic)$df, 23, tolerance = df_tol)
 
 })
