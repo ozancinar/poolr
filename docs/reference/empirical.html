@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.26</span>
       </span>
     </div>
 
@@ -170,14 +170,14 @@
 
 <span class='co'># Fisher's method is liberal in this scenario (i.e., its actual Type I error</span>
 <span class='co'># rate is around .14 instead of the nominal significance level of .05)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.1417</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.1412</div><div class='input'>
 <span class='co'># estimate the actual Type I error rate of the other methods in this scenario</span>
 <span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"stouffer"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.1671</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"invchisq"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.1709</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"invchisq"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.1292</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"binotest"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.0596</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bonferroni"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.0369</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"tippett"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.0328</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.0598</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"bonferroni"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.0374</div><div class='input'><span class='no'>psim</span> <span class='kw'>&lt;-</span> <span class='fu'>empirical</span>(<span class='no'>R</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"tippett"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>psim</span> <span class='kw'>&lt;=</span> <span class='fl'>.05</span>)</div><div class='output co'>#&gt; [1] 0.0336</div><div class='input'>
 # Stouffer's and the inverse chi-square method also have clearly inflated
 # Type I error rates and the binomial test just barely. As expected, the
 # Bonferroni method is overly conservative and so is Tippett's method.

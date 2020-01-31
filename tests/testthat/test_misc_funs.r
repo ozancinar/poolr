@@ -57,7 +57,7 @@ test_that("Errors are thrown correctly.", {
   expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)), "Length of 'threshold' argument is not compatible with length of 'size' argument. See help\\(fisher\\).")
   expect_error(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3, 0.3, 0.1)), "Length of 'threshold' argument is not compatible with length of 'size' argument. See help\\(fisher\\).")
   
-  fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3), verbose = TRUE)
+  out <- capture.output(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3), verbose = TRUE))
   
 })
 
