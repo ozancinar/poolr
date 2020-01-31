@@ -3,7 +3,7 @@ poolr: Package for Pooling the Results from (Dependent) Tests
 
 [![Build Status](https://travis-ci.org/ozancinar/poolr.svg?branch=master)](https://travis-ci.org/ozancinar/poolr)
 ![CRAN Version](https://www.r-pkg.org/badges/version/poolr)
-![devel Version](https://img.shields.io/badge/devel-0.1--28-brightgreen.svg)
+![devel Version](https://img.shields.io/badge/devel-0.8--0-brightgreen.svg)
 [![Code Coverage](https://codecov.io/gh/ozancinar/poolr/branch/master/graph/badge.svg)](https://codecov.io/gh/ozancinar/poolr)
 
 ## Description
