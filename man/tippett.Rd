@@ -20,9 +20,9 @@ tippett(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, 
 
    \bold{Tippett's Method}
 
-   By default (i.e., when \code{adjust = "none"}), the function applies the Tippett's method to the \eqn{p}-values (Tippett, 1931). Letting \eqn{p_1, p_2, \ldots, p_k} denote the individual (one- or two-sided) \eqn{p}-values of the \eqn{k} hypothesis tests to be combined, the combined \eqn{p}-value is then computed with \deqn{p_c = 1 - (1 - \min(p_1, p_2, \ldots, p_k))^k}.
+   By default (i.e., when \code{adjust = "none"}), the function applies the Tippett's method to the \eqn{p}-values (Tippett, 1931). Letting \eqn{p_1, p_2, \ldots, p_k} denote the individual (one- or two-sided) \eqn{p}-values of the \eqn{k} hypothesis tests to be combined, the combined \eqn{p}-value is then computed with \deqn{p_c = 1 - (1 - \min(p_1, p_2, \ldots, p_k))^k.}
 
-   Tippett's method assumes that the \eqn{p}-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).
+   Tippett's method asumes that the \eqn{p}-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).
 
    \bold{Adjustment Based on the Effective Number of Tests}
 
@@ -30,7 +30,7 @@ tippett(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, 
 
    There is no general solution for constructing such a correlation matrix, as this depends on the type of test that generated the \eqn{p}-values and the sidedness of these tests. If the \eqn{p}-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \eqn{p}-values, which can then be passed to the \code{R} argument. See \sQuote{Examples}.
 
-   Once the effective number of tests, \eqn{m}, is estimated based on \code{R} using one of the four methods described above, the combined \eqn{p}-value is then computed with \deqn{p_c = 1 - (1 - \min(p_1, p_2, \ldots, p_k))^m}.
+   Once the effective number of tests, \eqn{m}, is estimated based on \code{R} using one of the four methods described above, the combined \eqn{p}-value is then computed with \deqn{p_c = 1 - (1 - \min(p_1, p_2, \ldots, p_k))^m.}
 
    Alternatively, one can also directly specify the effective number of tests via the \code{m} argument (e.g., if some other method not implemented in the \pkg{poolr} package is used to estimate the effective number of tests). Argument \code{R} is then irrelevant and doesn't need to be specified.
 

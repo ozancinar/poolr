@@ -20,7 +20,7 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
 
    \bold{Fisher's Method}
 
-   By default (i.e., when \code{adjust = "none"}), the function applies Fisher's method to the \eqn{p}-values (Fisher, 1932). Letting \eqn{p_1, p_2, \ldots, p_k} denote the individual (one- or two-sided) \eqn{p}-values of the \eqn{k} hypothesis tests to be combined, the test statistic is then computed with \deqn{X^2 = -2 \sum_{i = 1}^k \ln(p_i)}. Under the joint null hypothesis, the test statistic follows a chi-square distribution with \eqn{2k} degrees of freedom which is used to compute the combined \eqn{p}-value.
+   By default (i.e., when \code{adjust = "none"}), the function applies Fisher's method to the \eqn{p}-values (Fisher, 1932). Letting \eqn{p_1, p_2, \ldots, p_k} denote the individual (one- or two-sided) \eqn{p}-values of the \eqn{k} hypothesis tests to be combined, the test statistic is then computed with \deqn{X^2 = -2 \sum_{i = 1}^k \ln(p_i).} Under the joint null hypothesis, the test statistic follows a chi-square distribution with \eqn{2k} degrees of freedom which is used to compute the combined \eqn{p}-value.
 
    Fisher's method assumes that the \eqn{p}-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).
 
