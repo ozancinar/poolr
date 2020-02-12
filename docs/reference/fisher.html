@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
       </span>
     </div>
 
@@ -246,7 +246,7 @@
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              127.482 ~ chi-square(46) 
 #&gt; adjustment:                  empirical 
-#&gt; combined p-value:            8e-04 (95% CI: 0.000345, 0.00158) </div><div class='input'>
+#&gt; combined p-value:            7e-04 (95% CI: 0.000281, 0.00144) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>fisher</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      Fisher's method
 #&gt; number of p-values combined: 23 
@@ -258,7 +258,7 @@
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              127.482 ~ chi-square(46) 
 #&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.00102 (95% CI: 0.000832, 0.00124) </div><div class='input'>
+#&gt; combined p-value:            0.00101 (95% CI: 0.000823, 0.00123) </div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># covariances among the (two-sided) '-2ln(p_i)' values assuming that the</span>
 <span class='co'># test statistics follow a multivariate normal distribution with correlation</span>

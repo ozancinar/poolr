@@ -103,7 +103,7 @@ invchisq(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm (not run, because this takes slightly longer
 # and can lead to a note when running the standard package checks)
-\dontrun{
+\donttest{
 invchisq(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 }
 
