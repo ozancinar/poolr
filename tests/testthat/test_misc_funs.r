@@ -13,7 +13,7 @@ mat_w_mis <- matrix(0.5, 2, 2); diag(mat_w_mis) <- 1; mat_w_mis[1, 1] <- NA
 neg_def_mat <- matrix(-0.8, 3, 3); diag(neg_def_mat) <- 1
 
 # matrix as a data frame
-dat_fra_mat <- matrix(0.8, 3, 3); diag(neg_def_mat) <- 1
+dat_fra_mat <- matrix(0.8, 3, 3); diag(dat_fra_mat) <- 1
 dat_fra_mat <- as.data.frame(dat_fra_mat)
 
 # matrix with values out of bounds
@@ -67,6 +67,6 @@ test_that("Conversions work correctly.", {
   meff_dat_fra_mat <- meff(dat_fra_mat, method = "liji")
   
   expect_equivalent(meff_neg_def_mat, 4, tolerance = m_tol)
-  expect_equivalent(meff_dat_fra_mat, 1, tolerance = m_tol)
+  expect_equivalent(meff_dat_fra_mat, 2, tolerance = m_tol)
 
 })

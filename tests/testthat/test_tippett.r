@@ -56,27 +56,27 @@ test_that("tippett() works correctly with empirically-derived null distributions
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0303597, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.03067969, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02930493, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03144182, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0296195, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03176722, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.03009997, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.03017697, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02976595, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03043672, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02984253, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03051413, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.03149685, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.0309969, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02816083, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03510921, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02768743, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03458305, tolerance = p_tol * emp_sca)
 
 })

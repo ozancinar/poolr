@@ -56,27 +56,27 @@ test_that("binotest() works correctly with empirically-derived null distribution
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0003899961, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.0005099949, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0002773396, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0005330993, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0003797475, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0006704953, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0004289996, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.0004199996, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.000389367, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0004715709, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.000380795, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0004621435, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0004799952, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.0005099949, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 11, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0003539311, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0006363542, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0003797475, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0006704953, tolerance = p_tol * emp_sca)
 
 })

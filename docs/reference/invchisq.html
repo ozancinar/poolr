@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -217,25 +217,25 @@
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              81.513 ~ chi-square(22) 
-#&gt; adjustment:                  effective number of tests (m=22; Nyholt, 2004) 
+#&gt; adjustment:                  effective number of tests (m = 22; Nyholt, 2004) 
 #&gt; combined p-value:            9.12e-09 </div><div class='input'><span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"liji"</span>,   <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              77.808 ~ chi-square(21) 
-#&gt; adjustment:                  effective number of tests (m=21; Li &amp; Ji, 2005) 
+#&gt; adjustment:                  effective number of tests (m = 21; Li &amp; Ji, 2005) 
 #&gt; combined p-value:            1.87e-08 </div><div class='input'><span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"gao"</span>,    <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  effective number of tests (m=23; Gao, 2008) 
+#&gt; adjustment:                  effective number of tests (m = 23; Gao, 2008) 
 #&gt; combined p-value:            4.45e-09 </div><div class='input'><span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              74.103 ~ chi-square(20) 
-#&gt; adjustment:                  effective number of tests (m=20; Galwey, 2009) 
+#&gt; adjustment:                  effective number of tests (m = 20; Galwey, 2009) 
 #&gt; combined p-value:            3.84e-08 </div><div class='input'>
 <span class='co'># setting argument 'm' manually</span>
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>)</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              44.462 ~ chi-square(12) 
-#&gt; adjustment:                  effective number of tests (m=12; user-defined) 
+#&gt; adjustment:                  effective number of tests (m = 12; user-defined) 
 #&gt; combined p-value:            1.27e-05 </div><div class='input'>
 <span class='co'># adjustment based on an empirically-derived null distribution (setting the</span>
 <span class='co'># seed for reproducibility)</span>
@@ -243,22 +243,22 @@
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>)</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            9e-04 (95% CI: 0.000412, 0.00171) </div><div class='input'>
+#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; combined p-value:            7e-04 (95% CI: 0.000281, 0.00144) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.0022 (95% CI: 0.00138, 0.00333) </div><div class='input'>
+#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; combined p-value:            0.0016 (95% CI: 0.000915, 0.0026) </div><div class='input'>
 <span class='co'># using the stepwise algorithm (not run, because this takes slightly longer</span>
 <span class='co'># and can lead to a note when running the standard package checks)</span>
 <span class='co'># \donttest{</span>
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.00118 (95% CI: 0.000977, 0.00141) </div><div class='input'><span class='co'># }</span>
+#&gt; adjustment:                  empirical (sample size = 100000) 
+#&gt; combined p-value:            0.00122 (95% CI: 0.00101, 0.00146) </div><div class='input'><span class='co'># }</span>
 
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># covariances among the (two-sided) 'F(1-p_i,1)' values assuming that the</span>

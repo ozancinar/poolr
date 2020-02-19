@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -215,25 +215,25 @@
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  effective number of tests (m=22; Nyholt, 2004) 
+#&gt; adjustment:                  effective number of tests (m = 22; Nyholt, 2004) 
 #&gt; combined p-value:            0.0365 </div><div class='input'><span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"liji"</span>,   <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  effective number of tests (m=21; Li &amp; Ji, 2005) 
+#&gt; adjustment:                  effective number of tests (m = 21; Li &amp; Ji, 2005) 
 #&gt; combined p-value:            0.0348 </div><div class='input'><span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"gao"</span>,    <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  effective number of tests (m=23; Gao, 2008) 
+#&gt; adjustment:                  effective number of tests (m = 23; Gao, 2008) 
 #&gt; combined p-value:            0.0381 </div><div class='input'><span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  effective number of tests (m=20; Galwey, 2009) 
+#&gt; adjustment:                  effective number of tests (m = 20; Galwey, 2009) 
 #&gt; combined p-value:            0.0332 </div><div class='input'>
 <span class='co'># setting argument 'm' manually</span>
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>)</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  effective number of tests (m=12; user-defined) 
+#&gt; adjustment:                  effective number of tests (m = 12; user-defined) 
 #&gt; combined p-value:            0.0201 </div><div class='input'>
 <span class='co'># adjustment based on an empirically-derived null distribution (setting the</span>
 <span class='co'># seed for reproducibility)</span>
@@ -241,20 +241,20 @@
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>)</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.0306 (95% CI: 0.0273, 0.0342) </div><div class='input'>
+#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; combined p-value:            0.0323 (95% CI: 0.0289, 0.036) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.0329 (95% CI: 0.0295, 0.0366) </div><div class='input'>
+#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; combined p-value:            0.0322 (95% CI: 0.0288, 0.0358) </div><div class='input'>
 <span class='co'># using the stepwise algorithm</span>
 <span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      Tippett's method
 #&gt; number of p-values combined: 23 
 #&gt; minimum p-value:             0.002 
-#&gt; adjustment:                  empirical 
-#&gt; combined p-value:            0.0289 (95% CI: 0.0257, 0.0324) </div></pre>
+#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; combined p-value:            0.0305 (95% CI: 0.0272, 0.0341) </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

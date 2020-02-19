@@ -16,8 +16,8 @@ test_that("empirical() works correctly.", {
   set.seed(1234)
   emp_test_side1 <- fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000, side = 1)
 
-  expect_equivalent(emp_test_alpha$p, 0.0029997, tolerance = p_tol * emp_sca)
-  expect_equivalent(emp_test_batch$p, 0.002997003, tolerance = p_tol * emp_sca)
+  expect_equivalent(emp_test_alpha$p, 0.00149985, tolerance = p_tol * emp_sca)
+  expect_equivalent(emp_test_batch$p, 0.001998002, tolerance = p_tol * emp_sca)
   expect_equivalent(emp_test_side1$p, 0.000999001, tolerance = p_tol * emp_sca)
 
 })

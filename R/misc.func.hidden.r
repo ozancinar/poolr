@@ -45,8 +45,10 @@
       stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].", call.=FALSE)
 
    # check that all diagonal values are equal to 1
-   if (length(unique(diag(R))) != 1 || unique(diag(R)) != checkdiag)
+   if (!is.vector(R)) {
+      if (length(unique(diag(R))) != 1 || unique(diag(R)) != checkdiag)
       stop("Argument 'R' must be a correlation matrix with diagonal values are all equal to 1.", call.=FALSE)
+   }
 
    # checks that are relevant only when called from the base functions
 
