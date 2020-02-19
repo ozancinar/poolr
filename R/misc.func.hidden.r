@@ -214,13 +214,21 @@
 
 # simplified version of MASS::mvrnorm()
 
-.simmvn <- function(n = 1, mu, Sigma) {
-   p <- length(mu)
+.simmvn <- function(n = 1, Sigma, method = "mvt_eigen") {
+
+   p <- nrow(Sigma)
    eS <- eigen(Sigma, symmetric = TRUE)
-   ev <- eS$values
-   X <- matrix(rnorm(p * n), n)
-   X <- mu + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(X)
-   t(X)
+   eval <- eS$values
+   evec <- eS$vectors
+
+   X <- matrix(rnorm(p * n), nrow = n, byrow = TRUE)
+
+   if (method == "mass_eigen") {   
+      return(X %*% diag(sqrt(pmax(eval, 0)), p) %*% t(evec))
+   } else if (method == "mvt_eigen") {
+      return(X %*% t(evec %*% (t(evec) * sqrt(pmax(eval, 0)))))
+   }
+
 }
 
 ############################################################################
