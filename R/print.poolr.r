@@ -53,7 +53,7 @@ print.poolr <- function(x, digits=3, ...) {
       if (x$adjust == "user")
          x$adjust <- "user-defined"
 
-      x$adjust <- paste0("effective number of tests (m=", x$m, "; ", x$adjust, ")")
+      x$adjust <- paste0("effective number of tests (m = ", x$m, "; ", x$adjust, ")")
 
    }
 
