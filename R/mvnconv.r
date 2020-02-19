@@ -81,8 +81,11 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       covs[lower.tri(covs, diag=TRUE)] <- mvnlookup[match(r, mvnlookup[,1]), column]
       covs[upper.tri(covs)] <- t(covs)[upper.tri(covs)]
 
-      if (cov2cor)
-         covs <- stats::cov2cor(covs)
+      if (cov2cor) {
+         var <- mvnlookup[1,column]
+         covs <- covs / var
+      }
+         
 
    } else {
 
