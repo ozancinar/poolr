@@ -16,7 +16,7 @@
 
 }
 
-.check.R <- function(R, checksym=TRUE, checkna=TRUE, checkpd=FALSE, checkcor=FALSE, isbase=TRUE, k, adjust, fun) {
+.check.R <- function(R, checksym=TRUE, checkna=TRUE, checkpd=FALSE, checkcor=FALSE, checkdiag = 1, isbase=TRUE, k, adjust, fun) {
 
    # turn a "dpoMatrix" object (from nearPD()) into a 'plain' matrix (since is.matrix() is FALSE for such objects)
    if (inherits(R, "dpoMatrix"))
@@ -43,6 +43,10 @@
    # check that all values in R are between -1 and 1
    if (checkcor && any(abs(R) > 1))
       stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].", call.=FALSE)
+
+   # check that all diagonal values are equal to 1
+   if (length(unique(diag(R))) != 1 || unique(diag(R)) != checkdiag)
+      stop("Argument 'R' must be a correlation matrix with diagonal values are all equal to 1.", call.=FALSE)
 
    # checks that are relevant only when called from the base functions
 
