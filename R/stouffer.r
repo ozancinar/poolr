@@ -38,6 +38,7 @@ stouffer <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
 
    # set some defaults
    ci <- NULL
+   size_used <- NULL
    if (adjust != "user")
       m <- NULL
 
@@ -85,10 +86,11 @@ stouffer <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
 
       pval <- tmp$pval
       ci <- tmp$ci
+      size_used <- tmp$size
 
    }
 
-   res <- list(p = c(pval), ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, fun = fun)
+   res <- list(p = c(pval), ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, size = size_used, fun = fun)
 
    class(res) <- "poolr"
    return(res)

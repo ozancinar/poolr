@@ -210,7 +210,7 @@
 
    }
 
-   return(list(pval = pval, ci = ci))
+   return(list(pval = pval, ci = ci, size = size))
 
 }
 

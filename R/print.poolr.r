@@ -68,7 +68,13 @@ print.poolr <- function(x, digits=3, ...) {
 
    }
 
-   cat("adjustment:                 ", x$adjust, "\n")
+   if (is.null(x$size)) {
+      cat("adjustment:                 ", x$adjust, "\n")
+   } else {
+      cat("adjustment:                 ", x$adjust, paste0("(sample size = ", as.integer(x$size), ")"), "\n")
+   }
+
+   
 
    if (is.null(x$ci)) {
       cat("combined p-value:           ", format.pval(x$p, digits), "\n")
