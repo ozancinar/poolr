@@ -19,6 +19,5 @@ test_that("The arguments of mvnconv() are checked correctly.", {
   
   expect_error(mvnconv(target = "m2lp"), "Argument 'R' must be specified.")
   expect_error(mvnconv(grid2ip.ld), "Argument 'target' must be specified.")
-  expect_warning(fisher(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, target = "z")))
   
 })

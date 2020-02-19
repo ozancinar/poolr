@@ -47,36 +47,36 @@ test_that("tippett() works correctly with empirically-derived null distributions
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.03059694, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.03229677, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02730888, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03416195, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02891875, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0359506, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.03067969, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.03065969, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0296195, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03176722, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02959984, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03174688, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.03017697, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.03024897, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02984253, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03051413, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02991414, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.03058652, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- tippett(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0309969, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.03139686, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 0.001687646, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.02768743, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.03458305, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.02806613, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.035004, tolerance = p_tol * emp_sca)
 
 })

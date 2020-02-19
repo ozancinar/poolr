@@ -47,19 +47,19 @@ test_that("stouffer() works correctly with empirically-derived null distribution
   res <- stouffer(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.00079992, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.00049995, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 5.915392, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0003454099, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.00157555, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0001623517, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.001166328, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- stouffer(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0005699943, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.0007599924, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 5.915392, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0004317358, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0007384315, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0005988329, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0009511528, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- stouffer(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
@@ -67,17 +67,17 @@ test_that("stouffer() works correctly with empirically-derived null distribution
 
   expect_equivalent(c(res$p), 0.0007119993, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 5.915392, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0006606711, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0007662541, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0006625978, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0007683274, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
   res <- stouffer(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
   out <- capture.output(print(res))
 
-  expect_equivalent(c(res$p), 0.0007599924, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$p), 0.0007899921, tolerance = p_tol * emp_sca)
   expect_equivalent(c(res$statistic), 5.915392, tolerance = stat_tol * emp_sca)
-  expect_equivalent(c(res$ci[1]), 0.0005988329, tolerance = p_tol * emp_sca)
-  expect_equivalent(c(res$ci[2]), 0.0009511528, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[1]), 0.0006254925, tolerance = p_tol * emp_sca)
+  expect_equivalent(c(res$ci[2]), 0.0009844701, tolerance = p_tol * emp_sca)
 
 })
 
