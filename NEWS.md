@@ -1,9 +1,12 @@
+# poolr 0.9-1 (2020-02-20)
 
-# poolr 0.9-0 (2020-02-19)
+- changed the way the pseudo replicates are generated in `empirical()` to a more stable method
 
-- A change in the way of generating random values in the empirical() function.
-- Minor changes in the output when either the effective number of tests or empirical distributions are utilized.
-- A change in the way of deriving the correlation matrix in the mvnconv() function.
+- slight improvements to the output of `print.poolr()` when using the effective number of tests or empirical distribution adjustments
+
+- `mvnconv()` now uses the variances from the lookup table instead of `cov2cor()` for the transformation when `cov2cor=TRUE`
+
+- added a check on `R` (where appropriate) that its diagonal values are all equal to 1
 
 # poolr 0.8-2 (2020-02-12)
 

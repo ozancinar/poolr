@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -203,7 +203,7 @@
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
 #&gt; adjustment:                  none 
-#&gt; combined p-value:            1.66e-09 </div><div class='input'>
+#&gt; combined p-value:            1.655433e-09 </div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># correlations among the (two-sided) p-values assuming that the test</span>
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
@@ -244,19 +244,19 @@
 <span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>)</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
-#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            5e-04 (95% CI: 0.000162, 0.00117) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
-#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            0.0012 (95% CI: 0.00062, 0.0021) </div><div class='input'>
 <span class='co'># using the stepwise algorithm</span>
 <span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
-#&gt; adjustment:                  empirical (sample size = 100000) 
+#&gt; adjustment:                  empirical distribution (size = 100000) 
 #&gt; combined p-value:            0.00074 (95% CI: 0.000581, 0.000929) </div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># covariances among the (two-sided) 'z_i' values assuming that the</span>

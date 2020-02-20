@@ -29,15 +29,7 @@ invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
       R # force evaluation of 'R' argument, so that R=mvnconv(R) works
 
       # checks for 'R' argument
-      if (adjust == "generalized") {
-
-         R <- .check.R(R, k = k, adjust = adjust, checkdiag = 2, fun = fun)
-         
-      } else {
-
-         R <- .check.R(R, k = k, adjust = adjust, fun = fun)
-
-      }
+      R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = FALSE, checkdiag = FALSE, isbase = TRUE, k = k, adjust = adjust, fun = fun)
 
    }
 

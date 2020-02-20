@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -202,7 +202,7 @@
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
 #&gt; adjustment:                  none 
-#&gt; combined p-value:            4.45e-09 </div><div class='input'>
+#&gt; combined p-value:            4.447048e-09 </div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># correlations among the (two-sided) p-values assuming that the test</span>
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
@@ -243,13 +243,13 @@
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>)</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            7e-04 (95% CI: 0.000281, 0.00144) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical (sample size = 10000) 
+#&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            0.0016 (95% CI: 0.000915, 0.0026) </div><div class='input'>
 <span class='co'># using the stepwise algorithm (not run, because this takes slightly longer</span>
 <span class='co'># and can lead to a note when running the standard package checks)</span>
@@ -257,7 +257,7 @@
 <span class='fu'>invchisq</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              85.219 ~ chi-square(23) 
-#&gt; adjustment:                  empirical (sample size = 100000) 
+#&gt; adjustment:                  empirical distribution (size = 100000) 
 #&gt; combined p-value:            0.00122 (95% CI: 0.00101, 0.00146) </div><div class='input'><span class='co'># }</span>
 
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>

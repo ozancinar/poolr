@@ -54,6 +54,7 @@ print.poolr <- function(x, digits=3, ...) {
          x$adjust <- "user-defined"
 
       x$adjust <- paste0("effective number of tests (m = ", x$m, "; ", x$adjust, ")")
+      x$p <- format.pval(x$p, digits)
 
    }
 
@@ -66,21 +67,19 @@ print.poolr <- function(x, digits=3, ...) {
       if (x$fun == "stouffer")
          x$adjust <- "Strube's method"
 
+      x$p <- format.pval(x$p, digits)
+
    }
 
-   if (is.null(x$size)) {
-      cat("adjustment:                 ", x$adjust, "\n")
-   } else {
-      cat("adjustment:                 ", x$adjust, paste0("(sample size = ", as.integer(x$size), ")"), "\n")
+   if (x$adjust == "empirical") {
+
+      x$adjust <- paste0("empirical distribution (size = ", as.integer(x$size), ")")
+      x$p <- paste0(format.pval(x$p, digits), " (95% CI: ", format.pval(x$ci[1], digits), ", ", format.pval(x$ci[2], digits), ")")
+
    }
 
-   
-
-   if (is.null(x$ci)) {
-      cat("combined p-value:           ", format.pval(x$p, digits), "\n")
-   } else {
-      cat("combined p-value:           ", format.pval(x$p, digits), paste0("(95% CI: ", format.pval(x$ci[1], digits), ", ", format.pval(x$ci[2], digits), ")"), "\n")
-   }
+   cat("adjustment:                 ", x$adjust, "\n")
+   cat("combined p-value:           ", x$p, "\n")
 
    invisible()
 

@@ -29,7 +29,7 @@ bonferroni <- function(p, adjust = "none", R, m, size = 10000, threshold, side =
       R # force evaluation of 'R' argument, so that R=mvnconv(R) works
 
       # checks for 'R' argument
-      R <- .check.R(R, k = k, adjust = adjust, fun = fun)
+      R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = FALSE, checkdiag = FALSE, isbase = TRUE, k = k, adjust = adjust, fun = fun)
 
    }
 

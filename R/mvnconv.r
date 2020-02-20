@@ -5,11 +5,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       stop("Argument 'R' must be specified.", call.=FALSE)
 
    # checks for 'R' argument
-   if (is.vector(R)) {
-      R <- .check.R(R, checksym=FALSE, checkna=FALSE, checkpd=FALSE, checkcor=TRUE, isbase=FALSE)
-   } else {
-      R <- .check.R(R, checksym=TRUE, checkna=FALSE, checkpd=FALSE, checkcor=TRUE, isbase=FALSE)
-   }
+   R <- .check.R(R, checksym = !is.vector(R), checkna = FALSE, checkpd = FALSE, checkcor = TRUE, checkdiag = !is.vector(R), isbase = FALSE)
 
    # get name of calling function (character(0) if called from global environment)
    call.fun <- as.character(sys.call(-1)[1])
@@ -81,21 +77,15 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       covs[lower.tri(covs, diag=TRUE)] <- mvnlookup[match(r, mvnlookup[,1]), column]
       covs[upper.tri(covs)] <- t(covs)[upper.tri(covs)]
 
-      if (cov2cor) {
-         var <- mvnlookup[1,column]
-         covs <- covs / var
-      }
-         
-
    } else {
 
       covs <- mvnlookup[match(R, mvnlookup[,1]), column]
 
-      if (cov2cor) {
-         var <- mvnlookup[1,column]
-         covs <- covs / var
-      }
+   }
 
+   if (cov2cor) {
+      var <- mvnlookup[1,column]
+      covs <- covs / var
    }
 
    return(covs)

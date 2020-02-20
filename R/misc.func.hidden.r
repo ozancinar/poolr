@@ -16,7 +16,7 @@
 
 }
 
-.check.R <- function(R, checksym=TRUE, checkna=TRUE, checkpd=FALSE, checkcor=FALSE, checkdiag = 1, isbase=TRUE, k, adjust, fun) {
+.check.R <- function(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = FALSE, checkdiag = TRUE, isbase = TRUE, k, adjust, fun) {
 
    # turn a "dpoMatrix" object (from nearPD()) into a 'plain' matrix (since is.matrix() is FALSE for such objects)
    if (inherits(R, "dpoMatrix"))
@@ -45,10 +45,8 @@
       stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].", call.=FALSE)
 
    # check that all diagonal values are equal to 1
-   if (!is.vector(R)) {
-      if (length(unique(diag(R))) != 1 || unique(diag(R)) != checkdiag)
-      stop("Argument 'R' must be a correlation matrix with diagonal values are all equal to 1.", call.=FALSE)
-   }
+   if (checkdiag && any(diag(R) != 1))
+      stop("Diagonal values in 'R' must all be equal to 1.", call.=FALSE)
 
    # checks that are relevant only when called from the base functions
 
@@ -124,6 +122,9 @@
    # check if 'size' is numeric
    if (!is.numeric(size))
      stop("Argument 'size' must be numeric. See help(", call.fun, ").", call.=FALSE)
+
+   # round 'size' value(s) (just in case)
+   size <- round(size)
 
    # check if all values in 'size' are >= 1
    if (any(size < 1))
@@ -229,7 +230,7 @@
 
    X <- matrix(rnorm(p * n), nrow = n, byrow = TRUE)
 
-   if (method == "mass_eigen") {   
+   if (method == "mass_eigen") {
       return(X %*% diag(sqrt(pmax(eval, 0)), p) %*% t(evec))
    } else if (method == "mvt_eigen") {
       return(X %*% t(evec %*% (t(evec) * sqrt(pmax(eval, 0)))))

@@ -10,7 +10,7 @@ meff <- function(R, eigen, method, ...) {
          stop("Argument 'R' must be specified.", call.=FALSE)
 
       # checks for 'R' argument
-      R <- .check.R(R, checkcor=TRUE, isbase=FALSE)
+      R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
 
       # get eigenvalues of 'R' matrix
       evs <- base::eigen(R)$values
