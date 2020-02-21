@@ -1,4 +1,4 @@
-# poolr 0.9-1 (2020-02-21)
+# poolr 0.9-2 (2020-02-21)
 
 - changed the way the pseudo replicates are generated in `empirical()` to a more stable method
 

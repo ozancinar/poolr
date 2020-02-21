@@ -2,8 +2,8 @@ poolr: Package for Pooling the Results from (Dependent) Tests
 =============================================================
 
 [![Build Status](https://travis-ci.org/ozancinar/poolr.svg?branch=master)](https://travis-ci.org/ozancinar/poolr)
-![CRAN Version](https://www.r-pkg.org/badges/version/poolr)
-![devel Version](https://img.shields.io/badge/devel-0.9--1-brightgreen.svg)
+[![CRAN Version](https://www.r-pkg.org/badges/version/poolr)](https://cran.r-project.org/package=poolr)
+[![devel Version](https://img.shields.io/badge/devel-0.9--2-brightgreen.svg)](https://github.com/ozancinar/poolr)
 [![Code Coverage](https://codecov.io/gh/ozancinar/poolr/branch/master/graph/badge.svg)](https://codecov.io/gh/ozancinar/poolr)
 
 ## Description
@@ -16,6 +16,10 @@ You can read the documentation of the `poolr` package online at [https://ozancin
 
 ## Installation
 
+The current official (i.e., [CRAN](https://cran.r-project.org/package=poolr)) release can be installed directly within R with:
+```r
+install.packages("poolr")
+
 After installing the [remotes](https://cran.r-project.org/package=remotes) package with ```install.packages("remotes")```, the development version of the `poolr` package can be installed with:
 ```r
 remotes::install_github("ozancinar/poolr")
@@ -23,4 +27,4 @@ remotes::install_github("ozancinar/poolr")
 
 ## Meta
 
-The poolr package was written by Ozan Cinar and [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License Version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). To report any issues or bugs, please go [here](https://github.com/ozancinar/poolr/issues).
+The `poolr` package was written by Ozan Cinar and [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License Version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). To report any issues or bugs, please go [here](https://github.com/ozancinar/poolr/issues).

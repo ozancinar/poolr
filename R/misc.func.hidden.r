@@ -5,7 +5,7 @@
    if (missing(p))
       stop("Argument 'p' must be specified.", call.=FALSE)
 
-   if(is.matrix(p) && nrow(p) == 1)
+   if (is.matrix(p) && nrow(p) == 1)
       p <- c(p)
 
    if (!is.vector(p) || !is.numeric(p))
