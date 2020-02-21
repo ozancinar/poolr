@@ -19,6 +19,7 @@ You can read the documentation of the `poolr` package online at [https://ozancin
 The current official (i.e., [CRAN](https://cran.r-project.org/package=poolr)) release can be installed directly within R with:
 ```r
 install.packages("poolr")
+```
 
 After installing the [remotes](https://cran.r-project.org/package=remotes) package with ```install.packages("remotes")```, the development version of the `poolr` package can be installed with:
 ```r
