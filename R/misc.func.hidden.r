@@ -5,6 +5,9 @@
    if (missing(p))
       stop("Argument 'p' must be specified.", call.=FALSE)
 
+   if(is.matrix(p) && nrow(p) == 1)
+      p <- c(p)
+
    if (!is.vector(p) || !is.numeric(p))
       stop("Argument 'p' must be a numeric vector.", call.=FALSE)
 
@@ -14,8 +17,7 @@
    if (any(p < 0) || any(p > 1))
       stop("Values in 'p' vector (i.e., the p-values) must be between 0 and 1.", call.=FALSE)
 
-   if(is.matrix(p) && nrow(p) == 1)
-      p <- c(p)
+   return(p)
 
 }
 

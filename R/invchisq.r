@@ -1,7 +1,7 @@
 invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, ...) {
 
    # checks for 'p' argument
-   .check.p(p)
+   p <- .check.p(p)
 
    k <- length(p)
 
