@@ -105,14 +105,15 @@
       
     </div>
 
-    <div id="poolr-0-9-1-2020-02-20" class="section level1">
+    <div id="poolr-0-9-1-2020-02-21" class="section level1">
 <h1 class="page-header">
-<a href="#poolr-0-9-1-2020-02-20" class="anchor"></a>poolr 0.9-1 (2020-02-20)</h1>
+<a href="#poolr-0-9-1-2020-02-21" class="anchor"></a>poolr 0.9-1 (2020-02-21)</h1>
 <ul>
 <li><p>changed the way the pseudo replicates are generated in <code><a href="../reference/empirical.html">empirical()</a></code> to a more stable method</p></li>
 <li><p>slight improvements to the output of <code><a href="../reference/print.poolr.html">print.poolr()</a></code> when using the effective number of tests or empirical distribution adjustments</p></li>
 <li><p><code><a href="../reference/mvnconv.html">mvnconv()</a></code> now uses the variances from the lookup table instead of <code><a href="https://rdrr.io/r/stats/cor.html">cov2cor()</a></code> for the transformation when <code>cov2cor=TRUE</code></p></li>
 <li><p>added a check on <code>R</code> (where appropriate) that its diagonal values are all equal to 1</p></li>
+<li><p>added a check on <code>p</code> to convert it into a <code>numeric</code> vector if it is a <code>matrix</code> with 1 row</p></li>
 </ul>
 </div>
     <div id="poolr-0-8-2-2020-02-12" class="section level1">
@@ -128,7 +129,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#poolr-0-9-1-2020-02-20">0.9-1</a></li>
+        <li><a href="#poolr-0-9-1-2020-02-21">0.9-1</a></li>
         <li><a href="#poolr-0-8-2-2020-02-12">0.8-2</a></li>
       </ul>
     </div>

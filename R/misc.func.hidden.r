@@ -14,6 +14,9 @@
    if (any(p < 0) || any(p > 1))
       stop("Values in 'p' vector (i.e., the p-values) must be between 0 and 1.", call.=FALSE)
 
+   if(is.matrix(p) && nrow(p) == 1)
+      p <- c(p)
+
 }
 
 .check.R <- function(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = FALSE, checkdiag = TRUE, isbase = TRUE, k, adjust, fun) {
