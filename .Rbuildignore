@@ -5,3 +5,4 @@
 ^docs$
 ^vignettes/pkgdown$
 ^misc$
+^quick_start.md
