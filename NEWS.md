@@ -1,4 +1,6 @@
-# poolr 0.9-2 (2020-02-21)
+# poolr 0.9-3 (2020-02-24)
+
+- improved the `pkgdown` docs and added a quick start guide
 
 - changed the way the pseudo replicates are generated in `empirical()` to a more stable method
 

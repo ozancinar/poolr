@@ -1,0 +1,49 @@
+template:
+  params:
+    bootswatch: cosmo
+
+home:
+  links:
+  - text: GitHub Repo
+    href: https://github.com/ozancinar/poolr
+
+navbar:
+  title: "poolr"
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: Quick Start
+      href: quick_start.html
+    - text: "Functions"
+      href: reference/index.html
+    - text: "Changelog"
+      href: news/index.html
+
+reference:
+  - title: "Base Methods"
+    desc: >
+      Functions to combine independent and dependent p-values.
+    contents:
+      - fisher
+      - stouffer
+      - invchisq
+      - binotest
+      - bonferroni
+      - tippett
+  - title: "Support Functions"
+    desc: >
+      Functions to support the functionality of the base methods..
+    contents:
+      - empirical
+      - meff
+      - mvnconv
+      - print.poolr
+  - title: "Datasets"
+    desc: >
+      Functions for creating various types of plots.
+    contents:
+      - grid2ip.p
+      - grid2ip.ld
+      - grid2ip.geno
+      - grid2ip.pheno
+      - mvnlookup
