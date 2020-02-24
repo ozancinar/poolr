@@ -146,14 +146,14 @@ rs117541653     -0.192       0.145       1.000     -0.097      0.099
 rs11761490      -0.130      -0.010      -0.097      1.000     -0.019
 rs11773436      -0.389      -0.260       0.099     -0.019      1.000</code></pre>
 <p>We can adjust the various base methods to account for the dependence using this correlation matrix. For example, we can use an estimate of the effective number of tests based on Li and Ji (2005) to adjust the test statistic of Fisher’s method as a way to account for the dependence:</p>
-<pre class="{r}"><code><a href="reference/fisher.html">fisher(grid2ip.p, adjust="liji", R=grid2ip.ld)</a></code></pre>
+<pre class="{r}"><code><a href="reference/fisher.html">fisher(grid2ip.p, adjust = "liji", R = grid2ip.ld)</a></code></pre>
 <pre><code>combined p-values with:      Fisher's method
 number of p-values combined: 23
 test statistic:              83.14 ~ chi-square(30)
 adjustment:                  effective number of tests (m = 15; Li &amp; Ji, 2005)
 combined p-value:            6.92e-07</code></pre>
 <p>Alternatively, we can use the generalization of Fisher’s method described by Brown (1975) to combine the p-values:</p>
-<pre class="{r}"><code><a href="reference/fisher.html">fisher(grid2ip.p, adjust="generalized", R=mvnconv(grid2ip.ld))</a></code></pre>
+<pre class="{r}"><code><a href="reference/fisher.html">fisher(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld))</a></code></pre>
 <pre><code>combined p-values with:      Fisher's method
 number of p-values combined: 23
 test statistic:              41.532 ~ chi-square(14.986)
@@ -161,7 +161,7 @@ adjustment:                  Brown's method
 combined p-value:            0.000263</code></pre>
 <p>Finally, one can empirically obtain the null distribution of Fisher’s method using pseudo replicates and compute the combined p-value based on that (which closely approximates a ‘proper’ permutation test, but runs in a fraction of the time):</p>
 <pre class="{r}"><code><a href="https://rdrr.io/r/base/Random.html">set.seed(123)
-fisher(grid2ip.p, adjust="empirical", R=grid2ip.ld)</a></code></pre>
+fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld)</a></code></pre>
 <pre><code>combined p-values with:      Fisher's method
 number of p-values combined: 23
 test statistic:              127.482 ~ chi-square(46)

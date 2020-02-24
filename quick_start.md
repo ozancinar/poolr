@@ -51,7 +51,7 @@ rs11773436      -0.389      -0.260       0.099     -0.019      1.000
 We can adjust the various base methods to account for the dependence using this correlation matrix. For example, we can use an estimate of the effective number of tests based on Li and Ji (2005) to adjust the test statistic of Fisher's method as a way to account for the dependence:
 
 ```{r}
-fisher(grid2ip.p, adjust="liji", R=grid2ip.ld)
+fisher(grid2ip.p, adjust = "liji", R = grid2ip.ld)
 ```
 ```
 combined p-values with:      Fisher's method
@@ -64,7 +64,7 @@ combined p-value:            6.92e-07
 Alternatively, we can use the generalization of Fisher's method described by Brown (1975) to combine the p-values:
 
 ```{r}
-fisher(grid2ip.p, adjust="generalized", R=mvnconv(grid2ip.ld))
+fisher(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld))
 ```
 ```
 combined p-values with:      Fisher's method
@@ -78,7 +78,7 @@ Finally, one can empirically obtain the null distribution of Fisher's method usi
 
 ```{r}
 set.seed(123)
-fisher(grid2ip.p, adjust="empirical", R=grid2ip.ld)
+fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
 ```
 ```
 combined p-values with:      Fisher's method
