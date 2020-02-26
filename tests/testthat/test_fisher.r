@@ -22,11 +22,13 @@ test_that("fisher() works correctly with effective number of tests.", {
   res_lj  <- fisher(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gao <- fisher(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- fisher(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_user <- fisher(grid2ip.p, m = 18)
   
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
   out <- capture.output(print(res_gal))
+  out <- capture.output(print(res_user))
 
   expect_equivalent(c(res_nyh$p), 3.008722e-09, tolerance = p_tol)
   expect_equivalent(c(res_nyh$statistic), 121.9391, tolerance = stat_tol)
@@ -40,6 +42,9 @@ test_that("fisher() works correctly with effective number of tests.", {
   expect_equivalent(c(res_gal$p), 1.414432e-08, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 110.8537, tolerance = stat_tol)
 
+  expect_equivalent(c(res_user$p), 6.677494e-08, tolerance = p_tol)
+  expect_equivalent(c(res_user$statistic), 99.76835, tolerance = stat_tol)
+  
 })
 
 test_that("fisher() works correctly with empirically-derived null distributions.", {

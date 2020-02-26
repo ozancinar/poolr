@@ -19,6 +19,9 @@ dat_fra_mat <- as.data.frame(dat_fra_mat)
 # matrix with values out of bounds
 mat_out_bou <- matrix(1.5, 2, 2); diag(unsym_mat) <- 1
 
+# matrix with diagonal values other than 1
+mat_out_diag <- matrix(0.9, 2, 2)
+
 # an appropriate matrix (to test the dimensions with the vector of p-values)
 approp_mat <- matrix(0.5, 2, 2); diag(approp_mat) <- 1 
 
@@ -59,6 +62,19 @@ test_that("Errors are thrown correctly.", {
   
   out <- capture.output(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000), threshold = c(0.3), verbose = TRUE))
   
+  expect_error(fisher(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  expect_error(stouffer(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  expect_error(invchisq(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  expect_error(binotest(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  expect_error(bonferroni(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  expect_error(tippett(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  
+  expect_error(fisher(runif(2), adjust = "liji", R = mat_out_diag), "Diagonal values in 'R' must all be equal to 1.")
+  
+  expect_warning(fisher(runif(2), adjust = "empirical", R = approp_mat, size = c(100, 1000, 10000), threshold = rep(0.5, 3)))
+  
+  expect_warning(fisher(runif(2), adjust = "generalized", R = mvnconv(approp_mat, target = "z")))
+  
 })
 
 test_that("Conversions work correctly.", {
@@ -68,5 +84,9 @@ test_that("Conversions work correctly.", {
   
   expect_equivalent(meff_neg_def_mat, 4, tolerance = m_tol)
   expect_equivalent(meff_dat_fra_mat, 2, tolerance = m_tol)
+  
+  set.seed(1234)
+  meff_nearpd <- fisher(runif(3), adjust = "liji", R = nearPD(neg_def_mat, corr = TRUE)$mat)
+  expect_equivalent(c(meff_nearpd$p), 0.3917173, tolerance = p_tol)
 
 })

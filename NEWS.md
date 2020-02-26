@@ -1,4 +1,4 @@
-# poolr 0.9-3 (2020-02-24)
+# poolr 0.9-3 (2020-02-26)
 
 - improved the `pkgdown` docs and added a quick start guide
 
