@@ -53,8 +53,14 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
 
       if (!is.null(ddd$verbose) && ddd$verbose)
          setTxtProgressBar(pbar, i)
+     
+      if (is.null(ddd$mvnmethod)) {
+         mvnmethod <- "mvt_eigen"
+      } else {
+         mvnmethod <- ddd$mvnmethod
+      }
 
-      z <- try(.simmvn(batchsizes[i], Sigma = R))
+      z <- try(.simmvn(batchsizes[i], Sigma = R, mvnmethod = mvnmethod))
 
       if (inherits(z, "try-error"))
          stop("Matrix to be generated is too large. Try setting 'batchsize' (or to a lower number if it was set).", call.=FALSE)

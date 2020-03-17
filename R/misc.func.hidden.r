@@ -224,9 +224,9 @@
 
 ############################################################################
 
-# simplified version of MASS::mvrnorm()
+# simplified versions of MASS::mvrnorm() and mvtnorm::rmvnorm()
 
-.simmvn <- function(n = 1, Sigma, method = "mvt_eigen") {
+.simmvn <- function(n = 1, Sigma, mvnmethod = "mvt_eigen") {
 
    p <- nrow(Sigma)
    eS <- eigen(Sigma, symmetric = TRUE)
@@ -235,9 +235,9 @@
 
    X <- matrix(rnorm(p * n), nrow = n, byrow = TRUE)
 
-   if (method == "mass_eigen") {
+   if (mvnmethod == "mass_eigen") {
       return(X %*% diag(sqrt(pmax(eval, 0)), p) %*% t(evec))
-   } else if (method == "mvt_eigen") {
+   } else if (mvnmethod == "mvt_eigen") {
       return(X %*% t(evec %*% (t(evec) * sqrt(pmax(eval, 0)))))
    }
 
