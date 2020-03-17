@@ -1,3 +1,7 @@
+# poolr 0.9-5 (2020-03-17)
+
+- added a more specific test on `p` and `eigen` that they are `numeric` vectors
+
 # poolr 0.9-3 (2020-02-26)
 
 - improved the `pkgdown` docs and added a quick start guide

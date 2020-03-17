@@ -8,7 +8,7 @@
    if (is.matrix(p) && nrow(p) == 1)
       p <- c(p)
 
-   if (!is.vector(p) || !is.numeric(p))
+   if (!(is.atomic(p) && !is.matrix(p) && !is.null(p)) || !is.numeric(p))
       stop("Argument 'p' must be a numeric vector.", call.=FALSE)
 
    if (any(is.na(p)))

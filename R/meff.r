@@ -19,7 +19,7 @@ meff <- function(R, eigen, method, ...) {
 
       # can pass eigenvalues directly to function via 'eigen'
 
-      if (!is.vector(eigen) || !is.numeric(eigen))
+      if (!(is.atomic(eigen) && !is.matrix(eigen) && !is.null(eigen)) || !is.numeric(eigen))
          stop("Argument 'eigen' must be a numeric vector.", call.=FALSE)
 
       evs <- eigen
