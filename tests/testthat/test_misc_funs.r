@@ -25,6 +25,9 @@ mat_out_diag <- matrix(0.9, 2, 2)
 # an appropriate matrix (to test the dimensions with the vector of p-values)
 approp_mat <- matrix(0.5, 2, 2); diag(approp_mat) <- 1 
 
+# a set of p-values stored as a matrix with 1 row
+p_mat <- t(as.matrix(c(0.02, 0.05, 0.20)))
+
 context("Checking errors")
 
 test_that("Errors are thrown correctly.", {
@@ -88,5 +91,11 @@ test_that("Conversions work correctly.", {
   set.seed(1234)
   meff_nearpd <- fisher(runif(3), adjust = "liji", R = nearPD(neg_def_mat, corr = TRUE)$mat)
   expect_equivalent(c(meff_nearpd$p), 0.3917173, tolerance = p_tol)
+  
+  emp_mvnmethod <- fisher(runif(2), adjust = "liji", R = approp_mat, mvnmethod = "mass_eigen")
+  expect_equivalent(c(emp_mvnmethod$p), 0.8706827, tolerance = p_tol)
+  
+  p_mat_comb <- fisher(p_mat)
+  expect_equivalent(c(p_mat_comb$p), 0.009157697, tolerance = p_tol)
 
 })
