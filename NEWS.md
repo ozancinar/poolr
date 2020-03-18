@@ -1,4 +1,4 @@
-# poolr 0.9-5 (2020-03-17)
+# poolr 0.9-6 (2020-03-18)
 
 - added a more specific test on `p` and `eigen` that they are `numeric` vectors
 

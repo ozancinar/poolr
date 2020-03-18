@@ -1,5 +1,4 @@
 ### library(poolr); library(testthat); Sys.setenv(NOT_CRAN="true")
-library(poolr)
 
 source("tolerances.r")
 
@@ -28,7 +27,7 @@ test_that("binotest() works correctly with effective number of tests.", {
   out <- capture.output(print(res_gao))
   out <- capture.output(print(res_gal))
   out <- capture.output(print(res_user))
-  
+
   expect_equivalent(c(res_nyh$p), 2.057712e-09, tolerance = p_tol)
   expect_equivalent(c(res_nyh$statistic), 11, tolerance = stat_tol)
 
@@ -40,7 +39,7 @@ test_that("binotest() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_gal$p), 1.134072e-08, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 11, tolerance = stat_tol)
-  
+
   expect_equivalent(c(res_user$p), 6.279596e-08, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 11, tolerance = stat_tol)
 

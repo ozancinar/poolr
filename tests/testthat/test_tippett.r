@@ -1,5 +1,4 @@
 ### library(poolr); library(testthat); Sys.setenv(NOT_CRAN="true")
-library(poolr)
 
 source("tolerances.r")
 
@@ -22,7 +21,7 @@ test_that("tippett() works correctly with effective number of tests.", {
   res_gao <- tippett(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- tippett(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_user <- tippett(grid2ip.p, m = 18)
-  
+
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
@@ -40,7 +39,7 @@ test_that("tippett() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_gal$p), 0.03321721, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 0.001687646, tolerance = stat_tol)
-  
+
   expect_equivalent(c(res_user$p), 0.02994575, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 0.001687646, tolerance = stat_tol)
 

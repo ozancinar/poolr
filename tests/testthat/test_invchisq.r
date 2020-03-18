@@ -1,5 +1,4 @@
 ### library(poolr); library(testthat); Sys.setenv(NOT_CRAN="true")
-library(poolr)
 
 source("tolerances.r")
 
@@ -23,7 +22,7 @@ test_that("invchisq() works correctly with effective number of tests.", {
   res_gao <- invchisq(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- invchisq(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_user <- invchisq(grid2ip.p, m = 18)
-  
+
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
@@ -41,7 +40,7 @@ test_that("invchisq() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_gal$p), 3.841594e-08, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 74.10316, tolerance = stat_tol)
-  
+
   expect_equivalent(c(res_user$p), 1.625318e-07, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 66.69285, tolerance = stat_tol)
 

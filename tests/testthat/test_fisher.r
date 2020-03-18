@@ -1,5 +1,4 @@
 ### library(poolr); library(testthat); Sys.setenv(NOT_CRAN="true")
-library(poolr)
 
 source("tolerances.r")
 
@@ -23,7 +22,7 @@ test_that("fisher() works correctly with effective number of tests.", {
   res_gao <- fisher(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- fisher(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_user <- fisher(grid2ip.p, m = 18)
-  
+
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
@@ -44,7 +43,7 @@ test_that("fisher() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_user$p), 6.677494e-08, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 99.76835, tolerance = stat_tol)
-  
+
 })
 
 test_that("fisher() works correctly with empirically-derived null distributions.", {

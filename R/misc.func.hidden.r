@@ -8,7 +8,7 @@
    if (is.matrix(p) && nrow(p) == 1)
       p <- c(p)
 
-   if (!(is.atomic(p) && !is.matrix(p) && !is.null(p)) || !is.numeric(p))
+   if (!.is.numeric.vector(p))
       stop("Argument 'p' must be a numeric vector.", call.=FALSE)
 
    if (any(is.na(p)))
@@ -274,5 +274,10 @@
    statistic <- sum(p <= alpha)
    sum(dbinom(statistic:k, k, alpha))
 }
+
+############################################################################
+
+.is.numeric.vector <- function(x)
+   is.atomic(x) && is.numeric(x) && !is.matrix(x) && !is.null(x)
 
 ############################################################################
