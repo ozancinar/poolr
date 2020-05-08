@@ -38,7 +38,7 @@ test_that("Errors are thrown correctly.", {
 
   expect_error(mvnconv(unsym_mat, target = "m2lp"), "Argument 'R' must be a symmetric matrix.")
   expect_error(meff(mat_w_mis, method = "liji"), "Values in 'R' vector must not contain NAs.")
-  expect_warning(empirical(neg_def_mat, method = "fisher"), "Matrix 'R' is not positive definite. Used Matrix::nearPD\\(\\) to make 'R' positive definite.")
+  expect_warning(empirical(neg_def_mat, method = "fisher"), "Matrix 'R' is not positive definite. Used \\(simplified\\) Matrix::nearPD\\(\\) to make 'R' positive definite.")
   expect_error(meff(mat_out_bou, method = "liji"), "Argument 'R' must be a correlation matrix, but contains values outside \\[-1,1\\].")
 
   expect_error(fisher(runif(3), adjust = "liji", R = approp_mat), "Length of 'p' vector \\(3\\) does not match the dimensions of the 'R' matrix \\(2,2\\).")
@@ -87,12 +87,13 @@ test_that("Conversions work correctly.", {
   expect_equivalent(meff_neg_def_mat, 4, tolerance = m_tol)
   expect_equivalent(meff_dat_fra_mat, 2, tolerance = m_tol)
 
-  set.seed(1234)
-  meff_nearpd <- fisher(runif(3), adjust = "liji", R = nearPD(neg_def_mat, corr = TRUE)$mat)
-  expect_equivalent(c(meff_nearpd$p), 0.3917173, tolerance = p_tol)
+  # set.seed(1234)
+  # meff_nearpd <- fisher(runif(3), adjust = "liji", R = nearPD(neg_def_mat, corr = TRUE)$mat)
+  # expect_equivalent(c(meff_nearpd$p), 0.3917173, tolerance = p_tol)
 
+  set.seed(1234)
   emp_mvnmethod <- fisher(runif(2), adjust = "liji", R = approp_mat, mvnmethod = "mass_eigen")
-  expect_equivalent(c(emp_mvnmethod$p), 0.8706827, tolerance = p_tol)
+  expect_equivalent(c(emp_mvnmethod$p), 0.2581587, tolerance = p_tol)
 
   p_mat_comb <- fisher(p_mat)
   expect_equivalent(c(p_mat_comb$p), 0.009157697, tolerance = p_tol)
