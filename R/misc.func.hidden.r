@@ -41,8 +41,8 @@
 
    # check if 'R' is positive definite; if not, make it
    if (checkpd && any(eigen(R)$values <= 0)) {
-      R <- as.matrix(Matrix::nearPD(R, corr=TRUE)$mat)
-      warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
+      R <- as.matrix(.find.nonegmat(R))
+      warning("Matrix 'R' is not positive definite. Used (simplified) Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
    }
 
    # check that all values in R are between -1 and 1
@@ -241,6 +241,60 @@
       return(X %*% t(evec %*% (t(evec) * sqrt(pmax(eval, 0)))))
    }
 
+}
+
+############################################################################
+
+# simplified version of Matrix::nearPD()
+
+.find.nonegmat <- function(R) {
+   
+   k <- nrow(R)
+   d_s <- matrix(0, k, k)
+   x <- R
+   iter <- 0
+   converged <- FALSE
+   conv <- Inf
+   
+   while (iter < 100 && !converged) {
+      y <- x
+      r <- y - d_s
+      e <- eigen(R, symmetric = TRUE)
+      q <- e$vectors
+      d <- e$values
+      p <- d > 1e-06 * d[1]
+      
+      if (!any(p)) {
+         stop("Matrix seems negative semi-definite")
+      }
+      
+      q <- q[, p, drop = FALSE]
+      x <- tcrossprod(q * rep(d[p], each = nrow(q)), q)
+      d_s <- x - r
+      diag(x) <- 1
+      conv <- norm(y - x, "I") / norm(y, "I")
+      iter <- iter + 1
+      converged <- (conv <= 1e-07)
+   }
+
+   e <- eigen(x, symmetric = TRUE)
+   d <- e$values
+   eps <- 1e-08 * abs(d[1])
+   
+   if (d[k] < eps) {
+      d[d < eps] <- eps
+      q <- e$vectors
+      o.diag <- diag(x)
+      x <- q %*% (d * t(q))
+      d <- sqrt(pmax(eps, o.diag)/diag(x))
+      x[] <- d * x * rep(d, each = k)
+   }
+
+   diag(x) <- 1
+   colnames(x) <- colnames(R)
+   rownames(x) <- rownames(R)
+  
+   return(x)
 }
 
 ############################################################################

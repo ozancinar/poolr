@@ -3,6 +3,5 @@ exportPattern("^[^\\.]")
 import(methods)
 import(stats)
 import(utils)
-import(Matrix)
 
 S3method(print, poolr)

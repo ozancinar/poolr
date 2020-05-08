@@ -1,3 +1,9 @@
+# poolr 0.9-7 (2020-05-08)
+
+- implemented a simplified version of `Matrix::nearPD()`
+
+- dependence on the package `Matrix` was removed
+
 # poolr 0.9-6 (2020-03-18)
 
 - added a more specific test on `p` and `eigen` that they are `numeric` vectors
