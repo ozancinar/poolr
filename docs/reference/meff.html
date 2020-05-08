@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="Estimate the Effective Number of Tests — meff" />
 <meta property="og:description" content="Estimate the effective number of tests." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-8</span>
       </span>
     </div>
 
@@ -112,7 +115,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Estimate the effective number of tests.</p>
+    <p>Estimate the effective number of tests.<script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <pre class="usage"><span class='fu'>meff</span>(<span class='no'>R</span>, <span class='no'>eigen</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
@@ -144,13 +147,13 @@
 
 <p>The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the \(R\) matrix supplied via the <code>R</code> argument (or from the eigenvalues directly passed via the <code>eigen</code> argument). Letting \(\lambda_i\) denote the \(i\)th eigenvalue of this matrix (with \(i = 1, \ldots, k\)), the effective number of tests (\(m\)) is estimated as follows.</p>
 <p><b>Method by Nyholt (2004)</b></p>
-<p>$$m = 1 + (k - 1) \left(1 - \frac{\mbox{Var}(\lambda)}{k}\right)$$ where \(\mbox{Var}(\lambda)\) is the observed sample variance of the \(k\) eigenvalues.</p>
+<p>\[m = 1 + (k - 1) \left(1 - \frac{\mbox{Var}(\lambda)}{k}\right)\] where \(\mbox{Var}(\lambda)\) is the observed sample variance of the \(k\) eigenvalues.</p>
 <p><b>Method by Li &amp; Ji (2005)</b></p>
-<p>$$m = \sum_{i = 1}^k f(|\lambda_i|)$$ where \(f(x) = I(x \geq 1) + (x - \lfloor x \rfloor)\) and \(\lfloor . \rfloor\) is the floor function.</p>
+<p>\[m = \sum_{i = 1}^k f(|\lambda_i|)\] where \(f(x) = I(x \ge 1) + (x - \lfloor x \rfloor)\) and \(\lfloor \cdot \rfloor\) is the floor function.</p>
 <p><b>Method by Gao et al. (2008)</b></p>
-<p>$$m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} &gt; C$$ where \(\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}\) are the sorted eigenvalues in decreasing order and \(C\) is a pre-defined parameter which is set to 0.995 by default.</p>
+<p>\[m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C\] where \(\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}\) are the sorted eigenvalues in decreasing order and \(C\) is a pre-defined parameter which is set to 0.995 by default.</p>
 <p><b>Method by Galwey (2009)</b></p>
-<p>$$m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}$$ where \(\lambda_i' = 0\) if \(\lambda_i &lt; 0\) and \(\lambda_i\) otherwise.</p>
+<p>\[m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}\] where \(\lambda_i' = 0\) if \(\lambda_i < 0\) and \(\lambda_i\) otherwise.</p>
 <p><b>Note:</b> For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \(m\) is rounded down to the nearest integer.</p>
 <p><b>Specifying the R Matrix</b></p>
 <p>The \(R\) matrix should reflect the correlation structure among the tests. There is no general solution on how such a correlation matrix should be constructed, as this depends on the type of test and the sidedness of these tests. For example, we can use the correlations among related but changing elements across the analyses/tests, or a function thereof, as a proxy for the correlation structure. For example, when conducting \(k\) analyses with the same dependent variable and \(k\) different independent variables, the correlations among the independent variables could serve as such a proxy. Analogously, if analyses are conducted for \(k\) dependent variables with the same set of independent variables, the correlations among the dependent variables could be used instead.</p>
@@ -190,20 +193,10 @@
 <span class='co'># use this matrix instead for estimating the effective number of tests</span>
 <span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>)</div><div class='output co'>#&gt; [1] 22</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"liji"</span>)</div><div class='output co'>#&gt; [1] 21</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gao"</span>)</div><div class='output co'>#&gt; [1] 23</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>)</div><div class='output co'>#&gt; [1] 20</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Ozan Cinar <a href='mailto:ozancinar86@gmail.com'>ozancinar86@gmail.com</a> <br />
-   Wolfgang Viechtbauer <a href='mailto:wvb@wvbauer.com'>wvb@wvbauer.com</a> <br /></p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -214,7 +207,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

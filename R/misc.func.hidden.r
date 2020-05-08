@@ -248,14 +248,14 @@
 # simplified version of Matrix::nearPD()
 
 .find.nonegmat <- function(R) {
-   
+
    k <- nrow(R)
    d_s <- matrix(0, k, k)
    x <- R
    iter <- 0
    converged <- FALSE
    conv <- Inf
-   
+
    while (iter < 100 && !converged) {
       y <- x
       r <- y - d_s
@@ -263,11 +263,10 @@
       q <- e$vectors
       d <- e$values
       p <- d > 1e-06 * d[1]
-      
-      if (!any(p)) {
+
+      if (!any(p))
          stop("Matrix seems negative semi-definite")
-      }
-      
+
       q <- q[, p, drop = FALSE]
       x <- tcrossprod(q * rep(d[p], each = nrow(q)), q)
       d_s <- x - r
@@ -280,7 +279,7 @@
    e <- eigen(x, symmetric = TRUE)
    d <- e$values
    eps <- 1e-08 * abs(d[1])
-   
+
    if (d[k] < eps) {
       d[d < eps] <- eps
       q <- e$vectors
@@ -293,8 +292,9 @@
    diag(x) <- 1
    colnames(x) <- colnames(R)
    rownames(x) <- rownames(R)
-  
+
    return(x)
+
 }
 
 ############################################################################

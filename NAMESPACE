@@ -3,5 +3,6 @@ exportPattern("^[^\\.]")
 import(methods)
 import(stats)
 import(utils)
+import(mathjaxr)
 
 S3method(print, poolr)

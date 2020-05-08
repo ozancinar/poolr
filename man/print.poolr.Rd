@@ -13,7 +13,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The output shows the combined p-value (with the specified number of significant digits), the test statistic (and its assumed null distribution), and the adjustment method that was applied.
+   The output shows the combined \mjseqn{p}-value (with the specified number of significant digits), the test statistic (and its assumed null distribution), and the adjustment method that was applied.
 }
 \value{
    The function does not return an object.

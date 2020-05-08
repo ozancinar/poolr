@@ -1,4 +1,6 @@
-# poolr 0.9-7 (2020-05-08)
+# poolr 0.9-8 (2020-05-08)
+
+- the HTML help files now show rendered equations with the help of the `mathjaxr` package
 
 - implemented a simplified version of `Matrix::nearPD()`
 
