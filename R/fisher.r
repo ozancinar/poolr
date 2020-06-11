@@ -25,7 +25,7 @@ fisher <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, 
          stop("Argument 'R' must be specified when using an adjustment method.")
 
    } else {
-
+      
       R # force evaluation of 'R' argument, so that R=mvnconv(R) works
 
       # checks for 'R' argument
@@ -60,7 +60,7 @@ fisher <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, 
    }
 
    if (adjust == "generalized") {
-
+      
       covs  <- R
       expx2 <- 2 * k
       varx2 <- sum(covs)

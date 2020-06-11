@@ -3,6 +3,9 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    # check if 'R' is specified
    if (missing(R))
       stop("Argument 'R' must be specified.", call.=FALSE)
+   
+   if (is.matrix(R) && any(eigen(R)$values < 0))
+      stop("Matrix 'R' can not be negative definite.", call.=FALSE)
 
    # checks for 'R' argument
    R <- .check.R(R, checksym = !is.vector(R), checkna = FALSE, checkpd = FALSE, checkcor = TRUE, checkdiag = !is.vector(R), isbase = FALSE)

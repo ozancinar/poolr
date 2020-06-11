@@ -18,5 +18,11 @@ test_that("The arguments of mvnconv() are checked correctly.", {
 
   expect_error(mvnconv(target = "m2lp"), "Argument 'R' must be specified.")
   expect_error(mvnconv(grid2ip.ld), "Argument 'target' must be specified.")
+  
+  R <- matrix(c(   1,  0.8,  0.5,  -0.3,
+                   0.8,    1,  0.2,  0.4,
+                   0.5,  0.2,    1,  -0.7,
+                   -0.3,  0.4,  -0.7,    1), nrow = 4, ncol = 4)
+  expect_error(mvnconv(R, side = 2, target = "m2lp"), "Matrix 'R' can not be negative definite.")
 
 })

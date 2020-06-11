@@ -42,10 +42,10 @@ mvnconv(R, side = 2, target, cov2cor = FALSE)
 }
 \examples{
 # illustrative correlation matrix
-R <- matrix(c(   1,  0.8,  0.5, -0.3,
+R <- matrix(c(   1,  0.8,  0.5,  0.3,
                0.8,    1,  0.2,  0.4,
-               0.5,  0.2,    1, -0.7,
-              -0.3,  0.4, -0.7,    1), nrow = 4, ncol = 4)
+               0.5,  0.2,    1,  0.7,
+               0.3,  0.4,  0.7,    1), nrow = 4, ncol = 4)
 
 # convert R into covariance matrices for the chosen targets
 mvnconv(R, target = "p")

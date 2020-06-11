@@ -1,3 +1,9 @@
+# poolr 0.9-9 (2020-06-11)
+
+- added a warning message to `meff(method = "galwey")` if there are negative eigenvalues
+
+- `mvnconv()` now checks if `R` is non-negative definite
+
 # poolr 0.9-8 (2020-05-08)
 
 - the HTML help files now show rendered equations with the help of the `mathjaxr` package
