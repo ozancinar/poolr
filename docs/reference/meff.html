@@ -145,13 +145,13 @@
 
     
 
-<p>The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the \(R\) matrix supplied via the <code>R</code> argument (or from the eigenvalues directly passed via the <code>eigen</code> argument). Letting \(\lambda_i\) denote the \(i\)th eigenvalue of this matrix (with \(i = 1, \ldots, k\)), the effective number of tests (\(m\)) is estimated as follows.</p>
+<p>The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the \(R\) matrix supplied via the <code>R</code> argument (or from the eigenvalues directly passed via the <code>eigen</code> argument). Letting \(\lambda_i\) denote the \(i\)th eigenvalue of this matrix (with \(i = 1, \ldots, k\)) in decreasing order, the effective number of tests (\(m\)) is estimated as follows.</p>
 <p><b>Method by Nyholt (2004)</b></p>
 <p>\[m = 1 + (k - 1) \left(1 - \frac{\mbox{Var}(\lambda)}{k}\right)\] where \(\mbox{Var}(\lambda)\) is the observed sample variance of the \(k\) eigenvalues.</p>
 <p><b>Method by Li &amp; Ji (2005)</b></p>
 <p>\[m = \sum_{i = 1}^k f(|\lambda_i|)\] where \(f(x) = I(x \ge 1) + (x - \lfloor x \rfloor)\) and \(\lfloor \cdot \rfloor\) is the floor function.</p>
 <p><b>Method by Gao et al. (2008)</b></p>
-<p>\[m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C\] where \(\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}\) are the sorted eigenvalues in decreasing order and \(C\) is a pre-defined parameter which is set to 0.995 by default.</p>
+<p>\[m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} > C\] where \(C\) is a pre-defined parameter which is set to 0.995 by default.</p>
 <p><b>Method by Galwey (2009)</b></p>
 <p>\[m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}\] where \(\lambda_i' = 0\) if \(\lambda_i < 0\) and \(\lambda_i\) otherwise.</p>
 <p><b>Note:</b> For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \(m\) is rounded down to the nearest integer.</p>

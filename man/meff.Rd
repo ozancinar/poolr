@@ -13,7 +13,7 @@ meff(R, eigen, method, \dots)
 }
 \details{
 
-   The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the \mjseqn{R} matrix supplied via the \code{R} argument (or from the eigenvalues directly passed via the \code{eigen} argument). Letting \mjseqn{\lambda_i} denote the \mjseqn{i}th eigenvalue of this matrix (with \mjseqn{i = 1, \ldots, k}), the effective number of tests (\mjseqn{m}) is estimated as follows.
+   The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the \mjseqn{R} matrix supplied via the \code{R} argument (or from the eigenvalues directly passed via the \code{eigen} argument). Letting \mjseqn{\lambda_i} denote the \mjseqn{i}th eigenvalue of this matrix (with \mjseqn{i = 1, \ldots, k}) in decreasing order, the effective number of tests (\mjseqn{m}) is estimated as follows.
 
    \bold{Method by Nyholt (2004)}
 
@@ -25,7 +25,7 @@ meff(R, eigen, method, \dots)
 
    \bold{Method by Gao et al. (2008)}
 
-   \mjdeqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{(i)}}{\sum_{i = 1}^k \lambda_{(i)}} > C}{m = min(x) such that sum_{i=1}^x \lambda_(i) / sum_{i=1}^k \lambda_(i) > C} where \mjeqn{\lambda_{(1)}, \lambda_{(2)}, \ldots, \lambda_{(k)}}{\lambda_(1), \lambda_(2), \ldots, \lambda_(k)} are the sorted eigenvalues in decreasing order and \mjseqn{C} is a pre-defined parameter which is set to 0.995 by default.
+   \mjdeqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} > C}{m = min(x) such that sum_{i=1}^x \lambda_(i) / sum_{i=1}^k \lambda_(i) > C} where \mjseqn{C} is a pre-defined parameter which is set to 0.995 by default.
 
    \bold{Method by Galwey (2009)}
 
