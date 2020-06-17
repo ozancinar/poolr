@@ -1,10 +1,8 @@
-# poolr 0.9-9 (2020-06-11)
+# poolr 0.9-10 (2020-06-17)
 
-- added a warning message to `meff(method = "galwey")` if there are negative eigenvalues
+- added a warning message to the `meff()` function if there are negative eigenvalues
 
 - `mvnconv()` now checks if `R` is non-negative definite
-
-# poolr 0.9-8 (2020-05-08)
 
 - the HTML help files now show rendered equations with the help of the `mathjaxr` package
 
@@ -12,11 +10,7 @@
 
 - dependence on the package `Matrix` was removed
 
-# poolr 0.9-6 (2020-03-18)
-
 - added a more specific test on `p` and `eigen` that they are `numeric` vectors
-
-# poolr 0.9-3 (2020-02-26)
 
 - improved the `pkgdown` docs and added a quick start guide
 

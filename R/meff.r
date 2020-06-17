@@ -26,6 +26,11 @@ meff <- function(R, eigen, method, ...) {
 
    }
 
+   # check if there are negative eigenvalues
+   if (any(evs < 0))
+      warning("Negative eigenvalues derived from matrix 'R' were set to 0.", call.=FALSE)
+
+
    if (method == "nyholt") {
 
       # effective number of tests (based on Nyholt, 2004)
@@ -66,8 +71,6 @@ meff <- function(R, eigen, method, ...) {
    if (method == "galwey") {
 
       # effective number of tests (based on Galwey, 2009)
-      if (any(evs < 0))
-         warning("Negative eigenvalues derived from matrix 'R' were set to 0.", call.=FALSE)
       
       evs[evs < 0] <- 0
       m <- sum(sqrt(evs))^2 / sum(evs)
