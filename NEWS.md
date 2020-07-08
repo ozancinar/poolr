@@ -1,14 +1,12 @@
-# poolr 0.9-10 (2020-06-17)
-
-- added a warning message to the `meff()` function if there are negative eigenvalues
-
-- `mvnconv()` now checks if `R` is non-negative definite
+# poolr 0.9-11 (2020-07-08)
 
 - the HTML help files now show rendered equations with the help of the `mathjaxr` package
 
-- implemented a simplified version of `Matrix::nearPD()`
+- `meff()` function now issues a warning if there are negative eigenvalues (and if they were set to 0 for `method="galway"`)
 
-- dependence on the package `Matrix` was removed
+- added `nearpd` argument to all base functions; if `TRUE`, a negative definite `R` matrix will be turned into the nearest positive semi-definite matrix (only for `adjust="empirical"` and `adjust="generalized"`)
+
+- implemented a simplified version of `Matrix::nearPD()`; hence, dependence on the package `Matrix` was removed
 
 - added a more specific test on `p` and `eigen` that they are `numeric` vectors
 

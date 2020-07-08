@@ -81,7 +81,7 @@ test_that("Errors are thrown correctly.", {
 
 test_that("Conversions work correctly.", {
 
-  meff_neg_def_mat <- meff(neg_def_mat, method = "liji")
+  meff_neg_def_mat <- expect_warning(meff(neg_def_mat, method = "liji"), "One or more eigenvalues derived from the 'R' matrix are negative.")
   meff_dat_fra_mat <- meff(dat_fra_mat, method = "liji")
 
   expect_equivalent(meff_neg_def_mat, 4, tolerance = m_tol)

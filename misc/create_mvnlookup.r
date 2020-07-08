@@ -2,6 +2,7 @@
 
 # Code to create the mvnlookup.rdata file.
 
+# for rhos <- seq(1, -0.99, by = -0.01)
 # note: 15865 secs for "pracma" (with n=1000) on 'psysim' using 18 cores
 #        2853 secs for "cubature" on 'psysim' using 18 cores
 
@@ -12,7 +13,8 @@ library(parallel)
 cl <- makePSOCKcluster(18)
 
 # vector of rho values for which we obtain the covariances
-rhos <- seq(1, -0.99, by = -0.01)
+#rhos <- seq(1, -0.99, by = -0.01)
+rhos <- seq(1, -0.99, by = -0.001)
 
 # choose method for the numerical integration
 method <- "pracma"
@@ -259,6 +261,7 @@ mvnlookup[rhos == 0,] <- 0
 mvnlookup <- round(mvnlookup, rnd)
 
 # save results
+#save(mvnlookup, file = "mvnlookup.rdata")
 save(mvnlookup, file = "../data/mvnlookup.rdata")
 #save(mvnlookup, file = paste0("mvnlookup_", method, ".rdata"))
 

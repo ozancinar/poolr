@@ -29,7 +29,7 @@ meff(R, eigen, method, \dots)
 
    \bold{Method by Galwey (2009)}
 
-   \mjdeqn{m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}}{m = (sum_{i=1}^k \sqrt{\lambda_i'})^2 / \sum_{i=1}^k \lambda_i'} where \mjseqn{\lambda_i' = 0} if \mjseqn{\lambda_i < 0} and \mjseqn{\lambda_i} otherwise.
+   \mjdeqn{m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}}{m = (sum_{i=1}^k \sqrt{\lambda_i'})^2 / \sum_{i=1}^k \lambda_i'} where \mjeqn{\lambda_i' = \max[0, \lambda_i]}{\lambda_i' = max[0, \lambda_i]}.
 
    \bold{Note:} For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \mjseqn{m} is rounded down to the nearest integer.
 
@@ -41,7 +41,7 @@ meff(R, eigen, method, \dots)
 
    \bold{Not Positive Semi-Definite R}
 
-   Depending on the way \mjseqn{R} is constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive (semi-)definite matrix (e.g., Higham 2002) before passing this matrix to the function (see \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package for a corresponding implementation).
+   Depending on the way \mjseqn{R} was constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive (semi-)definite matrix (e.g., Higham 2002) before passing this matrix to the function (see \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package for a corresponding implementation).
 
 }
 \value{

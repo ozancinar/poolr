@@ -21,7 +21,7 @@
 
 }
 
-.check.R <- function(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = FALSE, checkdiag = TRUE, isbase = TRUE, k, adjust, fun) {
+.check.R <- function(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, nearpd = FALSE, checkcor = FALSE, checkdiag = TRUE, isbase = TRUE, k, adjust, fun) {
 
    # turn a "dpoMatrix" object (from nearPD()) into a 'plain' matrix (since is.matrix() is FALSE for such objects)
    if (inherits(R, "dpoMatrix"))
@@ -41,8 +41,12 @@
 
    # check if 'R' is positive definite; if not, make it
    if (checkpd && any(eigen(R)$values <= 0)) {
-      R <- as.matrix(.find.nonegmat(R))
-      warning("Matrix 'R' is not positive definite. Used (simplified) Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
+      if (nearpd) {
+         warning("Matrix 'R' is not positive definite. Used (simplified) Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
+         R <- as.matrix(.find.nonegmat(R))
+      } else {
+         stop("Matrix 'R' is not positive definite.", call.=FALSE)
+      }
    }
 
    # check that all values in R are between -1 and 1
@@ -249,6 +253,9 @@
 
 .find.nonegmat <- function(R) {
 
+   v <- diag(R)
+   R <- cov2cor(R)
+
    k <- nrow(R)
    d_s <- matrix(0, k, k)
    x <- R
@@ -292,6 +299,9 @@
    diag(x) <- 1
    colnames(x) <- colnames(R)
    rownames(x) <- rownames(R)
+
+   S <- diag(sqrt(v))
+   R <- S %*% R %*% S
 
    return(x)
 

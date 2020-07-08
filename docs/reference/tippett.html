@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-11</span>
       </span>
     </div>
 
@@ -118,7 +118,8 @@
     <p>Function to carry out Tippett's method.<script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='no'>R</span>, <span class='no'>m</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='no'>threshold</span>, <span class='kw'>side</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>batchsize</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tippett</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='no'>R</span>, <span class='no'>m</span>,
+        <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='no'>threshold</span>, <span class='kw'>side</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>batchsize</span>, <span class='kw'>nearpd</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,6 +157,10 @@
       <td><p>optional scalar to specify the batch size for generating the null distribution. When unspecified (the default), this is done in a single batch.</p></td>
     </tr>
     <tr>
+      <th>nearpd</th>
+      <td><p>logical indicating if a negative definite 'R' matrix should be turned into the nearest positive semi-definite matrix (only relevant when <code>adjust="empirical"</code> or <code>adjust="generalized"</code>).</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>other arguments.</p></td>
     </tr>
@@ -191,6 +196,9 @@
    <dt>statistic</dt><dd><p>value of the (adjusted) test statistic.</p></dd>
    <dt>fun</dt><dd><p>name of calling function.</p></dd>
 
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>The method underlying <code>adjust="empirical"</code> assumes that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (Higham 2002).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Tippett, L. H. C. (1931). <em>Methods of Statistics</em>. London: Williams Norgate.</p>

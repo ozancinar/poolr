@@ -11,7 +11,7 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
    .check.side(side)
 
    # checks for 'R' argument
-   R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = TRUE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
+   R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = TRUE, nearpd = TRUE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
 
    ddd <- list(...)
 
@@ -53,7 +53,7 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
 
       if (!is.null(ddd$verbose) && ddd$verbose)
          setTxtProgressBar(pbar, i)
-     
+
       if (is.null(ddd$mvnmethod)) {
          mvnmethod <- "mvt_eigen"
       } else {

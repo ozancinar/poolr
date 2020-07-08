@@ -3,7 +3,8 @@
 \title{Fisher's Method}
 \description{Function to carry out Fisher's method.\loadmathjax}
 \usage{
-fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \dots)
+fisher(p, adjust = "none", R, m,
+       size = 10000, threshold, side = 2, batchsize, nearpd = TRUE, \dots)
 }
 \arguments{
    \item{p}{vector of length \mjseqn{k} with the (one- or two-sided) p-values to be combined.}
@@ -14,6 +15,7 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
    \item{threshold}{numeric vector to specify the significance thresholds for the stepwise algorithm (only relevant when \code{size} is a vector).}
    \item{side}{scalar to specify the sidedness of the \mjseqn{p}-values that are used to simulate the null distribution (2, by default, for two-sided tests; 1 for one-sided tests).}
    \item{batchsize}{optional scalar to specify the batch size for generating the null distribution. When unspecified (the default), this is done in a single batch.}
+   \item{nearpd}{logical indicating if a negative definite 'R' matrix should be turned into the nearest positive semi-definite matrix (only relevant when \code{adjust="empirical"} or \code{adjust="generalized"}).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -64,6 +66,9 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
    \item{statistic}{value of the (adjusted) test statistic.}
    \item{fun}{name of calling function.}
 }
+\note{
+   The methods underlying \code{adjust="empirical"} and \code{adjust="generalized"} assume that the test statistics that generated the \mjseqn{p}-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via \code{R} must be (at least) positive semi-definite. If it is not and \code{nearpd=TRUE}, it will be turned into one (Higham 2002).
+}
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
@@ -72,6 +77,8 @@ fisher(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, \
    Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics, 31}(4), 987-992.
 
    Fisher, R. A. (1932). \emph{Statistical Methods for Research Workers} (4th ed.). Edinburgh: Oliver and Boyd.
+
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329-343.
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r

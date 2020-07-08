@@ -1,4 +1,4 @@
-invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, ...) {
+invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, nearpd = TRUE, ...) {
 
    # checks for 'p' argument
    p <- .check.p(p)
@@ -29,7 +29,7 @@ invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
       R # force evaluation of 'R' argument, so that R=mvnconv(R) works
 
       # checks for 'R' argument
-      R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, checkcor = FALSE, checkdiag = FALSE, isbase = TRUE, k = k, adjust = adjust, fun = fun)
+      R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, nearpd = FALSE, checkcor = FALSE, checkdiag = FALSE, isbase = TRUE, k = k, adjust = adjust, fun = fun)
 
    }
 
@@ -61,6 +61,8 @@ invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
 
    if (adjust == "generalized") {
 
+      R <- .check.R(R, checksym = FALSE, checkna = FALSE, checkpd = TRUE, nearpd = TRUE, checkcor = FALSE, checkdiag = FALSE, isbase = FALSE)
+
       covs  <- R
       expx2 <- k
       varx2 <- sum(covs)
@@ -74,6 +76,8 @@ invchisq <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
    }
 
    if (adjust == "empirical") {
+
+      R <- .check.R(R, checksym = FALSE, checkna = FALSE, checkpd = TRUE, nearpd = TRUE, checkcor = FALSE, checkdiag = FALSE, isbase = FALSE)
 
       # setting 'batchsize' to NULL if it is missing
       if (missing(batchsize))

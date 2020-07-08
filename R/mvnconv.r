@@ -4,18 +4,18 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    if (missing(R))
       stop("Argument 'R' must be specified.", call.=FALSE)
 
-   # checks for 'R' argument
-   R <- .check.R(R, checksym = !is.vector(R), checkna = FALSE, checkpd = FALSE, checkcor = TRUE, checkdiag = !is.vector(R), isbase = FALSE)
-
    # get name of calling function (character(0) if called from global environment)
    call.fun <- as.character(sys.call(-1)[1])
    call.fun <- gsub("^poolr::", "", call.fun)
 
+   # checks for 'R' argument
+   if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))) {
+      R <- .check.R(R, checksym = FALSE, checkna = FALSE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
+   } else {
+      R <- .check.R(R, checksym = !is.vector(R), checkna = FALSE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = !is.vector(R), isbase = FALSE)
+   }
+
    if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq"))) {
-
-      if (is.matrix(R) && any(eigen(R)$values < 0))
-         stop("Matrix 'R' can not be negative definite.", call.=FALSE)
-
 
       if (missing(target)) {
 
@@ -43,8 +43,8 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    # check for incompatibility between poolr base function and the specified target (only when adjust = "generalized")
 
-   if (length(call.fun) > 0L && call.fun %in% c("fisher", "stouffer", "invchisq")) {
-      # need this in case the 'adjust' argument is abbreviated
+   if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq"))) {
+      # figure out what the 'adjust' argument was (this also handles the case where 'adjust' argument is abbreviated)
       call.fun.args <- as.list(match.call(definition = sys.function(-1), call = sys.call(-1), expand.dots = FALSE))
       adjust <- match.arg(call.fun.args$adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
       if (adjust == "generalized" && ((call.fun == "fisher" && target != "m2lp") || (call.fun == "stouffer" && target != "z") || (call.fun == "invchisq" && target != "chisq1")))
