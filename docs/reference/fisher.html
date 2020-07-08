@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-12</span>
       </span>
     </div>
 
@@ -201,7 +201,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The methods underlying <code>adjust="empirical"</code> and <code>adjust="generalized"</code> assume that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (Higham 2002).</p>
+    <p>The methods underlying <code>adjust="empirical"</code> and <code>adjust="generalized"</code> assume that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (based on Higham, 2002, and a slightly simplified version of <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> from the <span class="pkg">Matrix</span> package).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. <em>Biometrics, 31</em>(4), 987-992.</p>

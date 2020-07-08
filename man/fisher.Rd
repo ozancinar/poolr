@@ -67,7 +67,7 @@ fisher(p, adjust = "none", R, m,
    \item{fun}{name of calling function.}
 }
 \note{
-   The methods underlying \code{adjust="empirical"} and \code{adjust="generalized"} assume that the test statistics that generated the \mjseqn{p}-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via \code{R} must be (at least) positive semi-definite. If it is not and \code{nearpd=TRUE}, it will be turned into one (Higham 2002).
+   The methods underlying \code{adjust="empirical"} and \code{adjust="generalized"} assume that the test statistics that generated the \mjseqn{p}-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via \code{R} must be (at least) positive semi-definite. If it is not and \code{nearpd=TRUE}, it will be turned into one (based on Higham, 2002, and a slightly simplified version of \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package).
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr

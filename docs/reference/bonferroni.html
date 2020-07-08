@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-12</span>
       </span>
     </div>
 
@@ -198,10 +198,11 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The method underlying <code>adjust="empirical"</code> assumes that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (Higham 2002).</p>
+    <p>The method underlying <code>adjust="empirical"</code> assumes that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (based on Higham, 2002, and a slightly simplified version of <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> from the <span class="pkg">Matrix</span> package).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Bland, J. M., &amp; Altman, D. G. (1995). Multiple significance tests: The Bonferroni method. <em>British Medical Journal, 310</em>(6973), 170.</p>
+<p>Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. <em>IMA Journal of Numerical Analysis, 22</em>(3), 329-343.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># copy p-values and LD correlation matrix into p and r</span>

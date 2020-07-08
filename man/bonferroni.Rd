@@ -61,7 +61,7 @@ bonferroni(p, adjust = "none", R, m,
    \item{fun}{name of calling function.}
 }
 \note{
-   The method underlying \code{adjust="empirical"} assumes that the test statistics that generated the \mjseqn{p}-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via \code{R} must be (at least) positive semi-definite. If it is not and \code{nearpd=TRUE}, it will be turned into one (Higham 2002).
+   The method underlying \code{adjust="empirical"} assumes that the test statistics that generated the \mjseqn{p}-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via \code{R} must be (at least) positive semi-definite. If it is not and \code{nearpd=TRUE}, it will be turned into one (based on Higham, 2002, and a slightly simplified version of \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package).
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
@@ -69,6 +69,8 @@ bonferroni(p, adjust = "none", R, m,
 }
 \references{
    Bland, J. M., & Altman, D. G. (1995). Multiple significance tests: The Bonferroni method. \emph{British Medical Journal, 310}(6973), 170.
+
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329-343.
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r
