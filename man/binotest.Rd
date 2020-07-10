@@ -68,9 +68,9 @@ binotest(p, adjust = "none", R, m,
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329-343.
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
 
-   Wilkinson, B. (1951). A statistical consideration in psychological research. \emph{Psychological Bulletin, 48}(2), 156-158.
+   Wilkinson, B. (1951). A statistical consideration in psychological research. \emph{Psychological Bulletin, 48}(2), 156--158.
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r

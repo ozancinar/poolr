@@ -41,8 +41,17 @@
 
 <meta property="og:title" content="Methods for Pooling P-Values from (Dependent) Tests — poolr-package" />
 <meta property="og:description" content="
- The poolr package contains functions for pooling/combining the results (i.e., \(p\)-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically-derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method).
-Note that you can also read the documentation of the package online at https://ozancinar.github.io/poolr/ (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided)." />
+ The poolr package contains functions for pooling/combining the results (i.e., \(p\)-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically-derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method). For more details, see:
+
+fisher: for Fisher's method (and Brown's method)
+stouffer: for Stouffer's method (and Strube's method)
+invchisq: for the inverse chi-square method
+bonferroni: for the Bonferroni method
+tippett: for Tippett's method
+binotest: for the binomial test
+
+
+Note that you can also read the documentation of the package online at https://ozancinar.github.io/poolr/ (where it is nicely formatted and the output from all examples is provided)." />
 
 
 
@@ -74,7 +83,7 @@ Note that you can also read the documentation of the package online at https://o
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-14</span>
       </span>
     </div>
 
@@ -118,20 +127,29 @@ Note that you can also read the documentation of the package online at https://o
 
     <div class="ref-description">
     <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
- The <span class="pkg">poolr</span> package contains functions for pooling/combining the results (i.e., \(p\)-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically-derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method).</p>
-<p>Note that you can also read the documentation of the package online at <a href='https://ozancinar.github.io/poolr/'>https://ozancinar.github.io/poolr/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
+ The <span class="pkg">poolr</span> package contains functions for pooling/combining the results (i.e., \(p\)-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically-derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method). For more details, see:</p>
+<p></p><ul>
+<li><p><code><a href='fisher.html'>fisher</a></code>: for Fisher's method (and Brown's method)</p></li>
+<li><p><code><a href='stouffer.html'>stouffer</a></code>: for Stouffer's method (and Strube's method)</p></li>
+<li><p><code><a href='invchisq.html'>invchisq</a></code>: for the inverse chi-square method</p></li>
+<li><p><code><a href='bonferroni.html'>bonferroni</a></code>: for the Bonferroni method</p></li>
+<li><p><code><a href='tippett.html'>tippett</a></code>: for Tippett's method</p></li>
+<li><p><code><a href='binotest.html'>binotest</a></code>: for the binomial test</p></li>
+</ul>
+
+<p>Note that you can also read the documentation of the package online at <a href='https://ozancinar.github.io/poolr/'>https://ozancinar.github.io/poolr/</a> (where it is nicely formatted and the output from all examples is provided).</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. <em>Biometrics, 31</em>(4), 987-992.</p>
+    <p>Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. <em>Biometrics, 31</em>(4), 987--992.</p>
 <p>Fisher, R. A. (1932). <em>Statistical Methods for Research Workers</em> (4th ed.). Edinburgh: Oliver and Boyd.</p>
-<p>Lancaster, H. O. (1961). The combination of probabilities: An application of orthonormal functions. <em>Australian Journal of Statistics, 3</em>(1), 20-33.</p>
-<p>Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. <em>Psychological Bulletin, 97</em>(2), 334-341.</p>
+<p>Lancaster, H. O. (1961). The combination of probabilities: An application of orthonormal functions. <em>Australian Journal of Statistics, 3</em>(1), 20--33.</p>
+<p>Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. <em>Psychological Bulletin, 97</em>(2), 334--341.</p>
 <p>Tippett, L. H. C. (1931). <em>Methods of Statistics</em>. London: Williams Norgate.</p>
-<p>Wilkinson, B. (1951). A statistical consideration in psychological research. <em>Psychological Bulletin, 48</em>(2), 156-158.</p>
+<p>Wilkinson, B. (1951). A statistical consideration in psychological research. <em>Psychological Bulletin, 48</em>(2), 156--158.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

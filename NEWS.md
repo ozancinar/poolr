@@ -1,4 +1,4 @@
-# poolr 0.9-13 (2020-07-10)
+# poolr 0.9-14 (2020-07-10)
 
 - the HTML help files now show rendered equations with the help of the `mathjaxr` package
 
