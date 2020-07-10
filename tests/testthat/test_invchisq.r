@@ -95,15 +95,15 @@ test_that("invchisq() works correctly under multivariate theory.", {
   res1 <- invchisq(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 1))
   out <- capture.output(print(res1))
 
-  expect_equivalent(c(res1$p), 2.067614e-05, tolerance = p_tol)
-  expect_equivalent(c(res1$statistic), 42.01508, tolerance = stat_tol)
-  expect_equivalent(attributes(res1$statistic)$df, 11.33962, tolerance = df_tol)
+  expect_equivalent(c(res1$p), 2.044974e-05, tolerance = p_tol)
+  expect_equivalent(c(res1$statistic), 42.07063, tolerance = stat_tol)
+  expect_equivalent(attributes(res1$statistic)$df, 11.35461, tolerance = df_tol)
 
   res2 <- invchisq(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 2))
   out <- capture.output(print(res2))
 
-  expect_equivalent(c(res2$p), 0.0003818601, tolerance = p_tol)
-  expect_equivalent(c(res2$statistic), 27.43317, tolerance = stat_tol)
-  expect_equivalent(attributes(res2$statistic)$df, 7.404048, tolerance = df_tol)
+  expect_equivalent(c(res2$p), 0.0003806222, tolerance = p_tol)
+  expect_equivalent(c(res2$statistic), 27.44923, tolerance = stat_tol)
+  expect_equivalent(attributes(res2$statistic)$df, 7.408383, tolerance = df_tol)
 
 })

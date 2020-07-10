@@ -6,6 +6,9 @@
 # note: 15865 secs for "pracma" (with n=1000) on 'psysim' using 18 cores
 #        2853 secs for "cubature" on 'psysim' using 18 cores
 
+# for rhos <- seq(1, -0.99, by = -0.001)
+# note: 160347 secs for "pracma" (with n=1000) on 'psysim' using 18 cores
+
 ############################################################################
 
 library(parallel)
@@ -187,6 +190,8 @@ mvnlookup$chisq1_1 <- covs
 
 ############################################################################
 
+# Cov(X^2_i, X^2_j) for two-sided p-values
+
 intfun <- function(xy, rho) {
    fx <- qchisq(2 * pnorm(abs(xy[1]), lower.tail = FALSE), df = 1, lower.tail = FALSE)
    fy <- qchisq(2 * pnorm(abs(xy[2]), lower.tail = FALSE), df = 1, lower.tail = FALSE)
@@ -270,6 +275,9 @@ save(mvnlookup, file = "../data/mvnlookup.rdata")
 if (F) {
 
    load("../data/mvnlookup.rdata")
+
+   #mvnlookup <- mvnlookup[mvnlookup$rhos >= .90,]
+   #mvnlookup <- mvnlookup[mvnlookup$rhos <= -.90,]
 
    par(mfrow=c(4, 2))
 

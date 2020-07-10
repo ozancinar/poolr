@@ -1,6 +1,8 @@
-# poolr 0.9-12 (2020-07-08)
+# poolr 0.9-13 (2020-07-10)
 
 - the HTML help files now show rendered equations with the help of the `mathjaxr` package
+
+- increased resolution of `mvnlookup` table (now in steps of .001)
 
 - `meff()` function now issues a warning if there are negative eigenvalues (and if they were set to 0 for `method="galway"`)
 

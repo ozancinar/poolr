@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-13</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
 <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
-#&gt; [1,] 1.00000000 0.02160864 0.021608643 0.010804322 0.097238896
+#&gt; [1,] 1.00000000 0.02160864 0.022809124 0.010804322 0.097238896
 #&gt; [2,] 0.02160864 1.00000000 0.013205282 0.000000000 0.042016807
-#&gt; [3,] 0.02160864 0.01320528 1.000000000 0.006002401 0.006002401
+#&gt; [3,] 0.02280912 0.01320528 1.000000000 0.006002401 0.006002401
 #&gt; [4,] 0.01080432 0.00000000 0.006002401 1.000000000 0.000000000
 #&gt; [5,] 0.09723890 0.04201681 0.006002401 0.000000000 1.000000000</div><div class='input'>
 <span class='co'># adjustment based on estimates of the effective number of tests</span>
@@ -279,24 +279,24 @@
 <span class='co'># test statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
 <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"m2lp"</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;        [,1]   [,2]   [,3]   [,4]   [,5]
-#&gt; [1,] 4.0000 0.1410 0.1410 0.0660 0.5953
-#&gt; [2,] 0.1410 4.0000 0.0879 0.0004 0.2642
-#&gt; [3,] 0.1410 0.0879 4.0000 0.0390 0.0390
-#&gt; [4,] 0.0660 0.0004 0.0390 4.0000 0.0015
-#&gt; [5,] 0.5953 0.2642 0.0390 0.0015 4.0000</div><div class='input'>
+#&gt; [1,] 4.0000 0.1366 0.1440 0.0660 0.5922
+#&gt; [2,] 0.1366 4.0000 0.0821 0.0004 0.2642
+#&gt; [3,] 0.1440 0.0821 4.0000 0.0367 0.0383
+#&gt; [4,] 0.0660 0.0004 0.0367 4.0000 0.0014
+#&gt; [5,] 0.5922 0.2642 0.0383 0.0014 4.0000</div><div class='input'>
 <span class='co'># adjustment based on generalized method</span>
 <span class='fu'>fisher</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"generalized"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"m2lp"</span>))</div><div class='output co'>#&gt; combined p-values with:      Fisher's method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              41.532 ~ chi-square(14.986) 
+#&gt; test statistic:              41.554 ~ chi-square(14.994) 
 #&gt; adjustment:                  Brown's method 
-#&gt; combined p-value:            0.000263 </div><div class='input'>
+#&gt; combined p-value:            0.000262 </div><div class='input'>
 <span class='co'># when using mvnconv() inside fisher() with adjust = "generalized", the</span>
 <span class='co'># 'target' argument is automatically set and doesn't need to be specified</span>
 <span class='fu'>fisher</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"generalized"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>))</div><div class='output co'>#&gt; combined p-values with:      Fisher's method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              41.532 ~ chi-square(14.986) 
+#&gt; test statistic:              41.554 ~ chi-square(14.994) 
 #&gt; adjustment:                  Brown's method 
-#&gt; combined p-value:            0.000263 </div></pre>
+#&gt; combined p-value:            0.000262 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

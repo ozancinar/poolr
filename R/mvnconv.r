@@ -63,11 +63,11 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    if (side == 2)
       column <- column + 1
 
-   # round elements in 'R' to two decimals (since mvnlookup[,1] values are in .01 steps)
-   R <- round(R, 2)
+   # round elements in 'R' to 3 decimals (since mvnlookup[,1] values are in .001 steps)
+   R <- round(R, 3)
 
-   # replace -1 elements in 'R' with -0.99
-   R[R == -1] <- -0.99
+   # replace elements < -0.99 in 'R' with -0.99
+   R[R < -0.99] <- -0.99
 
    mvnlookup <- get(data(mvnlookup, package="poolr", envir = environment()))
 

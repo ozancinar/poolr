@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-13</span>
       </span>
     </div>
 
@@ -112,12 +112,13 @@
       
     </div>
 
-    <div id="poolr-0-9-12-2020-07-08" class="section level1">
-<h1 class="page-header" data-toc-text="0.9-12">
-<a href="#poolr-0-9-12-2020-07-08" class="anchor"></a>poolr 0.9-12 (2020-07-08)<small> Unreleased </small>
+    <div id="poolr-0-9-13-2020-07-10" class="section level1">
+<h1 class="page-header" data-toc-text="0.9-13">
+<a href="#poolr-0-9-13-2020-07-10" class="anchor"></a>poolr 0.9-13 (2020-07-10)<small> Unreleased </small>
 </h1>
 <ul>
 <li><p>the HTML help files now show rendered equations with the help of the <code>mathjaxr</code> package</p></li>
+<li><p>increased resolution of <code>mvnlookup</code> table (now in steps of .001)</p></li>
 <li><p><code><a href="../reference/meff.html">meff()</a></code> function now issues a warning if there are negative eigenvalues (and if they were set to 0 for <code>method="galway"</code>)</p></li>
 <li><p>added <code>nearpd</code> argument to all base functions; if <code>TRUE</code>, a negative definite <code>R</code> matrix will be turned into the nearest positive semi-definite matrix (only for <code>adjust="empirical"</code> and <code>adjust="generalized"</code>)</p></li>
 <li><p>implemented a simplified version of <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html">Matrix::nearPD()</a></code>; hence, dependence on the package <code>Matrix</code> was removed</p></li>

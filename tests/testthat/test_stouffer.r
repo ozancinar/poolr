@@ -87,16 +87,16 @@ test_that("stouffer() works correctly with empirically-derived null distribution
 
 test_that("stouffer() works correctly under multivariate theory.", {
 
-  res1 <- expect_warning(stouffer(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 1)))
+  res1 <- stouffer(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 1))
   out <- capture.output(print(res1))
 
-  expect_equivalent(c(res1$p), 1.710019e-06, tolerance = p_tol)
-  expect_equivalent(c(res1$statistic), 4.643833, tolerance = stat_tol)
+  expect_equivalent(c(res1$p), 1.67123e-06, tolerance = p_tol)
+  expect_equivalent(c(res1$statistic), 4.648569, tolerance = stat_tol)
 
   res2 <- stouffer(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 2))
   out <- capture.output(print(res2))
 
-  expect_equivalent(c(res2$p), 0.0001125978, tolerance = p_tol)
-  expect_equivalent(c(res2$statistic), 3.688934, tolerance = stat_tol)
+  expect_equivalent(c(res2$p), 0.000112044, tolerance = p_tol)
+  expect_equivalent(c(res2$statistic), 3.690188, tolerance = stat_tol)
 
 })

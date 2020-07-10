@@ -95,15 +95,15 @@ test_that("fisher() works correctly under multivariate theory.", {
   res1 <- fisher(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 1))
   out <- capture.output(print(res1))
 
-  expect_equivalent(c(res1$p), 6.156203e-06, tolerance = p_tol)
-  expect_equivalent(c(res1$statistic), 67.69611, tolerance = stat_tol)
-  expect_equivalent(attributes(res1$statistic)$df, 24.42718, tolerance = df_tol)
+  expect_equivalent(c(res1$p), 6.063446e-06, tolerance = p_tol)
+  expect_equivalent(c(res1$statistic), 67.80295, tolerance = stat_tol)
+  expect_equivalent(attributes(res1$statistic)$df, 24.46574, tolerance = df_tol)
 
   res2 <- fisher(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld, side = 2))
   out <- capture.output(print(res2))
 
-  expect_equivalent(c(res2$p), 0.0002631017, tolerance = p_tol)
-  expect_equivalent(c(res2$statistic), 41.53204, tolerance = stat_tol)
-  expect_equivalent(attributes(res2$statistic)$df, 14.98625, tolerance = df_tol)
+  expect_equivalent(c(res2$p), 0.0002622587, tolerance = p_tol)
+  expect_equivalent(c(res2$statistic), 41.55411, tolerance = stat_tol)
+  expect_equivalent(attributes(res2$statistic)$df, 14.99421, tolerance = df_tol)
 
 })

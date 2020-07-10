@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-13</span>
       </span>
     </div>
 
@@ -225,9 +225,9 @@
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
 <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
-#&gt; [1,] 1.00000000 0.02160864 0.021608643 0.010804322 0.097238896
+#&gt; [1,] 1.00000000 0.02160864 0.022809124 0.010804322 0.097238896
 #&gt; [2,] 0.02160864 1.00000000 0.013205282 0.000000000 0.042016807
-#&gt; [3,] 0.02160864 0.01320528 1.000000000 0.006002401 0.006002401
+#&gt; [3,] 0.02280912 0.01320528 1.000000000 0.006002401 0.006002401
 #&gt; [4,] 0.01080432 0.00000000 0.006002401 1.000000000 0.000000000
 #&gt; [5,] 0.09723890 0.04201681 0.006002401 0.000000000 1.000000000</div><div class='input'>
 <span class='co'># adjustment based on estimates of the effective number of tests</span>
@@ -279,24 +279,24 @@
 <span class='co'># test statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
 <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"z"</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;        [,1]   [,2]   [,3]   [,4]   [,5]
-#&gt; [1,] 1.0000 0.0251 0.0251 0.0117 0.1079
-#&gt; [2,] 0.0251 1.0000 0.0156 0.0001 0.0473
-#&gt; [3,] 0.0251 0.0156 1.0000 0.0069 0.0069
-#&gt; [4,] 0.0117 0.0001 0.0069 1.0000 0.0003
-#&gt; [5,] 0.1079 0.0473 0.0069 0.0003 1.0000</div><div class='input'>
+#&gt; [1,] 1.0000 0.0243 0.0256 0.0117 0.1073
+#&gt; [2,] 0.0243 1.0000 0.0146 0.0001 0.0473
+#&gt; [3,] 0.0256 0.0146 1.0000 0.0065 0.0068
+#&gt; [4,] 0.0117 0.0001 0.0065 1.0000 0.0003
+#&gt; [5,] 0.1073 0.0473 0.0068 0.0003 1.0000</div><div class='input'>
 <span class='co'># adjustment based on generalized method</span>
 <span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"generalized"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"z"</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              3.689 ~ N(0,1) 
+#&gt; test statistic:              3.69 ~ N(0,1) 
 #&gt; adjustment:                  Strube's method 
-#&gt; combined p-value:            0.000113 </div><div class='input'>
+#&gt; combined p-value:            0.000112 </div><div class='input'>
 <span class='co'># when using mvnconv() inside stouffer() with adjust = "generalized", the</span>
 <span class='co'># 'target' argument is automatically set and doesn't need to be specified</span>
 <span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"generalized"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              3.689 ~ N(0,1) 
+#&gt; test statistic:              3.69 ~ N(0,1) 
 #&gt; adjustment:                  Strube's method 
-#&gt; combined p-value:            0.000113 </div></pre>
+#&gt; combined p-value:            0.000112 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

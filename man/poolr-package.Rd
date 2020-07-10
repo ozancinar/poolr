@@ -4,7 +4,7 @@
 \docType{package}
 \title{Methods for Pooling P-Values from (Dependent) Tests}
 \description{
-   The \pkg{poolr} package contains functions for pooling/combining the results (i.e., \mjseqn{p}-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically-derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method).
+   \loadmathjax The \pkg{poolr} package contains functions for pooling/combining the results (i.e., \mjseqn{p}-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically-derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method).
 
    Note that you can also read the documentation of the package online at \url{https://ozancinar.github.io/poolr/} (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).
 }
