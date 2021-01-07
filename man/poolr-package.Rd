@@ -12,7 +12,7 @@
    \item \code{\link{invchisq}}: for the inverse chi-square method
    \item \code{\link{bonferroni}}: for the Bonferroni method
    \item \code{\link{tippett}}: for Tippett's method
-   \item \code{\link{binotest}}: for the binomial test
+   \item \code{\link{binomtest}}: for the binomial test
    }
 
    Note that you can also read the documentation of the package online at \url{https://ozancinar.github.io/poolr/} (where it is nicely formatted and the output from all examples is provided).

@@ -27,7 +27,7 @@ reference:
       - fisher
       - stouffer
       - invchisq
-      - binotest
+      - binomtest
       - bonferroni
       - tippett
   - title: "Support Functions"

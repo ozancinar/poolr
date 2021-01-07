@@ -5,7 +5,7 @@ The package contains six 'base methods' for pooling p-values:
 * `fisher()`: for Fisher's method,
 * `stouffer()`: for Stouffer's method,
 * `invchisq()`: for the inverse chi-square method,
-* `binotest()`: for the binomial test,
+* `binomtest()`: for the binomial test,
 * `bonferroni()`: for the Bonferroni method,
 * `tippett()`: for Tippett's method.
 

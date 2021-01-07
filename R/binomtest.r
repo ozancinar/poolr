@@ -1,4 +1,4 @@
-binotest <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, nearpd = TRUE, ...) {
+binomtest <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2, batchsize, nearpd = TRUE, ...) {
 
    # checks for 'p' argument
    p <- .check.p(p)

@@ -7,7 +7,7 @@ context("Checking mvnconv() function")
 test_that("empirical() works correctly.", {
 
   set.seed(1234)
-  emp_test_alpha <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, alpha = 0.1)
+  emp_test_alpha <- binomtest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, alpha = 0.1)
 
   set.seed(1234)
   emp_test_batch <- fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000, batchsize = 300)

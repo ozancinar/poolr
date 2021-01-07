@@ -67,7 +67,7 @@ test_that("Errors are thrown correctly.", {
   expect_error(fisher(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
   expect_error(stouffer(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
   expect_error(invchisq(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
-  expect_error(binotest(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
+  expect_error(binomtest(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
   expect_error(bonferroni(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
   expect_error(tippett(runif(2), adjust = "empirical"), "Argument 'R' must be specified when using an adjustment method.")
 

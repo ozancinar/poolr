@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-15</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@
     <p>Estimate the effective number of tests.<script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>meff</span>(<span class='no'>R</span>, <span class='no'>eigen</span>, <span class='no'>method</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>meff</span><span class='op'>(</span><span class='va'>R</span>, <span class='va'>eigen</span>, <span class='va'>method</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +166,10 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For <code>method = "gao"</code>, <code>C = 0.995</code> by default, but a different value of <code>C</code> can be passed to the function via <code>...</code> (e.g., <code>meff(R, method = "gao", C = 0.95)</code>).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ozan Cinar <a href='mailto:ozancinar86@gmail.com'>ozancinar86@gmail.com</a> <br />
+   Wolfgang Viechtbauer <a href='mailto:wvb@wvbauer.com'>wvb@wvbauer.com</a> <br /></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gao, X., Starmer, J., &amp; Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. <em>Genetic Epidemiology, 32</em>(4), 361--369.</p>
@@ -176,22 +180,31 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># copy LD correlation matrix into r (see help(grid2ip) for details on these data)</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='no'>grid2ip.ld</span>
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='va'>grid2ip.ld</span>
 
 <span class='co'># estimate the effective number of tests based on the LD correlation matrix</span>
-<span class='fu'>meff</span>(<span class='no'>r</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>)</div><div class='output co'>#&gt; [1] 20</div><div class='input'><span class='fu'>meff</span>(<span class='no'>r</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"liji"</span>)</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'>meff</span>(<span class='no'>r</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gao"</span>)</div><div class='output co'>#&gt; [1] 18</div><div class='input'><span class='fu'>meff</span>(<span class='no'>r</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>)</div><div class='output co'>#&gt; [1] 13</div><div class='input'>
+<span class='fu'>meff</span><span class='op'>(</span><span class='va'>r</span>, method <span class='op'>=</span> <span class='st'>"nyholt"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 20</div><div class='input'><span class='fu'>meff</span><span class='op'>(</span><span class='va'>r</span>, method <span class='op'>=</span> <span class='st'>"liji"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'>meff</span><span class='op'>(</span><span class='va'>r</span>, method <span class='op'>=</span> <span class='st'>"gao"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 18</div><div class='input'><span class='fu'>meff</span><span class='op'>(</span><span class='va'>r</span>, method <span class='op'>=</span> <span class='st'>"galwey"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 13</div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
 <span class='co'># correlations among the (two-sided) p-values assuming that the test</span>
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
-<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
+<span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span> <span class='co'># show only rows/columns 1-5</span>
+</div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
 #&gt; [1,] 1.00000000 0.02160864 0.022809124 0.010804322 0.097238896
 #&gt; [2,] 0.02160864 1.00000000 0.013205282 0.000000000 0.042016807
 #&gt; [3,] 0.02280912 0.01320528 1.000000000 0.006002401 0.006002401
 #&gt; [4,] 0.01080432 0.00000000 0.006002401 1.000000000 0.000000000
 #&gt; [5,] 0.09723890 0.04201681 0.006002401 0.000000000 1.000000000</div><div class='input'>
 <span class='co'># use this matrix instead for estimating the effective number of tests</span>
-<span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>)</div><div class='output co'>#&gt; [1] 22</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"liji"</span>)</div><div class='output co'>#&gt; [1] 21</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gao"</span>)</div><div class='output co'>#&gt; [1] 23</div><div class='input'><span class='fu'>meff</span>(<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>)</div><div class='output co'>#&gt; [1] 20</div></pre>
+<span class='fu'>meff</span><span class='op'>(</span><span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"nyholt"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 22</div><div class='input'><span class='fu'>meff</span><span class='op'>(</span><span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"liji"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 21</div><div class='input'><span class='fu'>meff</span><span class='op'>(</span><span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"gao"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 23</div><div class='input'><span class='fu'>meff</span><span class='op'>(</span><span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"galwey"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 20</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -207,7 +220,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

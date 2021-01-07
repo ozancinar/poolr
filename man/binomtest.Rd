@@ -1,9 +1,9 @@
-\name{binotest}
-\alias{binotest}
+\name{binomtest}
+\alias{binomtest}
 \title{Binomial Test}
 \description{Function to carry out the binomial test.\loadmathjax}
 \usage{
-binotest(p, adjust = "none", R, m,
+binomtest(p, adjust = "none", R, m,
          size = 10000, threshold, side = 2, batchsize, nearpd = TRUE, \dots)
 }
 \arguments{
@@ -79,7 +79,7 @@ p <- grid2ip.p
 r <- grid2ip.ld
 
 # apply the binomial test
-binotest(p)
+binomtest(p)
 
 # use mvnconv() to convert the LD correlation matrix into a matrix with the
 # correlations among the (two-sided) p-values assuming that the test
@@ -88,23 +88,23 @@ binotest(p)
 mvnconv(r, target = "p", cov2cor = TRUE)[1:5,1:5] # show only rows/columns 1-5
 
 # adjustment based on estimates of the effective number of tests
-binotest(p, adjust = "nyholt", R = mvnconv(r, target = "p", cov2cor = TRUE))
-binotest(p, adjust = "liji",   R = mvnconv(r, target = "p", cov2cor = TRUE))
-binotest(p, adjust = "gao",    R = mvnconv(r, target = "p", cov2cor = TRUE))
-binotest(p, adjust = "galwey", R = mvnconv(r, target = "p", cov2cor = TRUE))
+binomtest(p, adjust = "nyholt", R = mvnconv(r, target = "p", cov2cor = TRUE))
+binomtest(p, adjust = "liji",   R = mvnconv(r, target = "p", cov2cor = TRUE))
+binomtest(p, adjust = "gao",    R = mvnconv(r, target = "p", cov2cor = TRUE))
+binomtest(p, adjust = "galwey", R = mvnconv(r, target = "p", cov2cor = TRUE))
 
 # setting argument 'm' manually
-binotest(p, m = 12)
+binomtest(p, m = 12)
 
 # adjustment based on an empirically-derived null distribution (setting the
 # seed for reproducibility)
 set.seed(1234)
-binotest(p, adjust = "empirical", R = r)
+binomtest(p, adjust = "empirical", R = r)
 
 # generate the empirical distribution in batches of size 100
-binotest(p, adjust = "empirical", R = r, batchsize = 100)
+binomtest(p, adjust = "empirical", R = r, batchsize = 100)
 
 # using the stepwise algorithm
-binotest(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
+binomtest(p, adjust = "empirical", R = r, size = c(1000, 10000, 100000), threshold = c(.10, .01))
 }
 \keyword{htest}

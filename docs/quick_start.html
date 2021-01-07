@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-15</span>
       </span>
     </div>
 
@@ -79,7 +79,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -122,27 +122,30 @@
 <li>
 <code><a href="reference/invchisq.html">invchisq()</a></code>: for the inverse chi-square method,</li>
 <li>
-<code><a href="reference/binotest.html">binotest()</a></code>: for the binomial test,</li>
+<code><a href="reference/binomtest.html">binomtest()</a></code>: for the binomial test,</li>
 <li>
 <code><a href="reference/bonferroni.html">bonferroni()</a></code>: for the Bonferroni method,</li>
 <li>
 <code><a href="reference/tippett.html">tippett()</a></code>: for Tippett’s method.</li>
 </ul>
 <p>For example, we can combine a set of independent p-values using <a href="https://en.wikipedia.org/wiki/Fisher's_method">Fisher’s method</a> as follows:</p>
-<div class="sourceCode"><html><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">poolr</span>)
-<span class="no">pvals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.02</span>, <span class="fl">0.03</span>, <span class="fl">0.08</span>, <span class="fl">0.20</span>)
-<span class="fu"><a href="reference/fisher.html">fisher</a></span>(<span class="no">pvals</span>)</pre></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">poolr</span><span class="op">)</span>
+<span class="va">pvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.02</span>, <span class="fl">0.03</span>, <span class="fl">0.08</span>, <span class="fl">0.20</span><span class="op">)</span>
+<span class="fu"><a href="reference/fisher.html">fisher</a></span><span class="op">(</span><span class="va">pvals</span><span class="op">)</span></code></pre></div>
 <pre><code>combined p-values with:      Fisher's method
 number of p-values combined: 4
 test statistic:              23.107 ~ chi-square(8)
 adjustment:                  none
 combined p-value:            0.003228942</code></pre>
 <p>More interesting are cases where the p-values are not independent. For example,</p>
-<div class="sourceCode"><html><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">grid2ip.p</span>[<span class="fl">1</span>:<span class="fl">5</span>], <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">grid2ip.p</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <pre><code> rs10267908 rs112305062 rs117541653  rs11761490  rs11773436
     0.01137     0.50636     0.12303     0.09992     0.00169</code></pre>
 <p>shows the first 5 p-values from (two-sided) tests of the association between 23 <a href="https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism">single-nucleotide polymorphism</a> (SNP) in the <em>GRID2IP</em> gene and depressive symptoms. Due to <a href="https://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage disequilibrium</a> (LD), the SNPs are not independent and hence neither will the p-values. The following shows the first 5 rows and columns of the LD correlation matrix:</p>
-<div class="sourceCode"><html><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="no">grid2ip.ld</span>[<span class="fl">1</span>:<span class="fl">5</span>,<span class="fl">1</span>:<span class="fl">5</span>], <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">grid2ip.ld</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>            rs10267908 rs112305062 rs117541653 rs11761490 rs11773436
 rs10267908       1.000       0.187      -0.192     -0.130     -0.389
 rs112305062      0.187       1.000       0.145     -0.010     -0.260
@@ -193,7 +196,7 @@ combined p-value:            0.0012 (95% CI: 0.00062, 0.0021)</code></pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

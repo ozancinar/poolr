@@ -334,7 +334,7 @@
    1 - (1 - statistic)^k
 }
 
-.binotest <- function(p, k, alpha) {
+.binomtest <- function(p, k, alpha) {
    statistic <- sum(p <= alpha)
    sum(dbinom(statistic:k, k, alpha))
 }

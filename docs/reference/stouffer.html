@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-15</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,8 +118,8 @@
     <p>Function to carry out Stouffer's method.<script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
-    <pre class="usage"><span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='no'>R</span>, <span class='no'>m</span>,
-         <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='no'>threshold</span>, <span class='kw'>side</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>batchsize</span>, <span class='kw'>nearpd</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"none"</span>, <span class='va'>R</span>, <span class='va'>m</span>,
+         size <span class='op'>=</span> <span class='fl'>10000</span>, <span class='va'>threshold</span>, side <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>batchsize</span>, nearpd <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,6 +202,10 @@
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The methods underlying <code>adjust="empirical"</code> and <code>adjust="generalized"</code> assume that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (based on Higham, 2002, and a slightly simplified version of <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> from the <span class="pkg">Matrix</span> package).</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ozan Cinar <a href='mailto:ozancinar86@gmail.com'>ozancinar86@gmail.com</a> <br />
+   Wolfgang Viechtbauer <a href='mailto:wvb@wvbauer.com'>wvb@wvbauer.com</a> <br /></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. <em>IMA Journal of Numerical Analysis, 22</em>(3), 329--343.</p>
@@ -211,11 +215,12 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># copy p-values and LD correlation matrix into p and r</span>
 <span class='co'># (see help(grid2ip) for details on these data)</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>grid2ip.p</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='no'>grid2ip.ld</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>grid2ip.p</span>
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='va'>grid2ip.ld</span>
 
 <span class='co'># apply Stouffer's method</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
 #&gt; adjustment:                  none 
@@ -224,52 +229,61 @@
 <span class='co'># correlations among the (two-sided) p-values assuming that the test</span>
 <span class='co'># statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
-<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
+<span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span> <span class='co'># show only rows/columns 1-5</span>
+</div><div class='output co'>#&gt;            [,1]       [,2]        [,3]        [,4]        [,5]
 #&gt; [1,] 1.00000000 0.02160864 0.022809124 0.010804322 0.097238896
 #&gt; [2,] 0.02160864 1.00000000 0.013205282 0.000000000 0.042016807
 #&gt; [3,] 0.02280912 0.01320528 1.000000000 0.006002401 0.006002401
 #&gt; [4,] 0.01080432 0.00000000 0.006002401 1.000000000 0.000000000
 #&gt; [5,] 0.09723890 0.04201681 0.006002401 0.000000000 1.000000000</div><div class='input'>
 <span class='co'># adjustment based on estimates of the effective number of tests</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"nyholt"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"nyholt"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.785 ~ N(0,1) 
 #&gt; adjustment:                  effective number of tests (m = 22; Nyholt, 2004) 
-#&gt; combined p-value:            3.62e-09 </div><div class='input'><span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"liji"</span>,   <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+#&gt; combined p-value:            3.62e-09 </div><div class='input'><span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"liji"</span>,   R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.652 ~ N(0,1) 
 #&gt; adjustment:                  effective number of tests (m = 21; Li &amp; Ji, 2005) 
-#&gt; combined p-value:            7.91e-09 </div><div class='input'><span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"gao"</span>,    <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+#&gt; combined p-value:            7.91e-09 </div><div class='input'><span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"gao"</span>,    R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
 #&gt; adjustment:                  effective number of tests (m = 23; Gao, 2008) 
-#&gt; combined p-value:            1.66e-09 </div><div class='input'><span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"galwey"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='kw'>cov2cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+#&gt; combined p-value:            1.66e-09 </div><div class='input'><span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"galwey"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.516 ~ N(0,1) 
 #&gt; adjustment:                  effective number of tests (m = 20; Galwey, 2009) 
 #&gt; combined p-value:            1.73e-08 </div><div class='input'>
 <span class='co'># setting argument 'm' manually</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>)</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, m <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              4.273 ~ N(0,1) 
 #&gt; adjustment:                  effective number of tests (m = 12; user-defined) 
 #&gt; combined p-value:            9.65e-06 </div><div class='input'>
 <span class='co'># adjustment based on an empirically-derived null distribution (setting the</span>
 <span class='co'># seed for reproducibility)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1234</span>)
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>)</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"empirical"</span>, R <span class='op'>=</span> <span class='va'>r</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
 #&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            5e-04 (95% CI: 0.000162, 0.00117) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>batchsize</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"empirical"</span>, R <span class='op'>=</span> <span class='va'>r</span>, batchsize <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
 #&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            0.0012 (95% CI: 0.00062, 0.0021) </div><div class='input'>
 <span class='co'># using the stepwise algorithm</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"empirical"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.10</span>, <span class='fl'>.01</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"empirical"</span>, R <span class='op'>=</span> <span class='va'>r</span>, size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.10</span>, <span class='fl'>.01</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              5.915 ~ N(0,1) 
 #&gt; adjustment:                  empirical distribution (size = 100000) 
@@ -278,21 +292,24 @@
 <span class='co'># covariances among the (two-sided) 'z_i' values assuming that the</span>
 <span class='co'># test statistics follow a multivariate normal distribution with correlation</span>
 <span class='co'># matrix r (note: 'side = 2' by default in mvnconv())</span>
-<span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"z"</span>)[<span class='fl'>1</span>:<span class='fl'>5</span>,<span class='fl'>1</span>:<span class='fl'>5</span>] <span class='co'># show only rows/columns 1-5</span></div><div class='output co'>#&gt;        [,1]   [,2]   [,3]   [,4]   [,5]
+<span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"z"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span> <span class='co'># show only rows/columns 1-5</span>
+</div><div class='output co'>#&gt;        [,1]   [,2]   [,3]   [,4]   [,5]
 #&gt; [1,] 1.0000 0.0243 0.0256 0.0117 0.1073
 #&gt; [2,] 0.0243 1.0000 0.0146 0.0001 0.0473
 #&gt; [3,] 0.0256 0.0146 1.0000 0.0065 0.0068
 #&gt; [4,] 0.0117 0.0001 0.0065 1.0000 0.0003
 #&gt; [5,] 0.1073 0.0473 0.0068 0.0003 1.0000</div><div class='input'>
 <span class='co'># adjustment based on generalized method</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"generalized"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"z"</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"generalized"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"z"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              3.69 ~ N(0,1) 
 #&gt; adjustment:                  Strube's method 
 #&gt; combined p-value:            0.000112 </div><div class='input'>
 <span class='co'># when using mvnconv() inside stouffer() with adjust = "generalized", the</span>
 <span class='co'># 'target' argument is automatically set and doesn't need to be specified</span>
-<span class='fu'>stouffer</span>(<span class='no'>p</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"generalized"</span>, <span class='kw'>R</span> <span class='kw'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span>(<span class='no'>r</span>))</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
+<span class='fu'>stouffer</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"generalized"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; combined p-values with:      Stouffer's method
 #&gt; number of p-values combined: 23 
 #&gt; test statistic:              3.69 ~ N(0,1) 
 #&gt; adjustment:                  Strube's method 
@@ -312,7 +329,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -5,7 +5,7 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
       stop("Argument 'R' must be specified.", call.=FALSE)
 
    # match 'method' argument
-   method <- match.arg(method, c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))
+   method <- match.arg(method, c("fisher", "stouffer", "invchisq", "binomtest", "bonferroni", "tippett"))
 
    # checks for 'side' argument
    .check.side(side)

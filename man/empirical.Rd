@@ -7,7 +7,7 @@ empirical(R, method, side = 2, size = 10000, batchsize, \dots)
 }
 \arguments{
    \item{R}{a \mjeqn{k \times k}{k * k} symmetric matrix that contains the correlations among the test statistics.}
-   \item{method}{character string to specify for which method to simulate the null distribution (either \code{"fisher"}, \code{"stouffer"}, \code{"invchisq"}, \code{"binotest"}, \code{"bonferroni"}, or \code{"tippett"}).}
+   \item{method}{character string to specify for which method to simulate the null distribution (either \code{"fisher"}, \code{"stouffer"}, \code{"invchisq"}, \code{"binomtest"}, \code{"bonferroni"}, or \code{"tippett"}).}
    \item{side}{scalar to specify the sidedness of the \mjseqn{p}-values that are used to simulate the null distribution (2, by default, for two-sided tests; 1 for one-sided tests).}
    \item{size}{size of the empirically-derived null distribution that should be generated.}
    \item{batchsize}{optional scalar to specify the batch size for generating the null distribution. When unspecified (the default), this is done in a single batch.}
@@ -51,7 +51,7 @@ psim <- empirical(R, method = "stouffer")
 mean(psim <= .05)
 psim <- empirical(R, method = "invchisq")
 mean(psim <= .05)
-psim <- empirical(R, method = "binotest")
+psim <- empirical(R, method = "binomtest")
 mean(psim <= .05)
 psim <- empirical(R, method = "bonferroni")
 mean(psim <= .05)

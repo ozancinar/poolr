@@ -9,7 +9,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
    call.fun <- gsub("^poolr::", "", call.fun)
 
    # checks for 'R' argument
-   if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq", "binotest", "bonferroni", "tippett"))) {
+   if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq", "binomtest", "bonferroni", "tippett"))) {
       R <- .check.R(R, checksym = FALSE, checkna = FALSE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
    } else {
       R <- .check.R(R, checksym = !is.vector(R), checkna = FALSE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = !is.vector(R), isbase = FALSE)

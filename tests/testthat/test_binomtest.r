@@ -2,11 +2,11 @@
 
 source("tolerances.r")
 
-context("Checking binotest() function")
+context("Checking binomtest() function")
 
-test_that("binotest() works correctly under independence.", {
+test_that("binomtest() works correctly under independence.", {
 
-  res <- binotest(grid2ip.p)
+  res <- binomtest(grid2ip.p)
   out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 3.763872e-09, tolerance = p_tol)
@@ -14,13 +14,13 @@ test_that("binotest() works correctly under independence.", {
 
 })
 
-test_that("binotest() works correctly with effective number of tests.", {
+test_that("binomtest() works correctly with effective number of tests.", {
 
-  res_nyh <- binotest(grid2ip.p, adjust = "nyholt", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
-  res_lj  <- binotest(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
-  res_gao <- binotest(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
-  res_gal <- binotest(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
-  res_user <- binotest(grid2ip.p, m = 18)
+  res_nyh <- binomtest(grid2ip.p, adjust = "nyholt", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_lj  <- binomtest(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_gao <- binomtest(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_gal <- binomtest(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_user <- binomtest(grid2ip.p, m = 18)
 
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
@@ -45,10 +45,10 @@ test_that("binotest() works correctly with effective number of tests.", {
 
 })
 
-test_that("binotest() works correctly with empirically-derived null distributions.", {
+test_that("binomtest() works correctly with empirically-derived null distributions.", {
 
   set.seed(1234)
-  res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
+  res <- binomtest(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
   out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.00059994, tolerance = p_tol * emp_sca)
@@ -57,7 +57,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
   expect_equivalent(c(res$ci[2]), 0.001305356, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
-  res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
+  res <- binomtest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 100000)
   out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0005099949, tolerance = p_tol * emp_sca)
@@ -66,7 +66,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
   expect_equivalent(c(res$ci[2]), 0.0006704953, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
-  res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
+  res <- binomtest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = 1000000, batchsize = 1000)
   out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0004199996, tolerance = p_tol * emp_sca)
@@ -75,7 +75,7 @@ test_that("binotest() works correctly with empirically-derived null distribution
   expect_equivalent(c(res$ci[2]), 0.0004621435, tolerance = p_tol * emp_sca)
 
   set.seed(1234)
-  res <- binotest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
+  res <- binomtest(grid2ip.p, adjust = "empirical", R = grid2ip.ld, size = c(1000, 10000, 100000), threshold = c(0.10, 0.01))
   out <- capture.output(print(res))
 
   expect_equivalent(c(res$p), 0.0005099949, tolerance = p_tol * emp_sca)

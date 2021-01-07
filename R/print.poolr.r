@@ -12,7 +12,7 @@ print.poolr <- function(x, digits=3, ...) {
       cat("Bonferroni method\n")
    if (x$fun == "tippett")
       cat("Tippett's method\n")
-   if (x$fun == "binotest")
+   if (x$fun == "binomtest")
       cat("binomial test\n")
 
    cat("number of p-values combined:", x$k, "\n")
@@ -26,7 +26,7 @@ print.poolr <- function(x, digits=3, ...) {
    if (x$fun %in% c("bonferroni", "tippett"))
       testinfo <- paste0("minimum p-value:             ", round(x$statistic, digits))
 
-   if (x$fun == "binotest") {
+   if (x$fun == "binomtest") {
       if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
          testinfo <- paste0("number of significant tests: ", round(x$statistic * x$m / x$k), " (adjusted based on m)")
       } else {
