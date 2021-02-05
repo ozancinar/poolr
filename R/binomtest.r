@@ -90,7 +90,7 @@ binomtest <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 
 
    }
 
-   res <- list(p = c(pval), ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, size = size_used, fun = fun)
+   res <- list(p = c(pval), ci = ci, k = k, m = m, adjust = adjust, statistic = statistic, size = size_used, fun = fun, alpha = alpha)
 
    class(res) <- "poolr"
    return(res)

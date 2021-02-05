@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-16</span>
       </span>
     </div>
 
@@ -148,13 +150,13 @@
 <p>The function converts a matrix with the correlations among multivariate normal test statistics to a matrix with the covariances among various target statistics. In particular, assume</p>
 <p><img src='figures/mvn.png' width=250 /></p>
 <p>is the joint distribution for test statistics \(t_i\) and \(t_j\). For <code>side = 1</code>, let \(p_i = 1 - \Phi(t_i)\) and \(p_j = 1 - \Phi(t_j)\) where \(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution. For <code>side = 2</code>, let \(p_i = 2(1 - \Phi(|t_i|))\) and \(p_j = 2(1 - \Phi(|t_j|))\). These are simply the one- and two-sided \(p\)-values corresponding to \(t_i\) and \(t_j\).</p>
-<p>If <code>target="p"</code>, the function computes \(\mbox{Cov}[p_i, p_j]\).</p>
-<p>If <code>target="m2lp"</code>, the function computes \(\mbox{Cov}[-2 \ln(p_i), -2 \ln(p_j)]\).</p>
-<p>If <code>target="chisq1"</code>, the function computes \(\mbox{Cov}[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]\), where \(F^{-1}(\cdot,1)\) denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom.</p>
-<p>If <code>target="z"</code>, the function computes \(\mbox{Cov}[\Phi^{-1}(1 - p_i), \Phi^{-1}(1 - p_j)]\), where \(\Phi^{-1}(\cdot)\) denotes the inverse of the cumulative distribution function of a standard normal distribution.</p>
+<p>If <code>target = "p"</code>, the function computes \(\mbox{Cov}[p_i, p_j]\).</p>
+<p>If <code>target = "m2lp"</code>, the function computes \(\mbox{Cov}[-2 \ln(p_i), -2 \ln(p_j)]\).</p>
+<p>If <code>target = "chisq1"</code>, the function computes \(\mbox{Cov}[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]\), where \(F^{-1}(\cdot,1)\) denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom.</p>
+<p>If <code>target = "z"</code>, the function computes \(\mbox{Cov}[\Phi^{-1}(1 - p_i), \Phi^{-1}(1 - p_j)]\), where \(\Phi^{-1}(\cdot)\) denotes the inverse of the cumulative distribution function of a standard normal distribution.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function returns the covariance matrix (or the correlation matrix if <code>cov2cor=TRUE</code>).</p>
+    <p>The function returns the covariance matrix (or the correlation matrix if <code>cov2cor = TRUE</code>).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Since computation of the covariances requires numerical integration, the function doesn't actually compute these covariances on the fly. Instead, it uses the <code><a href='mvnlookup.html'>mvnlookup</a></code> lookup table, which contains the covariances.</p>

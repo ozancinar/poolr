@@ -37,24 +37,28 @@
 
    # check if 'R' contains NAs
    if (checkna && any(is.na(R)))
-      stop("Values in 'R' vector must not contain NAs.", call.=FALSE)
+      stop("Values in 'R' must not contain NAs.", call.=FALSE)
 
    # check if 'R' is positive definite; if not, make it
-   if (checkpd && any(eigen(R)$values <= 0)) {
-      if (nearpd) {
-         warning("Matrix 'R' is not positive definite. Used (simplified) Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
-         R <- as.matrix(.find.nonegmat(R))
-      } else {
+   if (checkpd) {
+      if (any(is.na(R)))
          stop("Matrix 'R' is not positive definite.", call.=FALSE)
+      if (any(eigen(R)$values <= 0)) {
+         if (nearpd) {
+            warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
+            R <- as.matrix(.find.nonegmat(R))
+         } else {
+            stop("Matrix 'R' is not positive definite.", call.=FALSE)
+         }
       }
    }
 
    # check that all values in R are between -1 and 1
-   if (checkcor && any(abs(R) > 1))
+   if (checkcor && any(abs(R) > 1, na.rm=TRUE))
       stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1].", call.=FALSE)
 
-   # check that all diagonal values are equal to 1
-   if (checkdiag && any(diag(R) != 1))
+   # check that all diagonal values are equal to 1 (and also not missing)
+   if (checkdiag && (any(is.na(diag(R))) || any(diag(R) != 1)))
       stop("Diagonal values in 'R' must all be equal to 1.", call.=FALSE)
 
    # checks that are relevant only when called from the base functions

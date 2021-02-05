@@ -1,6 +1,6 @@
-# poolr 0.9-15 (2021-01-07)
+# poolr 0.9-16 (2021-02-05)
 
-- the name of the `binotest()` function is changed to `binomtest()`
+- changed name of `binotest()` function to `binomtest()`
 
 - the HTML help files now show rendered equations with the help of the `mathjaxr` package
 

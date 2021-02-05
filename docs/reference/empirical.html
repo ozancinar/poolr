@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-16</span>
       </span>
     </div>
 
@@ -154,7 +156,7 @@
     
 
 <p>This function simulates the null distribution of a particular method for combining \(p\)-values when the test statistics that generate the \(p\)-values to be combined can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the <code>R</code> argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided \(p\)-values (depending on the <code>side</code> argument), and the chosen method is applied. Repeating this process <code>size</code> times yields the null distribution.</p>
-<p>If <code>batchsize</code> is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions <code>[size,k]</code>. When <code>size</code> and/or <code>k</code> is large, allocating the memory for this matrix might not be possible. Instead, one can specify a <code>batchsize</code> value, in which case a matrix with dimensions <code>[batchsize,k]</code> is repeatedly simulated until the desired size of the null distribution has been obtained.</p>
+<p>If <code>batchsize</code> is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions <code>[size,k]</code>. When <code>size*k</code> is large, allocating the memory for this matrix might not be possible. Instead, one can specify a <code>batchsize</code> value, in which case a matrix with dimensions <code>[batchsize,k]</code> is repeatedly simulated until the desired size of the null distribution has been obtained.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of combined \(p\)-values as simulated under the joint null hypothesis for a given method.</p>

@@ -10,7 +10,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
 
    # checks for 'R' argument
    if (isTRUE(call.fun %in% c("fisher", "stouffer", "invchisq", "binomtest", "bonferroni", "tippett"))) {
-      R <- .check.R(R, checksym = FALSE, checkna = FALSE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
+      R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
    } else {
       R <- .check.R(R, checksym = !is.vector(R), checkna = FALSE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = !is.vector(R), isbase = FALSE)
    }
@@ -64,7 +64,7 @@ mvnconv <- function(R, side = 2, target, cov2cor = FALSE) {
       column <- column + 1
 
    # round elements in 'R' to 3 decimals (since mvnlookup[,1] values are in .001 steps)
-   R <- round(R, 3)
+   R <- round(R, 3L)
 
    # replace elements < -0.99 in 'R' with -0.99
    R[R < -0.99] <- -0.99

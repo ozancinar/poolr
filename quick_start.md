@@ -19,7 +19,7 @@ fisher(pvals)
 ```
 combined p-values with:      Fisher's method
 number of p-values combined: 4
-test statistic:              23.107 ~ chi-square(8)
+test statistic:              23.107 ~ chi-square(df = 8)
 adjustment:                  none
 combined p-value:            0.003228942
 ```
@@ -34,7 +34,7 @@ round(grid2ip.p[1:5], digits = 5)
     0.01137     0.50636     0.12303     0.09992     0.00169
 ```
 
-shows the first 5 p-values from (two-sided) tests of the association between 23 [single-nucleotide polymorphism](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism) (SNP) in the *GRID2IP* gene and depressive symptoms. Due to [linkage disequilibrium](https://en.wikipedia.org/wiki/Linkage_disequilibrium) (LD), the SNPs are not independent and hence neither will the p-values. The following shows the first 5 rows and columns of the LD correlation matrix:
+shows the first 5 p-values from (two-sided) tests of the association between 23 [single-nucleotide polymorphisms](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism) (SNPs) in the *GRID2IP* gene and depressive symptoms. Due to [linkage disequilibrium](https://en.wikipedia.org/wiki/Linkage_disequilibrium) (LD), the SNPs are not independent and hence neither are the p-values. The following shows the first 5 rows and columns of the LD correlation matrix:
 
 ```r
 round(grid2ip.ld[1:5,1:5], digits = 3)
@@ -56,7 +56,7 @@ fisher(grid2ip.p, adjust = "liji", R = grid2ip.ld)
 ```
 combined p-values with:      Fisher's method
 number of p-values combined: 23
-test statistic:              83.14 ~ chi-square(30)
+test statistic:              83.14 ~ chi-square(df = 30)
 adjustment:                  effective number of tests (m = 15; Li & Ji, 2005)
 combined p-value:            6.92e-07
 ```
@@ -69,9 +69,9 @@ fisher(grid2ip.p, adjust = "generalized", R = mvnconv(grid2ip.ld))
 ```
 combined p-values with:      Fisher's method
 number of p-values combined: 23
-test statistic:              41.532 ~ chi-square(14.986)
+test statistic:              41.554 ~ chi-square(df = 14.994)
 adjustment:                  Brown's method
-combined p-value:            0.000263
+combined p-value:            0.000262
 ```
 
 Finally, one can empirically obtain the null distribution of Fisher's method using pseudo replicates and compute the combined p-value based on that (which closely approximates a 'proper' permutation test, but runs in a fraction of the time):
@@ -83,7 +83,7 @@ fisher(grid2ip.p, adjust = "empirical", R = grid2ip.ld)
 ```
 combined p-values with:      Fisher's method
 number of p-values combined: 23
-test statistic:              127.482 ~ chi-square(46)
+test statistic:              127.482 ~ chi-square(df = 46)
 adjustment:                  empirical distribution (size = 10000)
 combined p-value:            0.0012 (95% CI: 0.00062, 0.0021)
 ```

@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-16</span>
       </span>
     </div>
 
@@ -158,7 +160,7 @@
     </tr>
     <tr>
       <th>nearpd</th>
-      <td><p>logical indicating if a negative definite 'R' matrix should be turned into the nearest positive semi-definite matrix (only relevant when <code>adjust="empirical"</code> or <code>adjust="generalized"</code>).</p></td>
+      <td><p>logical indicating if a negative definite <code>R</code> matrix should be turned into the nearest positive definite matrix (only relevant when <code>adjust = "empirical"</code> or <code>adjust = "generalized"</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -172,15 +174,15 @@
 
 <p><b>Inverse Chi-Square Method</b></p>
 <p>By default (i.e., when <code>adjust = "none"</code>), the function applies the inverse chi-square method to the \(p\)-values. Letting \(p_1, p_2, \ldots, p_k\) denote the individual (one- or two-sided) \(p\)-values of the \(k\) hypothesis tests to be combined, the test statistic is then computed with \[X^2 = \sum_{i = 1}^k F^{-1}(1 - p_i, 1)\] where \(F^{-1}(\cdot,1)\) denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom. Under the joint null hypothesis, the test statistic follows a chi-square distribution with \(k\) degrees of freedom which is used to compute the combined \(p\)-value.</p>
-<p>The inverse chi-square method assumes that the \(p\)-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the correlation structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).</p>
+<p>The inverse chi-square method assumes that the \(p\)-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the dependence structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).</p>
 <p><b>Adjustment Based on the Effective Number of Tests</b></p>
-<p>When <code>adjust</code> is set to <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code> or <code>"galwey"</code>, the inverse chi-square method is adjusted based on an estimate of the effective number of tests (see <code><a href='meff.html'>meff</a></code> for details on these methods for estimating the effective number of tests). In this case, argument <code>R</code> needs to be set to a correlation matrix that reflects the dependence structure among the tests.</p>
-<p>There is no general solution for constructing such a correlation matrix, as this depends on the type of test that generated the \(p\)-values and the sidedness of these tests. If the \(p\)-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the <code><a href='mvnconv.html'>mvnconv</a></code> function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \(p\)-values, which can then be passed to the <code>R</code> argument. See &#8216;Examples&#8217;.</p>
+<p>When <code>adjust</code> is set to <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code> or <code>"galwey"</code>, the inverse chi-square method is adjusted based on an estimate of the effective number of tests (see <code><a href='meff.html'>meff</a></code> for details on these methods for estimating the effective number of tests). In this case, argument <code>R</code> needs to be set to a matrix that reflects the dependence structure among the tests.</p>
+<p>There is no general solution for constructing such a matrix, as this depends on the type of test that generated the \(p\)-values and the sidedness of these tests. If the \(p\)-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the <code><a href='mvnconv.html'>mvnconv</a></code> function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \(p\)-values, which can then be passed to the <code>R</code> argument. See &#8216;Examples&#8217;.</p>
 <p>Once the effective number of tests, \(m\), is estimated based on <code>R</code> using one of the four methods described above, the test statistic of the inverse chi-square method can be modified with \[\tilde{X}^2 = \frac{m}{k} \times X^2\] which is then assumed to follow a chi-square distribution with \(m\) degrees of freedom.</p>
 <p>Alternatively, one can also directly specify the effective number of tests via the <code>m</code> argument (e.g., if some other method not implemented in the <span class="pkg">poolr</span> package is used to estimate the effective number of tests). Argument <code>R</code> is then irrelevant and doesn't need to be specified.</p>
 <p><b>Adjustment Based on an Empirically-Derived Null Distribution</b></p>
-<p>When <code>adjust = "empirical"</code>, the combined \(p\)-value is computed based on an empirically-derived null distribution using pseudo replicates. This is appropriate if the test statistics that generated the \(p\)-values to be combined can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the <code>R</code> argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided \(p\)-values (depending on the <code>side</code> argument), and the inverse chi-square method is applied. Repeating this process <code>size</code> times yields a null distribution based on which the combined \(p\)-value can be computed, or more precisely, estimated, since repeated applications of this method will yield (slightly) different results. To obtain a stable estimate of the combined \(p\)-value, <code>size</code> should be set to a large value (the default is <code>10000</code>, but this can be increased for a more precise estimate). If we consider the combined \(p\)-value an estimate of the &#8216;true&#8217; combined \(p\)-value that would be obtained for a null distribution of infinite size, we can also construct a 95% (pseudo) confidence interval based on a binomial distribution.</p>
-<p>If <code>batchsize</code> is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions <code>[size,k]</code>. When <code>size</code> and/or <code>k</code> is large, allocating the memory for this matrix might not be possible. Instead, one can specify a <code>batchsize</code> value, in which case a matrix with dimensions <code>[batchsize,k]</code> is repeatedly simulated until the desired size of the null distribution has been obtained.</p>
+<p>When <code>adjust = "empirical"</code>, the combined \(p\)-value is computed based on an empirically-derived null distribution using pseudo replicates (using the <code><a href='empirical.html'>empirical</a></code> function). This is appropriate if the test statistics that generated the \(p\)-values to be combined can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the <code>R</code> argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided \(p\)-values (depending on the <code>side</code> argument), and the inverse chi-square method is applied. Repeating this process <code>size</code> times yields a null distribution based on which the combined \(p\)-value can be computed, or more precisely, estimated, since repeated applications of this method will yield (slightly) different results. To obtain a stable estimate of the combined \(p\)-value, <code>size</code> should be set to a large value (the default is <code>10000</code>, but this can be increased for a more precise estimate). If we consider the combined \(p\)-value an estimate of the &#8216;true&#8217; combined \(p\)-value that would be obtained for a null distribution of infinite size, we can also construct a 95% (pseudo) confidence interval based on a binomial distribution.</p>
+<p>If <code>batchsize</code> is unspecified, the null distribution is simulated in a single batch, which requires temporarily storing a matrix with dimensions <code>[size,k]</code>. When <code>size*k</code> is large, allocating the memory for this matrix might not be possible. Instead, one can specify a <code>batchsize</code> value, in which case a matrix with dimensions <code>[batchsize,k]</code> is repeatedly simulated until the desired size of the null distribution has been obtained.</p>
 <p>One can also specify a vector for the <code>size</code> argument, in which case one must also specify a corresponding vector for the <code>threshold</code> argument. In that case, a stepwise algorithm is used that proceeds as follows. For <code>j = 1, ..., length(size)</code>,</p><ol>
 <li><p>estimate the combined \(p\)-value based on <code>size[j]</code></p></li>
 <li><p>if the combined \(p\)-value is \(\ge\) than <code>threshold[j]</code>, stop (and report the combined \(p\)-value), otherwise go back to 1.</p></li>
@@ -200,7 +202,7 @@
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The methods underlying <code>adjust="empirical"</code> and <code>adjust="generalized"</code> assume that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be (at least) positive semi-definite. If it is not and <code>nearpd=TRUE</code>, it will be turned into one (based on Higham, 2002, and a slightly simplified version of <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> from the <span class="pkg">Matrix</span> package).</p>
+    <p>The methods underlying <code>adjust = "empirical"</code> and <code>adjust = "generalized"</code> assume that the test statistics that generated the \(p\)-values to be combined follow a multivariate normal distribution. Hence, the matrix specified via <code>R</code> must be positive definite. If it is not and <code>nearpd = TRUE</code>, it will be turned into one (based on Higham, 2002, and a slightly simplified version of <code><a href='https://rdrr.io/pkg/Matrix/man/nearPD.html'>nearPD</a></code> from the <span class="pkg">Matrix</span> package).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Ozan Cinar <a href='mailto:ozancinar86@gmail.com'>ozancinar86@gmail.com</a> <br />
@@ -220,7 +222,7 @@
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              85.219 ~ chi-square(23) 
+#&gt; test statistic:              85.219 ~ chi-square(df = 23) 
 #&gt; adjustment:                  none 
 #&gt; combined p-value:            4.447048e-09 </div><div class='input'>
 <span class='co'># use mvnconv() to convert the LD correlation matrix into a matrix with the</span>
@@ -238,29 +240,29 @@
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"nyholt"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              81.513 ~ chi-square(22) 
+#&gt; test statistic:              81.513 ~ chi-square(df = 22) 
 #&gt; adjustment:                  effective number of tests (m = 22; Nyholt, 2004) 
 #&gt; combined p-value:            9.12e-09 </div><div class='input'><span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"liji"</span>,   R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              77.808 ~ chi-square(21) 
+#&gt; test statistic:              77.808 ~ chi-square(df = 21) 
 #&gt; adjustment:                  effective number of tests (m = 21; Li &amp; Ji, 2005) 
 #&gt; combined p-value:            1.87e-08 </div><div class='input'><span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"gao"</span>,    R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              85.219 ~ chi-square(23) 
+#&gt; test statistic:              85.219 ~ chi-square(df = 23) 
 #&gt; adjustment:                  effective number of tests (m = 23; Gao, 2008) 
 #&gt; combined p-value:            4.45e-09 </div><div class='input'><span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"galwey"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"p"</span>, cov2cor <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              74.103 ~ chi-square(20) 
+#&gt; test statistic:              74.103 ~ chi-square(df = 20) 
 #&gt; adjustment:                  effective number of tests (m = 20; Galwey, 2009) 
 #&gt; combined p-value:            3.84e-08 </div><div class='input'>
 <span class='co'># setting argument 'm' manually</span>
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, m <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              44.462 ~ chi-square(12) 
+#&gt; test statistic:              44.462 ~ chi-square(df = 12) 
 #&gt; adjustment:                  effective number of tests (m = 12; user-defined) 
 #&gt; combined p-value:            1.27e-05 </div><div class='input'>
 <span class='co'># adjustment based on an empirically-derived null distribution (setting the</span>
@@ -269,14 +271,14 @@
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"empirical"</span>, R <span class='op'>=</span> <span class='va'>r</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              85.219 ~ chi-square(23) 
+#&gt; test statistic:              85.219 ~ chi-square(df = 23) 
 #&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            7e-04 (95% CI: 0.000281, 0.00144) </div><div class='input'>
 <span class='co'># generate the empirical distribution in batches of size 100</span>
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"empirical"</span>, R <span class='op'>=</span> <span class='va'>r</span>, batchsize <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              85.219 ~ chi-square(23) 
+#&gt; test statistic:              85.219 ~ chi-square(df = 23) 
 #&gt; adjustment:                  empirical distribution (size = 10000) 
 #&gt; combined p-value:            0.0016 (95% CI: 0.000915, 0.0026) </div><div class='input'>
 <span class='co'># using the stepwise algorithm (not run, because this takes slightly longer</span>
@@ -285,7 +287,7 @@
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"empirical"</span>, R <span class='op'>=</span> <span class='va'>r</span>, size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>10000</span>, <span class='fl'>100000</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.10</span>, <span class='fl'>.01</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              85.219 ~ chi-square(23) 
+#&gt; test statistic:              85.219 ~ chi-square(df = 23) 
 #&gt; adjustment:                  empirical distribution (size = 100000) 
 #&gt; combined p-value:            0.00122 (95% CI: 0.00101, 0.00146) </div><div class='input'><span class='co'># }</span>
 
@@ -304,7 +306,7 @@
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"generalized"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span>, target <span class='op'>=</span> <span class='st'>"chisq1"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              27.449 ~ chi-square(7.408) 
+#&gt; test statistic:              27.449 ~ chi-square(df = 7.408) 
 #&gt; adjustment:                  Satterthwaite approximation 
 #&gt; combined p-value:            0.000381 </div><div class='input'>
 <span class='co'># when using mvnconv() inside invchisq() with adjust = "generalized", the</span>
@@ -312,7 +314,7 @@
 <span class='fu'>invchisq</span><span class='op'>(</span><span class='va'>p</span>, adjust <span class='op'>=</span> <span class='st'>"generalized"</span>, R <span class='op'>=</span> <span class='fu'><a href='mvnconv.html'>mvnconv</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; combined p-values with:      inverse chi-square method
 #&gt; number of p-values combined: 23 
-#&gt; test statistic:              27.449 ~ chi-square(7.408) 
+#&gt; test statistic:              27.449 ~ chi-square(df = 7.408) 
 #&gt; adjustment:                  Satterthwaite approximation 
 #&gt; combined p-value:            0.000381 </div></pre>
   </div>

@@ -37,9 +37,12 @@ test_that("Errors are thrown correctly.", {
   expect_error(fisher(c(1.1, 0.1)), "Values in 'p' vector \\(i.e., the p-values\\) must be between 0 and 1.")
 
   expect_error(mvnconv(unsym_mat, target = "m2lp"), "Argument 'R' must be a symmetric matrix.")
-  expect_error(meff(mat_w_mis, method = "liji"), "Values in 'R' vector must not contain NAs.")
-  expect_warning(empirical(neg_def_mat, method = "fisher"), "Matrix 'R' is not positive definite. Used \\(simplified\\) Matrix::nearPD\\(\\) to make 'R' positive definite.")
+  expect_error(meff(mat_w_mis, method = "liji"), "Values in 'R' must not contain NAs.")
+  expect_warning(empirical(neg_def_mat, method = "fisher"), "Matrix 'R' is not positive definite. Used Matrix::nearPD\\(\\) to make 'R' positive definite.")
   expect_error(meff(mat_out_bou, method = "liji"), "Argument 'R' must be a correlation matrix, but contains values outside \\[-1,1\\].")
+
+  expect_error(fisher(c(.1,.1), adjust = "generalized", R = mvnconv(unsym_mat)), "Argument 'R' must be a symmetric matrix.")
+  expect_error(fisher(c(.1,.1), adjust = "generalized", R = mvnconv(mat_w_mis)), "Values in 'R' must not contain NAs.")
 
   expect_error(fisher(runif(3), adjust = "liji", R = approp_mat), "Length of 'p' vector \\(3\\) does not match the dimensions of the 'R' matrix \\(2,2\\).")
   expect_warning(fisher(runif(2), R = approp_mat))

@@ -21,17 +21,17 @@ mvnconv(R, side = 2, target, cov2cor = FALSE)
 
    is the joint distribution for test statistics \mjseqn{t_i} and \mjseqn{t_j}. For \code{side = 1}, let \mjeqn{p_i = 1 - \Phi(t_i)}{p_i = 1 - Phi(t_i)} and \mjeqn{p_j = 1 - \Phi(t_j)}{p_j = 1 - Phi(t_j)} where \mjeqn{\Phi(\cdot)}{Phi(.)} denotes the cumulative distribution function of a standard normal distribution. For \code{side = 2}, let \mjeqn{p_i = 2(1 - \Phi(|t_i|))}{p_i = 2(1 - Phi(|t_i|))} and \mjeqn{p_j = 2(1 - \Phi(|t_j|))}{p_j = 2(1 - Phi(|t_j|))}. These are simply the one- and two-sided \mjseqn{p}-values corresponding to \mjseqn{t_i} and \mjseqn{t_j}.
 
-   If \code{target="p"}, the function computes \mjeqn{\mbox{Cov}[p_i, p_j]}{Cov[p_i, p_j]}.
+   If \code{target = "p"}, the function computes \mjeqn{\mbox{Cov}[p_i, p_j]}{Cov[p_i, p_j]}.
 
-   If \code{target="m2lp"}, the function computes \mjeqn{\mbox{Cov}[-2 \ln(p_i), -2 \ln(p_j)]}{Cov[-2 ln(p_i), -2 ln(p_j)]}.
+   If \code{target = "m2lp"}, the function computes \mjeqn{\mbox{Cov}[-2 \ln(p_i), -2 \ln(p_j)]}{Cov[-2 ln(p_i), -2 ln(p_j)]}.
 
-   If \code{target="chisq1"}, the function computes \mjeqn{\mbox{Cov}[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]}{Cov[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]}, where \mjeqn{F^{-1}(\cdot,1)}{F^{-1}(.,1)} denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom.
+   If \code{target = "chisq1"}, the function computes \mjeqn{\mbox{Cov}[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]}{Cov[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]}, where \mjeqn{F^{-1}(\cdot,1)}{F^{-1}(.,1)} denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom.
 
-   If \code{target="z"}, the function computes \mjeqn{\mbox{Cov}[\Phi^{-1}(1 - p_i), \Phi^{-1}(1 - p_j)]}{Cov[Phi^{-1}(1 - p_i), Phi^{-1}(1 - p_j)]}, where \mjeqn{\Phi^{-1}(\cdot)}{Phi^{-1}(.)} denotes the inverse of the cumulative distribution function of a standard normal distribution.
+   If \code{target = "z"}, the function computes \mjeqn{\mbox{Cov}[\Phi^{-1}(1 - p_i), \Phi^{-1}(1 - p_j)]}{Cov[Phi^{-1}(1 - p_i), Phi^{-1}(1 - p_j)]}, where \mjeqn{\Phi^{-1}(\cdot)}{Phi^{-1}(.)} denotes the inverse of the cumulative distribution function of a standard normal distribution.
 
 }
 \value{
-   The function returns the covariance matrix (or the correlation matrix if \code{cov2cor=TRUE}).
+   The function returns the covariance matrix (or the correlation matrix if \code{cov2cor = TRUE}).
 }
 \note{
    Since computation of the covariances requires numerical integration, the function doesn't actually compute these covariances on the fly. Instead, it uses the \code{\link{mvnlookup}} lookup table, which contains the covariances.

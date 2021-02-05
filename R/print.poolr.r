@@ -18,7 +18,7 @@ print.poolr <- function(x, digits=3, ...) {
    cat("number of p-values combined:", x$k, "\n")
 
    if (x$fun %in% c("fisher", "invchisq"))
-      testinfo <- paste0("test statistic:              ", round(x$statistic, digits), " ~ chi-square(", round(attr(x$statistic, "df"), digits), ")")
+      testinfo <- paste0("test statistic:              ", round(x$statistic, digits), " ~ chi-square(df = ", round(attr(x$statistic, "df"), digits), ")")
 
    if (x$fun == "stouffer")
       testinfo <- paste0("test statistic:              ", round(x$statistic, digits), " ~ N(0,1)")
@@ -28,9 +28,9 @@ print.poolr <- function(x, digits=3, ...) {
 
    if (x$fun == "binomtest") {
       if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
-         testinfo <- paste0("number of significant tests: ", round(x$statistic * x$m / x$k), " (adjusted based on m)")
+         testinfo <- paste0("number of significant tests: ", round(x$statistic * x$m / x$k), " (adjusted based on m; at alpha = ", x$alpha, ")")
       } else {
-         testinfo <- paste0("number of significant tests: ", x$statistic)
+         testinfo <- paste0("number of significant tests: ", x$statistic, " (at alpha = ", x$alpha, ")")
       }
    }
 

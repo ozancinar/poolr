@@ -8,7 +8,7 @@ meff(R, eigen, method, \dots)
 \arguments{
    \item{R}{a \mjeqn{k \times k}{k * k} symmetric matrix that reflects the correlation structure among the tests.}
    \item{eigen}{optional vector to directly supply the eigenvalues to the function (instead of computing them from the matrix given via \code{R}).}
-   \item{method}{character string to specify the method to be used to estimate the effective number of tests (either \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"}. See \sQuote{Details}.}
+   \item{method}{character string to specify the method to be used to estimate the effective number of tests (either \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"}). See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -35,7 +35,7 @@ meff(R, eigen, method, \dots)
 
    \bold{Specifying the R Matrix}
 
-   The \mjseqn{R} matrix should reflect the correlation structure among the tests. There is no general solution on how such a correlation matrix should be constructed, as this depends on the type of test and the sidedness of these tests. For example, we can use the correlations among related but changing elements across the analyses/tests, or a function thereof, as a proxy for the correlation structure. For example, when conducting \mjseqn{k} analyses with the same dependent variable and \mjseqn{k} different independent variables, the correlations among the independent variables could serve as such a proxy. Analogously, if analyses are conducted for \mjseqn{k} dependent variables with the same set of independent variables, the correlations among the dependent variables could be used instead.
+   The \mjseqn{R} matrix should reflect the dependence structure among the tests. There is no general solution on how such a matrix should be constructed, as this depends on the type of test and the sidedness of these tests. For example, we can use the correlations among related but changing elements across the analyses/tests, or a function thereof, as a proxy for the dependence structure. For example, when conducting \mjseqn{k} analyses with the same dependent variable and \mjseqn{k} different independent variables, the correlations among the independent variables could serve as such a proxy. Analogously, if analyses are conducted for \mjseqn{k} dependent variables with the same set of independent variables, the correlations among the dependent variables could be used instead.
 
    If the tests of interest have test statistics that can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which might be approximated by the correlations among the interchanging independent or dependent variables), then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \mjseqn{p}-values, which in turn can then be passed to the \code{R} argument. See \sQuote{Examples}.
 
