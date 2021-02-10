@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-17</span>
       </span>
     </div>
 
@@ -147,9 +147,7 @@
 
     
 
-<p>The function converts a matrix with the correlations among multivariate normal test statistics to a matrix with the covariances among various target statistics. In particular, assume</p>
-<p><img src='figures/mvn.png' width=250 /></p>
-<p>is the joint distribution for test statistics \(t_i\) and \(t_j\). For <code>side = 1</code>, let \(p_i = 1 - \Phi(t_i)\) and \(p_j = 1 - \Phi(t_j)\) where \(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution. For <code>side = 2</code>, let \(p_i = 2(1 - \Phi(|t_i|))\) and \(p_j = 2(1 - \Phi(|t_j|))\). These are simply the one- and two-sided \(p\)-values corresponding to \(t_i\) and \(t_j\).</p>
+<p>The function converts a matrix with the correlations among multivariate normal test statistics to a matrix with the covariances among various target statistics. In particular, assume \[\begin{bmatrix} t_i \\ t_j \end{bmatrix} \sim \mbox{MVN} \left(\begin{bmatrix} 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 & \rho_{ij} \\ \rho_{ij} & 1 \end{bmatrix} \right)\] is the joint distribution for test statistics \(t_i\) and \(t_j\). For <code>side = 1</code>, let \(p_i = 1 - \Phi(t_i)\) and \(p_j = 1 - \Phi(t_j)\) where \(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution. For <code>side = 2</code>, let \(p_i = 2(1 - \Phi(|t_i|))\) and \(p_j = 2(1 - \Phi(|t_j|))\). These are simply the one- and two-sided \(p\)-values corresponding to \(t_i\) and \(t_j\).</p>
 <p>If <code>target = "p"</code>, the function computes \(\mbox{Cov}[p_i, p_j]\).</p>
 <p>If <code>target = "m2lp"</code>, the function computes \(\mbox{Cov}[-2 \ln(p_i), -2 \ln(p_j)]\).</p>
 <p>If <code>target = "chisq1"</code>, the function computes \(\mbox{Cov}[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]\), where \(F^{-1}(\cdot,1)\) denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom.</p>

@@ -2,7 +2,7 @@
 
 [![R build status](https://github.com/ozancinar/poolr/workflows/R-CMD-check/badge.svg)](https://github.com/ozancinar/poolr/actions)
 [![CRAN Version](https://www.r-pkg.org/badges/version/poolr)](https://cran.r-project.org/package=poolr)
-[![devel Version](https://img.shields.io/badge/devel-0.9--16-brightgreen.svg)](https://github.com/ozancinar/poolr)
+[![devel Version](https://img.shields.io/badge/devel-0.9--17-brightgreen.svg)](https://github.com/ozancinar/poolr)
 [![Code Coverage](https://codecov.io/gh/ozancinar/poolr/branch/master/graph/badge.svg)](https://codecov.io/gh/ozancinar/poolr)
 
 ## Description
@@ -27,4 +27,4 @@ remotes::install_github("ozancinar/poolr")
 
 ## Meta
 
-The `poolr` package was written by Ozan Cinar and [Wolfgang Viechtbauer](http://www.wvbauer.com/). It is licensed under the [GNU General Public License Version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). To report any issues or bugs, please go [here](https://github.com/ozancinar/poolr/issues).
+The `poolr` package was written by Ozan Cinar and [Wolfgang Viechtbauer](https://www.wvbauer.com/). It is licensed under the [GNU General Public License Version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). To report any issues or bugs, please go [here](https://github.com/ozancinar/poolr/issues).

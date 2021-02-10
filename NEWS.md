@@ -1,4 +1,4 @@
-# poolr 0.9-16 (2021-02-05)
+# poolr 0.9-17 (2021-02-10)
 
 - changed name of `binotest()` function to `binomtest()`
 

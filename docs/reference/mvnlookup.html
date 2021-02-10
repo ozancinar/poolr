@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lookup Table for mvnconv() Function — mvnlookup • poolr</title>
+<title>Lookup Table for the mvnconv() Function — mvnlookup • poolr</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Lookup Table for mvnconv() Function — mvnlookup" />
+<meta property="og:title" content="Lookup Table for the mvnconv() Function — mvnlookup" />
 <meta property="og:description" content="Lookup table for the mvnconv function." />
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9-17</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Lookup Table for mvnconv() Function</h1>
+    <h1>Lookup Table for the mvnconv() Function</h1>
     
     <div class="hidden name"><code>mvnlookup.Rd</code></div>
     </div>
@@ -140,9 +140,7 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Assume</p>
-<p><img src='figures/mvn.png' width=250 /></p>
-<p>is the joint distribution for test statistics \(t_i\) and \(t_j\). For one-sided tests, let \(p_i = 1 - \Phi(t_i)\) and \(p_j = 1 - \Phi(t_j)\) where \(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution. For two-sided tests, let \(p_i = 2(1 - \Phi(|t_i|))\) and \(p_j = 2(1 - \Phi(|t_j|))\). These are simply the one- and two-sided \(p\)-values corresponding to \(t_i\) and \(t_j\).</p>
+    <p>Assume \[\begin{bmatrix} t_i \\ t_j \end{bmatrix} \sim \mbox{MVN} \left(\begin{bmatrix} 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 & \rho_{ij} \\ \rho_{ij} & 1 \end{bmatrix} \right)\] is the joint distribution for test statistics \(t_i\) and \(t_j\). For one-sided tests, let \(p_i = 1 - \Phi(t_i)\) and \(p_j = 1 - \Phi(t_j)\) where \(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution. For two-sided tests, let \(p_i = 2(1 - \Phi(|t_i|))\) and \(p_j = 2(1 - \Phi(|t_j|))\). These are simply the one- and two-sided \(p\)-values corresponding to \(t_i\) and \(t_j\).</p>
 <p>Columns <code>p_1</code> and <code>p_2</code> contain the values for \(\mbox{Cov}[p_i, p_j]\).</p>
 <p>Columns <code>m2lp_1</code> and <code>m2lp_2</code> contain the values for \(\mbox{Cov}[-2 \ln(p_i), -2 \ln(p_j)]\).</p>
 <p>Columns <code>chisq1_1</code> and <code>chisq1_2</code> contain the values for \(\mbox{Cov}[F^{-1}(1 - p_i, 1), F^{-1}(1 - p_j, 1)]\), where \(F^{-1}(\cdot,1)\) denotes the inverse of the cumulative distribution function of a chi-square distribution with one degree of freedom.</p>

@@ -13,13 +13,7 @@ mvnconv(R, side = 2, target, cov2cor = FALSE)
 }
 \details{
 
-   The function converts a matrix with the correlations among multivariate normal test statistics to a matrix with the covariances among various target statistics. In particular, assume
-
-   \if{html}{\figure{mvn.png}{options: width=250}}
-   \if{latex}{\figure{mvn.png}{options: width=2in}}
-   \if{text}{[t_i, t_j]' ~ MVN([0,0]', [1, rho_ij | rho_ij, 1])}
-
-   is the joint distribution for test statistics \mjseqn{t_i} and \mjseqn{t_j}. For \code{side = 1}, let \mjeqn{p_i = 1 - \Phi(t_i)}{p_i = 1 - Phi(t_i)} and \mjeqn{p_j = 1 - \Phi(t_j)}{p_j = 1 - Phi(t_j)} where \mjeqn{\Phi(\cdot)}{Phi(.)} denotes the cumulative distribution function of a standard normal distribution. For \code{side = 2}, let \mjeqn{p_i = 2(1 - \Phi(|t_i|))}{p_i = 2(1 - Phi(|t_i|))} and \mjeqn{p_j = 2(1 - \Phi(|t_j|))}{p_j = 2(1 - Phi(|t_j|))}. These are simply the one- and two-sided \mjseqn{p}-values corresponding to \mjseqn{t_i} and \mjseqn{t_j}.
+   The function converts a matrix with the correlations among multivariate normal test statistics to a matrix with the covariances among various target statistics. In particular, assume \mjtdeqn{\left[\begin{array}{c} t_i \\\\ t_j \end{array}\right] \sim \mbox{MVN} \left(\left[\begin{array}{c} 0 \\\\ 0 \end{array}\right], \left[\begin{array}{cc} 1 & \rho_{ij} \\\\ \rho_{ij} & 1 \end{array}\right] \right)}{\begin{bmatrix} t_i \\\\\ t_j \end{bmatrix} \sim \mbox{MVN} \left(\begin{bmatrix} 0 \\\\\ 0 \end{bmatrix}, \begin{bmatrix} 1 & \rho_{ij} \\\\\ \rho_{ij} & 1 \end{bmatrix} \right)}{[t_i, t_j]' ~ MVN([0,0]', [1, rho_ij | rho_ij, 1])} is the joint distribution for test statistics \mjseqn{t_i} and \mjseqn{t_j}. For \code{side = 1}, let \mjeqn{p_i = 1 - \Phi(t_i)}{p_i = 1 - Phi(t_i)} and \mjeqn{p_j = 1 - \Phi(t_j)}{p_j = 1 - Phi(t_j)} where \mjeqn{\Phi(\cdot)}{Phi(.)} denotes the cumulative distribution function of a standard normal distribution. For \code{side = 2}, let \mjeqn{p_i = 2(1 - \Phi(|t_i|))}{p_i = 2(1 - Phi(|t_i|))} and \mjeqn{p_j = 2(1 - \Phi(|t_j|))}{p_j = 2(1 - Phi(|t_j|))}. These are simply the one- and two-sided \mjseqn{p}-values corresponding to \mjseqn{t_i} and \mjseqn{t_j}.
 
    If \code{target = "p"}, the function computes \mjeqn{\mbox{Cov}[p_i, p_j]}{Cov[p_i, p_j]}.
 

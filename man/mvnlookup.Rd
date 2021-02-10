@@ -1,7 +1,7 @@
 \name{mvnlookup}
 \docType{data}
 \alias{mvnlookup}
-\title{Lookup Table for mvnconv() Function}
+\title{Lookup Table for the mvnconv() Function}
 \description{Lookup table for the \code{\link{mvnconv}} function.\loadmathjax}
 \usage{mvnlookup}
 \format{The data frame contains the following columns:
@@ -18,13 +18,7 @@
 }
 }
 \details{
-   Assume
-
-   \if{html}{\figure{mvn.png}{options: width=250}}
-   \if{latex}{\figure{mvn.png}{options: width=2in}}
-   \if{text}{[t_i, t_j]' ~ MVN([0,0]', [1, rho_ij | rho_ij, 1])}
-
-   is the joint distribution for test statistics \mjseqn{t_i} and \mjseqn{t_j}. For one-sided tests, let \mjeqn{p_i = 1 - \Phi(t_i)}{p_i = 1 - Phi(t_i)} and \mjeqn{p_j = 1 - \Phi(t_j)}{p_j = 1 - Phi(t_j)} where \mjeqn{\Phi(\cdot)}{Phi(.)} denotes the cumulative distribution function of a standard normal distribution. For two-sided tests, let \mjeqn{p_i = 2(1 - \Phi(|t_i|))}{p_i = 2(1 - Phi(|t_i|))} and \mjeqn{p_j = 2(1 - \Phi(|t_j|))}{p_j = 2(1 - Phi(|t_j|))}. These are simply the one- and two-sided \mjseqn{p}-values corresponding to \mjseqn{t_i} and \mjseqn{t_j}.
+   Assume \mjtdeqn{\left[\begin{array}{c} t_i \\\\ t_j \end{array}\right] \sim \mbox{MVN} \left(\left[\begin{array}{c} 0 \\\\ 0 \end{array}\right], \left[\begin{array}{cc} 1 & \rho_{ij} \\\\ \rho_{ij} & 1 \end{array}\right] \right)}{\begin{bmatrix} t_i \\\\\ t_j \end{bmatrix} \sim \mbox{MVN} \left(\begin{bmatrix} 0 \\\\\ 0 \end{bmatrix}, \begin{bmatrix} 1 & \rho_{ij} \\\\\ \rho_{ij} & 1 \end{bmatrix} \right)}{[t_i, t_j]' ~ MVN([0,0]', [1, rho_ij | rho_ij, 1])} is the joint distribution for test statistics \mjseqn{t_i} and \mjseqn{t_j}. For one-sided tests, let \mjeqn{p_i = 1 - \Phi(t_i)}{p_i = 1 - Phi(t_i)} and \mjeqn{p_j = 1 - \Phi(t_j)}{p_j = 1 - Phi(t_j)} where \mjeqn{\Phi(\cdot)}{Phi(.)} denotes the cumulative distribution function of a standard normal distribution. For two-sided tests, let \mjeqn{p_i = 2(1 - \Phi(|t_i|))}{p_i = 2(1 - Phi(|t_i|))} and \mjeqn{p_j = 2(1 - \Phi(|t_j|))}{p_j = 2(1 - Phi(|t_j|))}. These are simply the one- and two-sided \mjseqn{p}-values corresponding to \mjseqn{t_i} and \mjseqn{t_j}.
 
    Columns \code{p_1} and \code{p_2} contain the values for \mjeqn{\mbox{Cov}[p_i, p_j]}{Cov[p_i, p_j]}.
 
