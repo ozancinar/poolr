@@ -23,6 +23,16 @@
 
 .check.R <- function(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, nearpd = FALSE, checkcor = FALSE, checkdiag = TRUE, isbase = TRUE, k, adjust, fun) {
 
+   # certain checks imply that other checks must be used
+
+   if (nearpd)
+      checkpd <- TRUE
+
+   if (checkpd) {
+      checkna <- TRUE
+      checksym <- TRUE
+   }
+
    # turn a "dpoMatrix" object (from nearPD()) into a 'plain' matrix (since is.matrix() is FALSE for such objects)
    if (inherits(R, "dpoMatrix"))
       R <- as.matrix(R)
@@ -40,16 +50,12 @@
       stop("Values in 'R' must not contain NAs.", call.=FALSE)
 
    # check if 'R' is positive definite; if not, make it
-   if (checkpd) {
-      if (any(is.na(R)))
+   if (checkpd && any(eigen(R)$values <= 0)) {
+      if (nearpd) {
+         warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
+         R <- as.matrix(.find.nonegmat(R))
+      } else {
          stop("Matrix 'R' is not positive definite.", call.=FALSE)
-      if (any(eigen(R)$values <= 0)) {
-         if (nearpd) {
-            warning("Matrix 'R' is not positive definite. Used Matrix::nearPD() to make 'R' positive definite.", call.=FALSE)
-            R <- as.matrix(.find.nonegmat(R))
-         } else {
-            stop("Matrix 'R' is not positive definite.", call.=FALSE)
-         }
       }
    }
 
@@ -71,7 +77,7 @@
 
       # check if user specified 'R' argument but no adjustment method
       if (adjust == "none")
-         warning("Although argument 'R' was specified, no adjustment method was chosen via the 'adjust' argument.\n  To account for dependence, specify an adjustment method. See help(", fun, ") for details.", call.=FALSE)
+         warning("Argument 'R' was specified, but no adjustment method was chosen via the 'adjust' argument.\nTo account for dependence, specify an adjustment method. See help(", fun, ") for details.", call.=FALSE)
 
       # if 'm' has been specified, then warn the user that 'R' matrix is actually ignored
       if (adjust == "user")
