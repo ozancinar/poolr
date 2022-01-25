@@ -1,0 +1,16 @@
+bibentry(bibtype = "Article",
+  title        = "The {poolr} Package for Combining Independent and Dependent $p$ Values",
+  author       = c(person(given = "Ozan",
+                          family = "Cinar",
+                          email = "ozan.cinar@maastrichtuniversity.nl"),
+                   person(given = "Wolfgang",
+                          family = "Viechtbauer")),
+  journal      = "Journal of Statistical Software",
+  year         = "2022",
+  volume       = "101",
+  number       = "1",
+  pages        = "1--42",
+  doi          = "10.18637/jss.v101.i01",
+  header       = "To cite poolr in publications use:"
+)
+

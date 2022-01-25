@@ -74,6 +74,8 @@ stouffer(p, adjust = "none", R, m,
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
+   Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
+   
    Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
 
    Stouffer, S. A., Suchman, E. A., DeVinney, L. C., Star, S. A., & Williams, R. M., Jr. (1949). \emph{The American Soldier: Adjustment During Army Life (Vol. 1)}. Princeton, NJ: Princeton University Press.

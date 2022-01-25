@@ -70,6 +70,8 @@ bonferroni(p, adjust = "none", R, m,
 \references{
    Bland, J. M., & Altman, D. G. (1995). Multiple significance tests: The Bonferroni method. \emph{British Medical Journal, 310}(6973), 170.
 
+   Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
+   
    Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
 }
 \examples{

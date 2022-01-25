@@ -55,6 +55,8 @@ meff(R, eigen, method, \dots)
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
+   Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
+   
    Gao, X., Starmer, J., & Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. \emph{Genetic Epidemiology, 32}(4), 361--369.
 
    Galwey, N. W. (2009). A new measure of the effective number of tests, a practical tool for comparing families of non-independent significance tests. \emph{Genetic Epidemiology, 33}(7), 559--568.

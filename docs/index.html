@@ -12,13 +12,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Methods for Pooling P-Values from (Dependent) Tests">
-<meta property="og:description" content="Functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fishers method, Stouffers method, the inverse chi-square method, the Bonferroni method, Tippetts method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fishers, Stouffers, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Browns method, Strube's method, and the generalized inverse chi-square method).">
+<meta property="og:description" content="Functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fishers method, Stouffers method, the inverse chi-square method, the Bonferroni method, Tippetts method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fishers, Stouffers, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Browns method, Strube's method, and the generalized inverse chi-square method). An introduction can be found in Cinar and Viechtbauer (2022) &lt;doi:10.18637/jss.v101.i01&gt;. ">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0-1</span>
       </span>
     </div>
 
@@ -39,7 +41,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -65,81 +67,92 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="poolr-package-for-pooling-the-results-from-dependent-tests" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#poolr-package-for-pooling-the-results-from-dependent-tests" class="anchor"></a>poolr: Package for Pooling the Results from (Dependent) Tests</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="poolr-package-for-pooling-the-results-from-dependent-tests">poolr: Package for Pooling the Results from (Dependent) Tests<a class="anchor" aria-label="anchor" href="#poolr-package-for-pooling-the-results-from-dependent-tests"></a>
+</h1></div>
 
-<div id="description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h2>
+<div class="section level2">
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h2>
 <p>The <code>poolr</code> package contains functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fisher’s method, Stouffer’s method, the inverse chi-square method, the Bonferroni method, Tippett’s method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fisher’s, Stouffer’s, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown’s method, Strube’s method, and the generalized inverse chi-square method).</p>
 </div>
-<div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>You can read the documentation of the <code>poolr</code> package online at <a href="https://ozancinar.github.io/poolr/" class="uri">https://ozancinar.github.io/poolr/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p>You can read the documentation of the <code>poolr</code> package online at <a href="https://ozancinar.github.io/poolr/" class="external-link">https://ozancinar.github.io/poolr/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>The current official (i.e., <a href="https://cran.r-project.org/package=poolr">CRAN</a>) release can be installed directly within R with:</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"poolr"</span><span class="op">)</span></code></pre></div>
-<p>After installing the <a href="https://cran.r-project.org/package=remotes">remotes</a> package with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("remotes")</a></code>, the development version of the <code>poolr</code> package can be installed with:</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ozancinar/poolr"</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>The current official (i.e., <a href="https://cran.r-project.org/package=poolr" class="external-link">CRAN</a>) release can be installed directly within R with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"poolr"</span><span class="op">)</span></code></pre></div>
+<p>After installing the <a href="https://cran.r-project.org/package=remotes" class="external-link">remotes</a> package with <code>install.packages("remotes")</code>, the development version of the <code>poolr</code> package can be installed with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ozancinar/poolr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="meta" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meta" class="anchor"></a>Meta</h2>
-<p>The <code>poolr</code> package was written by Ozan Cinar and <a href="https://www.wvbauer.com/">Wolfgang Viechtbauer</a>. It is licensed under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt">GNU General Public License Version 2</a>. To report any issues or bugs, please go <a href="https://github.com/ozancinar/poolr/issues">here</a>.</p>
+<div class="section level2">
+<h2 id="meta">Meta<a class="anchor" aria-label="anchor" href="#meta"></a>
+</h2>
+<p>The <code>poolr</code> package was written by Ozan Cinar and <a href="https://www.wvbauer.com/" class="external-link">Wolfgang Viechtbauer</a>. It is licensed under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" class="external-link">GNU General Public License Version 2</a>. To report any issues or bugs, please go <a href="https://github.com/ozancinar/poolr/issues" class="external-link">here</a>.</p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=poolr">https://​cloud.r-project.org/​package=poolr</a>
-</li>
-<li>GitHub Repo at <br><a href="https://github.com/ozancinar/poolr">https://​github.com/​ozancinar/​poolr</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=poolr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/ozancinar/poolr" class="external-link">GitHub Repo</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;=2)</li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Ozan Cinar <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0329-1977" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Wolfgang Viechtbauer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3463-4063" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing poolr</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ozancinar/poolr/actions"><img src="https://github.com/ozancinar/poolr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://cran.r-project.org/package=poolr"><img src="https://www.r-pkg.org/badges/version/poolr" alt="CRAN Version"></a></li>
-<li><a href="https://github.com/ozancinar/poolr"><img src="https://img.shields.io/badge/devel-1.0--0-brightgreen.svg" alt="devel Version"></a></li>
-<li><a href="https://codecov.io/gh/ozancinar/poolr"><img src="https://codecov.io/gh/ozancinar/poolr/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
+<li>Ozan Cinar <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0329-1977" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Wolfgang Viechtbauer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3463-4063" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/ozancinar/poolr/actions" class="external-link"><img src="https://github.com/ozancinar/poolr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://cran.r-project.org/package=poolr" class="external-link"><img src="https://www.r-pkg.org/badges/version/poolr" alt="CRAN Version"></a></li>
+<li><a href="https://github.com/ozancinar/poolr" class="external-link"><img src="https://img.shields.io/badge/devel-1.0--1-brightgreen.svg" alt="devel Version"></a></li>
+<li><a href="https://codecov.io/gh/ozancinar/poolr" class="external-link"><img src="https://codecov.io/gh/ozancinar/poolr/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Ozan Cinar, Wolfgang Viechtbauer.</p>
+  <p></p>
+<p>Developed by Ozan Cinar, Wolfgang Viechtbauer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -147,6 +160,8 @@
 
   
 
+
+  
 
   </body>
 </html>

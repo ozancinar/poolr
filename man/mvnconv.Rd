@@ -34,6 +34,9 @@ mvnconv(R, side = 2, target, cov2cor = FALSE)
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
+\references{
+   Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
+}
 \examples{
 # illustrative correlation matrix
 R <- matrix(c(   1,  0.8,  0.5,  0.3,

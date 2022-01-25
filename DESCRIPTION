@@ -1,13 +1,13 @@
 Package: poolr
-Version: 1.0-0
-Date: 2021-06-02
+Version: 1.0-1
+Date: 2022-01-26
 Title: Methods for Pooling P-Values from (Dependent) Tests
 Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre"), comment = c(ORCID = "0000-0003-0329-1977")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = "aut", comment = c(ORCID = "0000-0003-3463-4063")))
 Depends: R (>= 3.5.0)
 Imports: methods, stats, utils, mathjaxr
 Suggests: testthat
 RdMacros: mathjaxr
-Description: Functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method).
+Description: Functions for pooling/combining the results (i.e., p-values) from (dependent) hypothesis tests. Included are Fisher's method, Stouffer's method, the inverse chi-square method, the Bonferroni method, Tippett's method, and the binomial test. Each method can be adjusted based on an estimate of the effective number of tests or using empirically derived null distribution using pseudo replicates. For Fisher's, Stouffer's, and the inverse chi-square method, direct generalizations based on multivariate theory are also available (leading to Brown's method, Strube's method, and the generalized inverse chi-square method). An introduction can be found in Cinar and Viechtbauer (2022) <doi:10.18637/jss.v101.i01>. 
 License: GPL (>=2)
 ByteCompile: TRUE
 LazyData: TRUE
