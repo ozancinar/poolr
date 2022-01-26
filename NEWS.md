@@ -1,4 +1,8 @@
-# poolr 1.0-1 (2022-01-26)
+# poolr 1.1-0 (2022-01-26)
+
+- added the reference to the publication in the Journal of Statistical Software. 
+
+# poolr 1.0-0 (2021-06-02)
 
 - changed name of `binotest()` function to `binomtest()`
 
