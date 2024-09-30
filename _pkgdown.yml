@@ -20,6 +20,11 @@ navbar:
       href: news/index.html
 
 reference:
+  - title: "Package Introduction"
+    desc: >
+      Introduction to the package.
+    contents:
+    - poolr-package
   - title: "Base Methods"
     desc: >
       Functions to combine independent and dependent p-values.
