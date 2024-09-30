@@ -1,4 +1,4 @@
-# poolr 1.1-1 (2022-01-26)
+# poolr 1.1-2 (2024-09-30)
 
 - added the reference to the publication in the Journal of Statistical Software. 
 

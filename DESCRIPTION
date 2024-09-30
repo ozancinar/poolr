@@ -1,6 +1,6 @@
 Package: poolr
-Version: 1.1-1
-Date: 2022-01-26
+Version: 1.1-2
+Date: 2024-09-30
 Title: Methods for Pooling P-Values from (Dependent) Tests
 Authors@R: c(person("Ozan", "Cinar", email = "ozancinar86@gmail.com", role = c("aut","cre"), comment = c(ORCID = "0000-0003-0329-1977")), person("Wolfgang", "Viechtbauer", email = "wvb@wvbauer.com", role = "aut", comment = c(ORCID = "0000-0003-3463-4063")))
 Depends: R (>= 3.5.0)
@@ -12,3 +12,4 @@ License: GPL (>=2)
 ByteCompile: TRUE
 LazyData: TRUE
 Encoding: UTF-8
+BuildManual: TRUE

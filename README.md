@@ -2,7 +2,7 @@
 
 [![R build status](https://github.com/ozancinar/poolr/workflows/R-CMD-check/badge.svg)](https://github.com/ozancinar/poolr/actions)
 [![CRAN Version](https://www.r-pkg.org/badges/version/poolr)](https://cran.r-project.org/package=poolr)
-[![devel Version](https://img.shields.io/badge/devel-1.1--1-brightgreen.svg)](https://github.com/ozancinar/poolr)
+[![devel Version](https://img.shields.io/badge/devel-1.1--2-brightgreen.svg)](https://github.com/ozancinar/poolr)
 [![Code Coverage](https://codecov.io/gh/ozancinar/poolr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ozancinar/poolr/)
 
 ## Description
