@@ -1,9 +1,38 @@
 meff <- function(R, eigen, method, ...) {
 
    # match 'method' argument
-   method <- match.arg(method, c("nyholt", "liji", "gao", "galwey"))
+   method <- match.arg(method, c("nyholt", "liji", "gao", "galwey", "chen"))
 
-   if (missing(eigen)) {
+   if (method %in% c("nyholt", "liji", "gao", "galwey")) {
+
+      if (missing(eigen)) {
+
+         # check if 'R' is specified
+         if (missing(R))
+            stop("Argument 'R' must be specified.", call.=FALSE)
+
+         # checks for 'R' argument
+         R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
+
+         # get eigenvalues of 'R' matrix
+         evs <- base::eigen(R)$values
+
+      } else {
+
+         # can pass eigenvalues directly to function via 'eigen'
+
+         if (!.is.numeric.vector(eigen))
+            stop("Argument 'eigen' must be a numeric vector.", call.=FALSE)
+
+         evs <- eigen
+
+      }
+
+      # check if there are negative eigenvalues
+      if (any(evs < 0))
+         warning(paste0("One or more eigenvalues ", ifelse(missing(eigen), "derived from the 'R' matrix ", ""), "are negative."), call.=FALSE)
+
+   } else {
 
       # check if 'R' is specified
       if (missing(R))
@@ -12,23 +41,7 @@ meff <- function(R, eigen, method, ...) {
       # checks for 'R' argument
       R <- .check.R(R, checksym = TRUE, checkna = TRUE, checkpd = FALSE, nearpd = FALSE, checkcor = TRUE, checkdiag = TRUE, isbase = FALSE)
 
-      # get eigenvalues of 'R' matrix
-      evs <- base::eigen(R)$values
-
-   } else {
-
-      # can pass eigenvalues directly to function via 'eigen'
-
-      if (!.is.numeric.vector(eigen))
-         stop("Argument 'eigen' must be a numeric vector.", call.=FALSE)
-
-      evs <- eigen
-
    }
-
-   # check if there are negative eigenvalues
-   if (any(evs < 0))
-      warning(paste0("One or more eigenvalues ", ifelse(missing(eigen), "derived from the 'R' matrix ", ""), "are negative."), call.=FALSE)
 
    if (method == "nyholt") {
 
@@ -77,6 +90,30 @@ meff <- function(R, eigen, method, ...) {
 
       # effective number of tests (based on Galwey, 2009)
       m <- sum(sqrt(evs))^2 / sum(evs)
+
+   }
+
+   if (method == "chen") {
+
+      # effective number of tests (based on Chen & Liu, 2011)
+
+      ddd <- list(...)
+
+      # allow user to specify the power value via ... but otherwise use 7
+      # (note: in the paper, this value is called k, but we cannot use this
+      # since k is already used to define the number of p-values)
+
+      if (!is.null(ddd$C)) {
+         C <- ddd$C
+      } else {
+         C <- 7
+      }
+
+      if (C < 1)
+         warning("Value of 'C' should be >= 1.", call.=FALSE)
+
+      # effective number of tests (based on Chen & Liu, 2011)
+      m <- sum(1 / apply(R, 1, function(r) sum(abs(r)^C)))
 
    }
 

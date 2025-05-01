@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2-0</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@
 <dd><p>optional vector to directly supply the eigenvalues to the function (instead of computing them from the matrix given via <code>R</code>).</p></dd>
 
    <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>character string to specify the method to be used to estimate the effective number of tests (either <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code>, or <code>"galwey"</code>). See ‘Details’.</p></dd>
+<dd><p>character string to specify the method to be used to estimate the effective number of tests (either <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code>, <code>"galwey"</code>, or <code>"chen"</code>). See ‘Details’.</p></dd>
 
    <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
@@ -79,20 +79,22 @@
     <h2>Details</h2>
 
 
-<p>The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the <em></em>\(R\) matrix supplied via the <code>R</code> argument (or from the eigenvalues directly passed via the <code>eigen</code> argument). Letting <em></em>\(\lambda_i\) denote the <em></em>\(i\)th eigenvalue of this matrix (with <em></em>\(i = 1, \ldots, k\)) in decreasing order, the effective number of tests (<em></em>\(m\)) is estimated as follows.</p>
+<p>The function estimates the effective number of tests based on one of five different methods. All methods except the one by Chen and Liu (2011) work by extracting the eigenvalues from the <em></em>\(R\) matrix supplied via the <code>R</code> argument (or from the eigenvalues directly passed via the <code>eigen</code> argument). Letting <em></em>\(\lambda_i\) denote the <em></em>\(i\)th eigenvalue of this matrix (with <em></em>\(i = 1, \ldots, k\)) in decreasing order, the effective number of tests (<em></em>\(m\)) is estimated as follows.</p>
 <p><b>Method by Nyholt (2004)</b></p>
 <p>\[m = 1 + (k - 1) \left(1 - \frac{\mbox{Var}(\lambda)}{k}\right)\] where <em></em>\(\mbox{Var}(\lambda)\) is the observed sample variance of the <em></em>\(k\) eigenvalues.</p>
 <p><b>Method by Li &amp; Ji (2005)</b></p>
 <p>\[m = \sum_{i = 1}^k f(|\lambda_i|)\] where <em></em>\(f(x) = I(x \ge 1) + (x - \lfloor x \rfloor)\) and <em></em>\(\lfloor \cdot \rfloor\) is the floor function.</p>
 <p><b>Method by Gao et al. (2008)</b></p>
-<p>\[m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} &gt; C\] where <em></em>\(C\) is a pre-defined parameter which is set to 0.995 by default.</p>
+<p>\[m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} &gt; C\] where <em></em>\(C\) is a pre-defined parameter which is set to 0.995 by default, but can be adjusted (see ‘Note’).</p>
 <p><b>Method by Galwey (2009)</b></p>
 <p>\[m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}\] where <em></em>\(\lambda_i' = \max[0, \lambda_i]\).</p>
+<p><b>Method by Chen &amp; Liu (2011)</b></p>
+<p>\[m = \sum_{i = 1}^k \frac{1}{R_i}\] where <em></em>\(R_i = \sum_{j = 1}^k |r_{ij}|^C\) for <em></em>\(i = 1, \ldots, k\) and <em></em>\(r_{ij}\) denotes the element in the <em></em>\(R\) matrix in row <em></em>\(i\) and column <em></em>\(j\). By default, the value of <em></em>\(C\) is set to 7, but can be adjusted (see ‘Note’).</p>
 <p><b>Note:</b> For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate <em></em>\(m\) is rounded down to the nearest integer.</p>
 <p><b>Specifying the R Matrix</b></p>
 <p>The <em></em>\(R\) matrix should reflect the dependence structure among the tests. There is no general solution on how such a matrix should be constructed, as this depends on the type of test and the sidedness of these tests. For example, we can use the correlations among related but changing elements across the analyses/tests, or a function thereof, as a proxy for the dependence structure. For example, when conducting <em></em>\(k\) analyses with the same dependent variable and <em></em>\(k\) different independent variables, the correlations among the independent variables could serve as such a proxy. Analogously, if analyses are conducted for <em></em>\(k\) dependent variables with the same set of independent variables, the correlations among the dependent variables could be used instead.</p>
 <p>If the tests of interest have test statistics that can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which might be approximated by the correlations among the interchanging independent or dependent variables), then the <code><a href="mvnconv.html">mvnconv</a></code> function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) <em></em>\(p\)-values, which in turn can then be passed to the <code>R</code> argument. See ‘Examples’.</p>
-<p><b>Not Positive Semi-Definite R</b></p>
+<p><b>Non-Positive Semi-Definite R</b></p>
 <p>Depending on the way <em></em>\(R\) was constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive (semi-)definite matrix (e.g., Higham 2002) before passing this matrix to the function (see <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html" class="external-link">nearPD</a></code> from the <span class="pkg">Matrix</span> package for a corresponding implementation).</p>
     </div>
     <div id="value">
@@ -101,7 +103,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>For <code>method = "gao"</code>, <code>C = 0.995</code> by default, but a different value of <code>C</code> can be passed to the function via <code>...</code> (e.g., <code>meff(R, method = "gao", C = 0.95)</code>).</p>
+    <p>For <code>method = "gao"</code>, <code>C = 0.995</code> by default, but a different value of <code>C</code> can be passed to the function via <code>...</code> (e.g., <code>meff(R, method = "gao", C = 0.95)</code>). For <code>method = "chen"</code>, <code>C = 7</code> by default, but a different value of <code>C</code> can be passed to the function via <code>...</code> (e.g., <code>meff(R, method = "chen", C = 6)</code>).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -110,12 +112,13 @@
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Cinar, O. &amp; Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. <em>Journal of Statistical Software</em>, <b>101</b>(1), 1–42. <code>https://doi.org/10.18637/jss.v101.i01</code></p>
-<p>Gao, X., Starmer, J., &amp; Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. <em>Genetic Epidemiology, 32</em>(4), 361–369.</p>
-<p>Galwey, N. W. (2009). A new measure of the effective number of tests, a practical tool for comparing families of non-independent significance tests. <em>Genetic Epidemiology, 33</em>(7), 559–568.</p>
-<p>Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. <em>IMA Journal of Numerical Analysis, 22</em>(3), 329–343.</p>
-<p>Li, J., &amp; Ji, L. (2005). Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix. <em>Heredity, 95</em>(3), 221–227.</p>
-<p>Nyholt, D. R. (2004). A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other. <em>American Journal of Human Genetics, 74</em>(4), 765–769.</p>
+    <p>Chen, Z. X., &amp; Liu, Q. Z. (2011). A new approach to account for the correlations among single nucleotide polymorphisms in genome-wide association studies. <em>Human Heredity</em>, <b>72</b>(1), 1–9. <code>https://doi.org/10.1159/000330135</code></p>
+<p>Cinar, O. &amp; Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. <em>Journal of Statistical Software</em>, <b>101</b>(1), 1–42. <code>https://doi.org/10.18637/jss.v101.i01</code></p>
+<p>Gao, X., Starmer, J., &amp; Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. <em>Genetic Epidemiology, 32</em>(4), 361–369. <code>https://doi.org/10.1002/gepi.20310</code></p>
+<p>Galwey, N. W. (2009). A new measure of the effective number of tests, a practical tool for comparing families of non-independent significance tests. <em>Genetic Epidemiology, 33</em>(7), 559–568. <code>https://doi.org/10.1002/gepi.20408</code></p>
+<p>Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. <em>IMA Journal of Numerical Analysis, 22</em>(3), 329–343. <code>https://doi.org/10.1093/imanum/22.3.329</code></p>
+<p>Li, J., &amp; Ji, L. (2005). Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix. <em>Heredity, 95</em>(3), 221–227. <code>https://doi.org/10.1038/sj.hdy.6800717</code></p>
+<p>Nyholt, D. R. (2004). A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other. <em>American Journal of Human Genetics, 74</em>(4), 765–769. <code>https://doi.org/10.1086/383251</code></p>
     </div>
 
     <div id="ref-examples">
@@ -132,6 +135,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 18</span>
 <span class="r-in"><span><span class="fu">meff</span><span class="op">(</span><span class="va">r</span>, method <span class="op">=</span> <span class="st">"galwey"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 13</span>
+<span class="r-in"><span><span class="fu">meff</span><span class="op">(</span><span class="va">r</span>, method <span class="op">=</span> <span class="st">"chen"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 18</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use mvnconv() to convert the LD correlation matrix into a matrix with the</span></span></span>
 <span class="r-in"><span><span class="co"># correlations among the (two-sided) p-values assuming that the test</span></span></span>
@@ -154,6 +159,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 23</span>
 <span class="r-in"><span><span class="fu">meff</span><span class="op">(</span><span class="fu"><a href="mvnconv.html">mvnconv</a></span><span class="op">(</span><span class="va">r</span>, target <span class="op">=</span> <span class="st">"p"</span>, cov2cor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"galwey"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 20</span>
+<span class="r-in"><span><span class="fu">meff</span><span class="op">(</span><span class="fu"><a href="mvnconv.html">mvnconv</a></span><span class="op">(</span><span class="va">r</span>, target <span class="op">=</span> <span class="st">"p"</span>, cov2cor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"chen"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 22</span>
 </code></pre></div>
     </div>
   </div>
@@ -168,7 +175,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer></div>

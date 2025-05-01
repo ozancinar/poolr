@@ -2,7 +2,9 @@
 
 - added the reference to the publication in the Journal of Statistical Software
 
-- fixed an issue where the Bonferroni and Tippett methods were not identical with `adjust = "empirical"` when the observed Bonferroni-adjusted p-value was equal to 1
+- fixed an issue where the Bonferroni and Tippett methods were not identical with `adjust = "empirical"` when the observed Bonferroni-adjusted p-value is equal to 1
+
+- added the method by Chen & Liu (2011) for estimating the effective number of tests via `adjust = "chen"`
 
 # poolr 1.0-0 (2021-06-02)
 

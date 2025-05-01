@@ -8,7 +8,7 @@ bonferroni(p, adjust = "none", R, m,
 }
 \arguments{
    \item{p}{vector of length \mjseqn{k} with the (one- or two-sided) p-values to be combined.}
-   \item{adjust}{character string to specify an adjustment method to account for dependence. The default is \code{"none"}, in which case no adjustment is applied. Methods \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"} are adjustments based on an estimate of the effective number of tests (see \code{\link{meff}}). Adjustment method \code{"empirical"} uses an empirically-derived null distribution using pseudo replicates. See \sQuote{Details}.}
+   \item{adjust}{character string to specify an adjustment method to account for dependence. The default is \code{"none"}, in which case no adjustment is applied. Methods \code{"nyholt"}, \code{"liji"}, \code{"gao"}, \code{"galwey"}, or \code{"chen"} are adjustments based on an estimate of the effective number of tests (see \code{\link{meff}}). Adjustment method \code{"empirical"} uses an empirically-derived null distribution using pseudo replicates. See \sQuote{Details}.}
    \item{R}{a \mjeqn{k \times k}{k * k} symmetric matrix that reflects the dependence structure among the tests. Must be specified if \code{adjust} is set to something other than \code{"none"}. See \sQuote{Details}.}
    \item{m}{optional scalar (between 1 and \mjseqn{k}) to manually specify the effective number of tests (instead of estimating it via one of the methods described above).}
    \item{size}{size of the empirically-derived null distribution. Can also be a numeric vector of sizes, in which case a stepwise algorithm is used. This (and the following arguments) are only relevant when \code{adjust = "empirical"}.}
@@ -28,11 +28,11 @@ bonferroni(p, adjust = "none", R, m,
 
    \bold{Adjustment Based on the Effective Number of Tests}
 
-   When \code{adjust} is set to \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}, the Bonferroni method is adjusted based on an estimate of the effective number of tests (see \code{\link{meff}} for details on these methods for estimating the effective number of tests). In this case, argument \code{R} needs to be set to a matrix that reflects the dependence structure among the tests.
+   When \code{adjust} is set to \code{"nyholt"}, \code{"liji"}, \code{"gao"}, \code{"galwey"}, or \code{"chen"}, the Bonferroni method is adjusted based on an estimate of the effective number of tests (see \code{\link{meff}} for details on these methods for estimating the effective number of tests). In this case, argument \code{R} needs to be set to a matrix that reflects the dependence structure among the tests.
 
    There is no general solution for constructing such a matrix, as this depends on the type of test that generated the \mjseqn{p}-values and the sidedness of these tests. If the \mjseqn{p}-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \mjseqn{p}-values, which can then be passed to the \code{R} argument. See \sQuote{Examples}.
 
-   Once the effective number of tests, \mjseqn{m}, is estimated based on \code{R} using one of the four methods described above, the combined \mjseqn{p}-value is then computed with \mjdeqn{p_c = \min(1, \min(p_1, p_2, \ldots, p_k) \times m).}{p_c = min(1, min(p_1, p_2, ..., p_k) * m).}
+   Once the effective number of tests, \mjseqn{m}, is estimated based on \code{R} using one of the methods described above, the combined \mjseqn{p}-value is then computed with \mjdeqn{p_c = \min(1, \min(p_1, p_2, \ldots, p_k) \times m).}{p_c = min(1, min(p_1, p_2, ..., p_k) * m).}
 
    Alternatively, one can also directly specify the effective number of tests via the \code{m} argument (e.g., if some other method not implemented in the \pkg{poolr} package is used to estimate the effective number of tests). Argument \code{R} is then irrelevant and doesn't need to be specified.
 
@@ -55,7 +55,7 @@ bonferroni(p, adjust = "none", R, m,
    \item{p}{combined \mjseqn{p}-value.}
    \item{ci}{confidence interval for the combined \mjseqn{p}-value (only when \code{adjust = "empirical"}; otherwise \code{NULL}).}
    \item{k}{number of \mjseqn{p}-values that were combined.}
-   \item{m}{estimate of the effective number of tests (only when \code{adjust} is one of \code{"nyholt"}, \code{"liji"}, \code{"gao"} or \code{"galwey"}; otherwise \code{NULL}).}
+   \item{m}{estimate of the effective number of tests (only when \code{adjust} is one of \code{"nyholt"}, \code{"liji"}, \code{"gao"}, \code{"galwey"}, or or \code{"chen"}; otherwise \code{NULL}).}
    \item{adjust}{chosen adjustment method.}
    \item{statistic}{value of the (adjusted) test statistic.}
    \item{fun}{name of calling function.}
@@ -94,6 +94,7 @@ bonferroni(p, adjust = "nyholt", R = mvnconv(r, target = "p", cov2cor = TRUE))
 bonferroni(p, adjust = "liji",   R = mvnconv(r, target = "p", cov2cor = TRUE))
 bonferroni(p, adjust = "gao",    R = mvnconv(r, target = "p", cov2cor = TRUE))
 bonferroni(p, adjust = "galwey", R = mvnconv(r, target = "p", cov2cor = TRUE))
+bonferroni(p, adjust = "chen",   R = mvnconv(r, target = "p", cov2cor = TRUE))
 
 # setting argument 'm' manually
 bonferroni(p, m = 12)

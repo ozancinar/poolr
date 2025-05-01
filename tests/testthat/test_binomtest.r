@@ -20,12 +20,14 @@ test_that("binomtest() works correctly with effective number of tests.", {
   res_lj  <- binomtest(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gao <- binomtest(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- binomtest(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_che <- binomtest(grid2ip.p, adjust = "chen", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_user <- binomtest(grid2ip.p, m = 18)
 
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
   out <- capture.output(print(res_gal))
+  out <- capture.output(print(res_che))
   out <- capture.output(print(res_user))
 
   expect_equivalent(c(res_nyh$p), 2.057712e-09, tolerance = p_tol)
@@ -39,6 +41,9 @@ test_that("binomtest() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_gal$p), 1.134072e-08, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 11, tolerance = stat_tol)
+
+  expect_equivalent(c(res_che$p), 2.057712e-09, tolerance = p_tol)
+  expect_equivalent(c(res_che$statistic), 11, tolerance = stat_tol)
 
   expect_equivalent(c(res_user$p), 6.279596e-08, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 11, tolerance = stat_tol)

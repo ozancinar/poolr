@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">poolr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2-0</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
 <dd><p>vector of length <em></em>\(k\) with the (one- or two-sided) p-values to be combined.</p></dd>
 
    <dt id="arg-adjust">adjust<a class="anchor" aria-label="anchor" href="#arg-adjust"></a></dt>
-<dd><p>character string to specify an adjustment method to account for dependence. The default is <code>"none"</code>, in which case no adjustment is applied. Methods <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code>, or <code>"galwey"</code> are adjustments based on an estimate of the effective number of tests (see <code><a href="meff.html">meff</a></code>). Adjustment method <code>"empirical"</code> uses an empirically-derived null distribution using pseudo replicates. Finally, method <code>"generalized"</code> uses a generalization of Fisher's method based on multivariate theory. See ‘Details’.</p></dd>
+<dd><p>character string to specify an adjustment method to account for dependence. The default is <code>"none"</code>, in which case no adjustment is applied. Methods <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code>, <code>"galwey"</code>, or <code>"chen"</code> are adjustments based on an estimate of the effective number of tests (see <code><a href="meff.html">meff</a></code>). Adjustment method <code>"empirical"</code> uses an empirically-derived null distribution using pseudo replicates. Finally, method <code>"generalized"</code> uses a generalization of Fisher's method based on multivariate theory. See ‘Details’.</p></dd>
 
    <dt id="arg-r">R<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>a <em></em>\(k \times k\) symmetric matrix that reflects the dependence structure among the tests. Must be specified if <code>adjust</code> is set to something other than <code>"none"</code>. See ‘Details’.</p></dd>
@@ -102,9 +102,9 @@
 <p>By default (i.e., when <code>adjust = "none"</code>), the function applies Fisher's method to the <em></em>\(p\)-values (Fisher, 1932). Letting <em></em>\(p_1, p_2, \ldots, p_k\) denote the individual (one- or two-sided) <em></em>\(p\)-values of the <em></em>\(k\) hypothesis tests to be combined, the test statistic is then computed with \[X^2 = -2 \sum_{i = 1}^k \ln(p_i).\] Under the joint null hypothesis, the test statistic follows a chi-square distribution with <em></em>\(2k\) degrees of freedom which is used to compute the combined <em></em>\(p\)-value.</p>
 <p>Fisher's method assumes that the <em></em>\(p\)-values to be combined are independent. If this is not the case, the method can either be conservative (not reject often enough) or liberal (reject too often), depending on the dependence structure among the tests. In this case, one can adjust the method to account for such dependence (to bring the Type I error rate closer to some desired nominal significance level).</p>
 <p><b>Adjustment Based on the Effective Number of Tests</b></p>
-<p>When <code>adjust</code> is set to <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code> or <code>"galwey"</code>, Fisher's method is adjusted based on an estimate of the effective number of tests (see <code><a href="meff.html">meff</a></code> for details on these methods for estimating the effective number of tests). In this case, argument <code>R</code> needs to be set to a matrix that reflects the dependence structure among the tests.</p>
+<p>When <code>adjust</code> is set to <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code>, <code>"galwey"</code>, or <code>"chen"</code>, Fisher's method is adjusted based on an estimate of the effective number of tests (see <code><a href="meff.html">meff</a></code> for details on these methods for estimating the effective number of tests). In this case, argument <code>R</code> needs to be set to a matrix that reflects the dependence structure among the tests.</p>
 <p>There is no general solution for constructing such a matrix, as this depends on the type of test that generated the <em></em>\(p\)-values and the sidedness of these tests. If the <em></em>\(p\)-values are obtained from tests whose test statistics can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics, then the <code><a href="mvnconv.html">mvnconv</a></code> function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) <em></em>\(p\)-values, which can then be passed to the <code>R</code> argument. See ‘Examples’.</p>
-<p>Once the effective number of tests, <em></em>\(m\), is estimated based on <code>R</code> using one of the four methods described above, the test statistic of Fisher's method can be modified with \[\tilde{X}^2 = \frac{m}{k} \times X^2\] which is then assumed to follow a chi-square distribution with <em></em>\(2m\) degrees of freedom.</p>
+<p>Once the effective number of tests, <em></em>\(m\), is estimated based on <code>R</code> using one of the methods described above, the test statistic of Fisher's method can be modified with \[\tilde{X}^2 = \frac{m}{k} \times X^2\] which is then assumed to follow a chi-square distribution with <em></em>\(2m\) degrees of freedom.</p>
 <p>Alternatively, one can also directly specify the effective number of tests via the <code>m</code> argument (e.g., if some other method not implemented in the <span class="pkg">poolr</span> package is used to estimate the effective number of tests). Argument <code>R</code> is then irrelevant and doesn't need to be specified.</p>
 <p><b>Adjustment Based on an Empirically-Derived Null Distribution</b></p>
 <p>When <code>adjust = "empirical"</code>, the combined <em></em>\(p\)-value is computed based on an empirically-derived null distribution using pseudo replicates (using the <code><a href="empirical.html">empirical</a></code> function). This is appropriate if the test statistics that generated the <em></em>\(p\)-values to be combined can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which is specified via the <code>R</code> argument). In this case, test statistics are repeatedly simulated from a multivariate normal distribution under the joint null hypothesis, converted into one- or two-sided <em></em>\(p\)-values (depending on the <code>side</code> argument), and Fisher's method is applied. Repeating this process <code>size</code> times yields a null distribution based on which the combined <em></em>\(p\)-value can be computed, or more precisely, estimated, since repeated applications of this method will yield (slightly) different results. To obtain a stable estimate of the combined <em></em>\(p\)-value, <code>size</code> should be set to a large value (the default is <code>10000</code>, but this can be increased for a more precise estimate). If we consider the combined <em></em>\(p\)-value an estimate of the ‘true’ combined <em></em>\(p\)-value that would be obtained for a null distribution of infinite size, we can also construct a 95% (pseudo) confidence interval based on a binomial distribution.</p>
@@ -129,7 +129,7 @@
 <dd><p>number of <em></em>\(p\)-values that were combined.</p></dd>
 
    <dt>m</dt>
-<dd><p>estimate of the effective number of tests (only when <code>adjust</code> is one of <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code> or <code>"galwey"</code>; otherwise <code>NULL</code>).</p></dd>
+<dd><p>estimate of the effective number of tests (only when <code>adjust</code> is one of <code>"nyholt"</code>, <code>"liji"</code>, <code>"gao"</code>, <code>"galwey"</code>, or <code>"chen"</code>; otherwise <code>NULL</code>).</p></dd>
 
    <dt>adjust</dt>
 <dd><p>chosen adjustment method.</p></dd>
@@ -152,10 +152,10 @@
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. <em>Biometrics, 31</em>(4), 987–992.</p>
+    <p>Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. <em>Biometrics, 31</em>(4), 987–992. <code>https://doi.org/10.2307/2529826</code></p>
 <p>Cinar, O. &amp; Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. <em>Journal of Statistical Software</em>, <b>101</b>(1), 1–42. <code>https://doi.org/10.18637/jss.v101.i01</code></p>
 <p>Fisher, R. A. (1932). <em>Statistical Methods for Research Workers</em> (4th ed.). Edinburgh: Oliver and Boyd.</p>
-<p>Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. <em>IMA Journal of Numerical Analysis, 22</em>(3), 329–343.</p>
+<p>Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. <em>IMA Journal of Numerical Analysis, 22</em>(3), 329–343. <code>https://doi.org/10.1093/imanum/22.3.329</code></p>
     </div>
 
     <div id="ref-examples">
@@ -210,6 +210,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> test statistic:              110.854 ~ chi-square(df = 40) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> adjustment:                  effective number of tests (m = 20; Galwey, 2009) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> combined p-value:            1.41e-08 </span>
+<span class="r-in"><span><span class="fu">fisher</span><span class="op">(</span><span class="va">p</span>, adjust <span class="op">=</span> <span class="st">"chen"</span>,   R <span class="op">=</span> <span class="fu"><a href="mvnconv.html">mvnconv</a></span><span class="op">(</span><span class="va">r</span>, target <span class="op">=</span> <span class="st">"p"</span>, cov2cor <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> combined p-values with:      Fisher's method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of p-values combined: 23 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> test statistic:              121.939 ~ chi-square(df = 44) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adjustment:                  effective number of tests (m = 22; Chen &amp; Liu, 2011) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> combined p-value:            3.01e-09 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># setting argument 'm' manually</span></span></span>
 <span class="r-in"><span><span class="fu">fisher</span><span class="op">(</span><span class="va">p</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></span>
@@ -287,7 +293,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer></div>

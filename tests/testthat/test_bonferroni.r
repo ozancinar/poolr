@@ -20,12 +20,14 @@ test_that("bonferroni() works correctly with effective number of tests.", {
   res_lj  <- bonferroni(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gao <- bonferroni(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- bonferroni(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_che <- bonferroni(grid2ip.p, adjust = "chen", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_user <- bonferroni(grid2ip.p, m = 18)
 
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
   out <- capture.output(print(res_gal))
+  out <- capture.output(print(res_che))
   out <- capture.output(print(res_user))
 
   expect_equivalent(c(res_nyh$p), 0.0371282, tolerance = p_tol)
@@ -39,6 +41,9 @@ test_that("bonferroni() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_gal$p), 0.03375291, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 0.001687646, tolerance = stat_tol)
+
+  expect_equivalent(c(res_che$p), 0.0371282, tolerance = p_tol)
+  expect_equivalent(c(res_che$statistic), 0.001687646, tolerance = stat_tol)
 
   expect_equivalent(c(res_user$p), 0.03037762, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 0.001687646, tolerance = stat_tol)

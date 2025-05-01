@@ -6,7 +6,7 @@ stouffer <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
    k <- length(p)
 
    # match 'adjust' argument
-   adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+   adjust <- match.arg(adjust, c("none", "nyholt", "liji", "gao", "galwey", "chen", "empirical", "generalized"))
 
    # if m is specified, apply effective number of test adjustment with user-defined m
    if (!missing(m))
@@ -21,7 +21,7 @@ stouffer <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
    if (missing(R)) {
 
       # check if 'R' is specified when using an adjustment method (does not apply to "user")
-      if (adjust %in% c("nyholt", "liji", "gao", "galwey", "empirical", "generalized"))
+      if (adjust %in% c("nyholt", "liji", "gao", "galwey", "chen", "empirical", "generalized"))
          stop("Argument 'R' must be specified when using an adjustment method.")
 
    } else {
@@ -48,7 +48,7 @@ stouffer <- function(p, adjust = "none", R, m, size = 10000, threshold, side = 2
 
    }
 
-   if (adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
+   if (adjust %in% c("nyholt", "liji", "gao", "galwey", "chen", "user")) {
 
       m <- .check.m(R = R, adjust = adjust, m = m, k = k, ...)
 

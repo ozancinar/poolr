@@ -27,7 +27,7 @@ print.poolr <- function(x, digits=3, ...) {
       testinfo <- paste0("minimum p-value:             ", round(x$statistic, digits))
 
    if (x$fun == "binomtest") {
-      if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
+      if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "chen", "user")) {
          testinfo <- paste0("number of significant tests: ", round(x$statistic * x$m / x$k), " (adjusted based on m; at alpha = ", x$alpha, ")")
       } else {
          testinfo <- paste0("number of significant tests: ", x$statistic, " (at alpha = ", x$alpha, ")")
@@ -36,7 +36,7 @@ print.poolr <- function(x, digits=3, ...) {
 
    cat(testinfo, "\n")
 
-   if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "user")) {
+   if (x$adjust %in% c("nyholt", "liji", "gao", "galwey", "chen", "user")) {
 
       if (x$adjust == "nyholt")
          x$adjust <- "Nyholt, 2004"
@@ -49,6 +49,9 @@ print.poolr <- function(x, digits=3, ...) {
 
       if (x$adjust == "galwey")
          x$adjust <- "Galwey, 2009"
+
+      if (x$adjust == "chen")
+         x$adjust <- "Chen & Liu, 2011"
 
       if (x$adjust == "user")
          x$adjust <- "user-defined"

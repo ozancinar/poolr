@@ -8,12 +8,12 @@ meff(R, eigen, method, \dots)
 \arguments{
    \item{R}{a \mjeqn{k \times k}{k * k} symmetric matrix that reflects the correlation structure among the tests.}
    \item{eigen}{optional vector to directly supply the eigenvalues to the function (instead of computing them from the matrix given via \code{R}).}
-   \item{method}{character string to specify the method to be used to estimate the effective number of tests (either \code{"nyholt"}, \code{"liji"}, \code{"gao"}, or \code{"galwey"}). See \sQuote{Details}.}
+   \item{method}{character string to specify the method to be used to estimate the effective number of tests (either \code{"nyholt"}, \code{"liji"}, \code{"gao"}, \code{"galwey"}, or \code{"chen"}). See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }
 \details{
 
-   The function estimates the effective number of tests based on one of four different methods. All methods work by extracting the eigenvalues from the \mjseqn{R} matrix supplied via the \code{R} argument (or from the eigenvalues directly passed via the \code{eigen} argument). Letting \mjseqn{\lambda_i} denote the \mjseqn{i}th eigenvalue of this matrix (with \mjseqn{i = 1, \ldots, k}) in decreasing order, the effective number of tests (\mjseqn{m}) is estimated as follows.
+   The function estimates the effective number of tests based on one of five different methods. All methods except the one by Chen and Liu (2011) work by extracting the eigenvalues from the \mjseqn{R} matrix supplied via the \code{R} argument (or from the eigenvalues directly passed via the \code{eigen} argument). Letting \mjseqn{\lambda_i} denote the \mjseqn{i}th eigenvalue of this matrix (with \mjseqn{i = 1, \ldots, k}) in decreasing order, the effective number of tests (\mjseqn{m}) is estimated as follows.
 
    \bold{Method by Nyholt (2004)}
 
@@ -25,11 +25,15 @@ meff(R, eigen, method, \dots)
 
    \bold{Method by Gao et al. (2008)}
 
-   \mjdeqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} > C}{m = min(x) such that sum_{i=1}^x \lambda_(i) / sum_{i=1}^k \lambda_(i) > C} where \mjseqn{C} is a pre-defined parameter which is set to 0.995 by default.
+   \mjdeqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} > C}{m = min(x) such that sum_{i=1}^x \lambda_(i) / sum_{i=1}^k \lambda_(i) > C} where \mjseqn{C} is a pre-defined parameter which is set to 0.995 by default, but can be adjusted (see \sQuote{Note}).
 
    \bold{Method by Galwey (2009)}
 
    \mjdeqn{m = \frac{\left(\sum_{i = 1}^k \sqrt{\lambda_i'}\right)^2}{\sum_{i = 1}^k \lambda_i'}}{m = (sum_{i=1}^k \sqrt{\lambda_i'})^2 / \sum_{i=1}^k \lambda_i'} where \mjeqn{\lambda_i' = \max[0, \lambda_i]}{\lambda_i' = max[0, \lambda_i]}.
+
+   \bold{Method by Chen & Liu (2011)}
+
+   \mjdeqn{m = \sum_{i = 1}^k \frac{1}{R_i}}{m = sum_{i=1}^k 1/R_i} where \mjeqn{R_i = \sum_{j = 1}^k |r_{ij}|^C}{R_i = |r_{ij}|^C} for \mjseqn{i = 1, \ldots, k} and \mjseqn{r_{ij}} denotes the element in the \mjseqn{R} matrix in row \mjseqn{i} and column \mjseqn{j}. By default, the value of \mjseqn{C} is set to 7, but can be adjusted (see \sQuote{Note}).
 
    \bold{Note:} For all methods that can yield a non-integer estimate (all but the method by Gao et al., 2008), the resulting estimate \mjseqn{m} is rounded down to the nearest integer.
 
@@ -39,7 +43,7 @@ meff(R, eigen, method, \dots)
 
    If the tests of interest have test statistics that can be assumed to follow a multivariate normal distribution and a matrix is available that reflects the correlations among the test statistics (which might be approximated by the correlations among the interchanging independent or dependent variables), then the \code{\link{mvnconv}} function can be used to convert this correlation matrix into the correlations among the (one- or two-sided) \mjseqn{p}-values, which in turn can then be passed to the \code{R} argument. See \sQuote{Examples}.
 
-   \bold{Not Positive Semi-Definite R}
+   \bold{Non-Positive Semi-Definite R}
 
    Depending on the way \mjseqn{R} was constructed, it may happen that this matrix is not positive semi-definite, leading to negative eigenvalues. The methods given above can all still be carried out in this case. However, another possibility is to handle such a case by using an algorithm that finds the nearest positive (semi-)definite matrix (e.g., Higham 2002) before passing this matrix to the function (see \code{\link[Matrix]{nearPD}} from the \pkg{Matrix} package for a corresponding implementation).
 
@@ -48,13 +52,15 @@ meff(R, eigen, method, \dots)
    A scalar giving the estimate of the effective number of tests.
 }
 \note{
-   For \code{method = "gao"}, \code{C = 0.995} by default, but a different value of \code{C} can be passed to the function via \code{\dots} (e.g., \code{meff(R, method = "gao", C = 0.95)}).
+   For \code{method = "gao"}, \code{C = 0.995} by default, but a different value of \code{C} can be passed to the function via \code{\dots} (e.g., \code{meff(R, method = "gao", C = 0.95)}). For \code{method = "chen"}, \code{C = 7} by default, but a different value of \code{C} can be passed to the function via \code{\dots} (e.g., \code{meff(R, method = "chen", C = 6)}).
 }
 \author{
    Ozan Cinar \email{ozancinar86@gmail.com} \cr
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
+   Chen, Z. X., & Liu, Q. Z. (2011). A new approach to account for the correlations among single nucleotide polymorphisms in genome-wide association studies. \emph{Human Heredity}, \bold{72}(1), 1--9. \verb{https://doi.org/10.1159/000330135}
+
    Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
    
    Gao, X., Starmer, J., & Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. \emph{Genetic Epidemiology, 32}(4), 361--369. \verb{https://doi.org/10.1002/gepi.20310}
@@ -76,6 +82,7 @@ meff(r, method = "nyholt")
 meff(r, method = "liji")
 meff(r, method = "gao")
 meff(r, method = "galwey")
+meff(r, method = "chen")
 
 # use mvnconv() to convert the LD correlation matrix into a matrix with the
 # correlations among the (two-sided) p-values assuming that the test
@@ -88,5 +95,6 @@ meff(mvnconv(r, target = "p", cov2cor = TRUE), method = "nyholt")
 meff(mvnconv(r, target = "p", cov2cor = TRUE), method = "liji")
 meff(mvnconv(r, target = "p", cov2cor = TRUE), method = "gao")
 meff(mvnconv(r, target = "p", cov2cor = TRUE), method = "galwey")
+meff(mvnconv(r, target = "p", cov2cor = TRUE), method = "chen")
 }
 \keyword{htest}

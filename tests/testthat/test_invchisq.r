@@ -21,12 +21,14 @@ test_that("invchisq() works correctly with effective number of tests.", {
   res_lj  <- invchisq(grid2ip.p, adjust = "liji", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gao <- invchisq(grid2ip.p, adjust = "gao", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_gal <- invchisq(grid2ip.p, adjust = "galwey", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
+  res_che <- invchisq(grid2ip.p, adjust = "chen", R = mvnconv(grid2ip.ld, target = "p", cov2cor = TRUE))
   res_user <- invchisq(grid2ip.p, m = 18)
 
   out <- capture.output(print(res_nyh))
   out <- capture.output(print(res_lj))
   out <- capture.output(print(res_gao))
   out <- capture.output(print(res_gal))
+  out <- capture.output(print(res_che))
   out <- capture.output(print(res_user))
 
   expect_equivalent(c(res_nyh$p), 9.116737e-09, tolerance = p_tol)
@@ -40,6 +42,9 @@ test_that("invchisq() works correctly with effective number of tests.", {
 
   expect_equivalent(c(res_gal$p), 3.841594e-08, tolerance = p_tol)
   expect_equivalent(c(res_gal$statistic), 74.10316, tolerance = stat_tol)
+
+  expect_equivalent(c(res_che$p), 9.116737e-09, tolerance = p_tol)
+  expect_equivalent(c(res_che$statistic), 81.51348, tolerance = stat_tol)
 
   expect_equivalent(c(res_user$p), 1.625318e-07, tolerance = p_tol)
   expect_equivalent(c(res_user$statistic), 66.69285, tolerance = stat_tol)
