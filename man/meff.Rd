@@ -57,15 +57,15 @@ meff(R, eigen, method, \dots)
 \references{
    Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
    
-   Gao, X., Starmer, J., & Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. \emph{Genetic Epidemiology, 32}(4), 361--369.
+   Gao, X., Starmer, J., & Martin, E. R. (2008). A multiple testing correction method for genetic association studies using correlated single nucleotide polymorphisms. \emph{Genetic Epidemiology, 32}(4), 361--369. \verb{https://doi.org/10.1002/gepi.20310}
 
-   Galwey, N. W. (2009). A new measure of the effective number of tests, a practical tool for comparing families of non-independent significance tests. \emph{Genetic Epidemiology, 33}(7), 559--568.
+   Galwey, N. W. (2009). A new measure of the effective number of tests, a practical tool for comparing families of non-independent significance tests. \emph{Genetic Epidemiology, 33}(7), 559--568. \verb{https://doi.org/10.1002/gepi.20408}
 
-   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343. \verb{https://doi.org/10.1093/imanum/22.3.329}
 
-   Li, J., & Ji, L. (2005). Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix. \emph{Heredity, 95}(3), 221--227.
+   Li, J., & Ji, L. (2005). Adjusting multiple testing in multilocus analyses using the eigenvalues of a correlation matrix. \emph{Heredity, 95}(3), 221--227. \verb{https://doi.org/10.1038/sj.hdy.6800717}
 
-   Nyholt, D. R. (2004). A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other. \emph{American Journal of Human Genetics, 74}(4), 765--769.
+   Nyholt, D. R. (2004). A simple correction for multiple testing for single-nucleotide polymorphisms in linkage disequilibrium with each other. \emph{American Journal of Human Genetics, 74}(4), 765--769. \verb{https://doi.org/10.1086/383251}
 }
 \examples{
 # copy LD correlation matrix into r (see help(grid2ip) for details on these data)

@@ -76,11 +76,11 @@ stouffer(p, adjust = "none", R, m,
 \references{
    Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
    
-   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343. \verb{https://doi.org/10.1093/imanum/22.3.329}
 
    Stouffer, S. A., Suchman, E. A., DeVinney, L. C., Star, S. A., & Williams, R. M., Jr. (1949). \emph{The American Soldier: Adjustment During Army Life (Vol. 1)}. Princeton, NJ: Princeton University Press.
 
-   Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. \emph{Psychological Bulletin, 97}(2), 334--341.
+   Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. \emph{Psychological Bulletin, 97}(2), 334--341. \verb{https://doi.org/10.1037/0033-2909.97.2.334}
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r

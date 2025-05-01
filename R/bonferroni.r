@@ -72,7 +72,8 @@ bonferroni <- function(p, adjust = "none", R, m, size = 10000, threshold, side =
       emp.setup <- .check.emp.setup(size = size, threshold = threshold, ddd = ddd)
 
       # observed pooled p-value
-      pval.obs <- min(1, statistic * k)
+      #pval.obs <- min(1, statistic * k)
+      pval.obs <- statistic * k
 
       # get empirically derived p-value
       tmp <- .do.emp(pval.obs = pval.obs, emp.setup = emp.setup, ddd = ddd,

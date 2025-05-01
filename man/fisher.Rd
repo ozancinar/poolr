@@ -74,13 +74,13 @@ fisher(p, adjust = "none", R, m,
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics, 31}(4), 987--992.
+   Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics, 31}(4), 987--992. \verb{https://doi.org/10.2307/2529826}
 
    Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
 
    Fisher, R. A. (1932). \emph{Statistical Methods for Research Workers} (4th ed.). Edinburgh: Oliver and Boyd.
 
-   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343. \verb{https://doi.org/10.1093/imanum/22.3.329}
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r

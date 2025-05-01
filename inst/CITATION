@@ -1,4 +1,4 @@
-citHeader("To cite the metafor package in publications, please use:")
+citHeader("To cite the poolr package in publications, please use:")
 
 bibentry(bibtype = "Article",
   title        = "The {poolr} Package for Combining Independent and Dependent $p$ Values",
@@ -15,4 +15,3 @@ bibentry(bibtype = "Article",
                      "Journal of Statistical Software, 101(1), 1-42.",
                      "https://doi.org/10.18637/jss.v101.i01")
 )
-

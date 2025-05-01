@@ -210,7 +210,7 @@
 
    for (j in seq_along(emp.setup$size)) {
 
-      if (!is.null(ddd$verbose) && ddd$verbose)
+      if (isTRUE(ddd$verbose))
          cat("Size:", emp.setup$size[j], " Threshold:", emp.setup$threshold[j], "\n")
 
       size <- emp.setup$size[j]
@@ -336,7 +336,8 @@
 
 .bonferroni <- function(p, k, alpha) {
    statistic <- min(p)
-   min(1, statistic * k)
+   #min(1, statistic * k)
+   statistic * k
 }
 
 .tippett <- function(p, k, alpha) {

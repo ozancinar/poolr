@@ -22,18 +22,18 @@
    Wolfgang Viechtbauer \email{wvb@wvbauer.com} \cr
 }
 \references{
-   Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics, 31}(4), 987--992.
+   Brown, M. B. (1975). 400: A method for combining non-independent, one-sided tests of significance. \emph{Biometrics, 31}(4), 987--992. \verb{https://doi.org/10.2307/2529826}
 
    Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
 
    Fisher, R. A. (1932). \emph{Statistical Methods for Research Workers} (4th ed.). Edinburgh: Oliver and Boyd.
 
-   Lancaster, H. O. (1961). The combination of probabilities: An application of orthonormal functions. \emph{Australian Journal of Statistics, 3}(1), 20--33.
+   Lancaster, H. O. (1961). The combination of probabilities: An application of orthonormal functions. \emph{Australian Journal of Statistics, 3}(1), 20--33. \verb{https://doi.org/10.1111/j.1467-842X.1961.tb00058.x}
 
-   Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. \emph{Psychological Bulletin, 97}(2), 334--341.
+   Strube, M. J. (1985). Combining and comparing significance levels from nonindependent hypothesis tests. \emph{Psychological Bulletin, 97}(2), 334--341. \verb{https://doi.org/10.1037/0033-2909.97.2.334}
 
    Tippett, L. H. C. (1931). \emph{Methods of Statistics}. London: Williams Norgate.
 
-   Wilkinson, B. (1951). A statistical consideration in psychological research. \emph{Psychological Bulletin, 48}(2), 156--158.
+   Wilkinson, B. (1951). A statistical consideration in psychological research. \emph{Psychological Bulletin, 48}(2), 156--158. \verb{https://doi.org/10.1037/h0059111}
 }
 \keyword{package}

@@ -74,9 +74,9 @@ invchisq(p, adjust = "none", R, m,
 \references{
    Cinar, O. & Viechtbauer, W. (2022). The poolr package for combining independent and dependent p values. \emph{Journal of Statistical Software}, \bold{101}(1), 1--42. \verb{https://doi.org/10.18637/jss.v101.i01}
    
-   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343.
+   Higham, N. J. (2002). Computing the nearest correlation matrix: A problem from finance. \emph{IMA Journal of Numerical Analysis, 22}(3), 329--343. \verb{https://doi.org/10.1093/imanum/22.3.329}
 
-   Lancaster, H. O. (1961). The combination of probabilities: An application of orthonormal functions. \emph{Australian Journal of Statistics, 3}(1), 20--33.
+   Lancaster, H. O. (1961). The combination of probabilities: An application of orthonormal functions. \emph{Australian Journal of Statistics, 3}(1), 20--33. \verb{https://doi.org/10.1111/j.1467-842X.1961.tb00058.x}
 }
 \examples{
 # copy p-values and LD correlation matrix into p and r

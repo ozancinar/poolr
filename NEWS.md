@@ -1,6 +1,8 @@
-# poolr 1.1-4 (2025-03-14)
+# poolr 1.2-0 (2025-05-01)
 
 - added the reference to the publication in the Journal of Statistical Software
+
+- fixed an issue where the Bonferroni and Tippett methods were not identical with `adjust = "empirical"` when the observed Bonferroni-adjusted p-value was equal to 1
 
 # poolr 1.0-0 (2021-06-02)
 

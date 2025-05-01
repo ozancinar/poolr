@@ -46,12 +46,12 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
 
    #return(list(batches=batches, batchsize=batchsize, batchsizes=batchsizes, batchpos=batchpos))
 
-   if (!is.null(ddd$verbose) && ddd$verbose)
+   if (isTRUE(ddd$verbose))
       pbar <- txtProgressBar(min=0, max=length(batchsizes), style=3)
 
    for (i in seq_along(batchsizes)) {
 
-      if (!is.null(ddd$verbose) && ddd$verbose)
+      if (isTRUE(ddd$verbose))
          setTxtProgressBar(pbar, i)
 
       if (is.null(ddd$mvnmethod)) {
@@ -75,7 +75,7 @@ empirical <- function(R, method, side = 2, size = 10000, batchsize, ...) {
 
    }
 
-   if (!is.null(ddd$verbose) && ddd$verbose)
+   if (isTRUE(ddd$verbose))
       close(pbar)
 
    return(emp.dist)
