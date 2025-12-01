@@ -25,7 +25,7 @@ meff(R, eigen, method, \dots)
 
    \bold{Method by Gao et al. (2008)}
 
-   \mjdeqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} > C}{m = min(x) such that sum_{i=1}^x \lambda_(i) / sum_{i=1}^k \lambda_(i) > C} where \mjseqn{C} is a pre-defined parameter which is set to 0.995 by default, but can be adjusted (see \sQuote{Note}).
+   \mjtdeqn{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} > C}{m = \min(x) \; \mbox{such that} \; \frac{\sum_{i = 1}^x \lambda_{i}}{\sum_{i = 1}^k \lambda_{i}} \gt C}{m = min(x) such that sum_{i=1}^x \lambda_(i) / sum_{i=1}^k \lambda_(i) > C} where \mjseqn{C} is a pre-defined parameter which is set to 0.995 by default, but can be adjusted (see \sQuote{Note}).
 
    \bold{Method by Galwey (2009)}
 

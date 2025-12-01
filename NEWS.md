@@ -1,4 +1,8 @@
-# poolr 1.2-0 (2025-05-01)
+# poolr 1.3-0 (2025-12-01)
+
+- version bump for development version
+
+# poolr 1.2-0 (2025-12-01)
 
 - added the reference to the publication in the Journal of Statistical Software
 
